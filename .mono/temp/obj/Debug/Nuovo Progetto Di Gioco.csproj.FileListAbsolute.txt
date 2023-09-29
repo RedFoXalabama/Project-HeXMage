@@ -1,0 +1,9 @@
+C:\RedFoX's Studio\Politecnico\Giochi-Elasitici\.mono\temp\bin\Debug\Nuovo Progetto Di Gioco.dll
+C:\RedFoX's Studio\Politecnico\Giochi-Elasitici\.mono\temp\bin\Debug\Nuovo Progetto Di Gioco.pdb
+C:\RedFoX's Studio\Politecnico\Giochi-Elasitici\.mono\temp\obj\Debug\Nuovo Progetto Di Gioco.csproj.AssemblyReference.cache
+C:\RedFoX's Studio\Politecnico\Giochi-Elasitici\.mono\temp\obj\Debug\Nuovo Progetto Di Gioco.GeneratedMSBuildEditorConfig.editorconfig
+C:\RedFoX's Studio\Politecnico\Giochi-Elasitici\.mono\temp\obj\Debug\Nuovo Progetto Di Gioco.AssemblyInfoInputs.cache
+C:\RedFoX's Studio\Politecnico\Giochi-Elasitici\.mono\temp\obj\Debug\Nuovo Progetto Di Gioco.AssemblyInfo.cs
+C:\RedFoX's Studio\Politecnico\Giochi-Elasitici\.mono\temp\obj\Debug\Nuovo Progetto Di Gioco.csproj.CoreCompileInputs.cache
+C:\RedFoX's Studio\Politecnico\Giochi-Elasitici\.mono\temp\obj\Debug\Nuovo Progetto Di Gioco.dll
+C:\RedFoX's Studio\Politecnico\Giochi-Elasitici\.mono\temp\obj\Debug\Nuovo Progetto Di Gioco.pdb

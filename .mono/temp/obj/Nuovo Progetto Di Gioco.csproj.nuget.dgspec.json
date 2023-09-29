@@ -1,0 +1,53 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\RedFoX's Studio\\Politecnico\\Giochi-Elasitici\\Nuovo Progetto Di Gioco.csproj": {}
+  },
+  "projects": {
+    "C:\\RedFoX's Studio\\Politecnico\\Giochi-Elasitici\\Nuovo Progetto Di Gioco.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\RedFoX's Studio\\Politecnico\\Giochi-Elasitici\\Nuovo Progetto Di Gioco.csproj",
+        "projectName": "Nuovo Progetto Di Gioco",
+        "projectPath": "C:\\RedFoX's Studio\\Politecnico\\Giochi-Elasitici\\Nuovo Progetto Di Gioco.csproj",
+        "packagesPath": "C:\\Users\\gianf\\.nuget\\packages\\",
+        "outputPath": "C:\\RedFoX's Studio\\Politecnico\\Giochi-Elasitici\\.mono\\temp\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\gianf\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "targetAlias": "net472",
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
