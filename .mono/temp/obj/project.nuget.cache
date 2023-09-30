@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EOCJTPfI+6fjekZwcfnSeHOTJ+fJNL57dGCoSBKtKBTyuBS/ptEsQBumg/uLpt6OQ8TcIHVX/WS4nY6H7R5DsQ==",
+  "dgSpecHash": "+/0Ugw3xl8olUOC/NBAT4zUTuAKSMLuxbUkQd0rpcLaVBYevqmq6vkuEdhmIWbCOTkNegcq8wLFgIjv+Ig15aw==",
   "success": true,
-  "projectFilePath": "C:\\RedFoX's Studio\\Politecnico\\Giochi-Elasitici\\Nuovo Progetto Di Gioco.csproj",
+  "projectFilePath": "C:\\RedFoX's Studio\\Politecnico\\Giochi-Elasitici\\Giochi-Elasitci.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gianf\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.3\\microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
     "C:\\Users\\gianf\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net472\\1.0.3\\microsoft.netframework.referenceassemblies.net472.1.0.3.nupkg.sha512"

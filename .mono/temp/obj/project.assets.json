@@ -420,9 +420,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\RedFoX's Studio\\Politecnico\\Giochi-Elasitici\\Nuovo Progetto Di Gioco.csproj",
-      "projectName": "Nuovo Progetto Di Gioco",
-      "projectPath": "C:\\RedFoX's Studio\\Politecnico\\Giochi-Elasitici\\Nuovo Progetto Di Gioco.csproj",
+      "projectUniqueName": "C:\\RedFoX's Studio\\Politecnico\\Giochi-Elasitici\\Giochi-Elasitci.csproj",
+      "projectName": "Giochi-Elasitci",
+      "projectPath": "C:\\RedFoX's Studio\\Politecnico\\Giochi-Elasitici\\Giochi-Elasitci.csproj",
       "packagesPath": "C:\\Users\\gianf\\.nuget\\packages\\",
       "outputPath": "C:\\RedFoX's Studio\\Politecnico\\Giochi-Elasitici\\.mono\\temp\\obj\\",
       "projectStyle": "PackageReference",
