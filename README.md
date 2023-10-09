@@ -63,3 +63,38 @@ Mancano 74 giorni
 - 1 mese e 2 settimana per realizzarlo, contemporanea stesura di abbozzo del report
 - 2 settimane per testing e completamento report
 Una settimana di scarto per ritardi ed eventuali problemi
+
+-----------------------------------------------------------------------------------------------------
+
+##IDEE DI FUNZIONI DA IMPLEMENTARE [SCARTATO]
+Vita condivisa tra Battaglia ed esplorazione;
+Database carte;
+Database Equipaggiabili;
+Effetti doppi per gli oggetti (es: stivali che ti fanno correre più veloce, ma in battaglia hanno effetto X);
+Vantaggio-Svantaggio in base all'interazione nell'esplorazione (es: attacco il mostro da dietro, inizio io la prima mano);
+Mappa esplorabile sia in orizzontale che in Verticale;
+
+-----------------------------------------------------------------------------------------------------
+
+Combattimento carte
+	^MainDeck (Mosse, Shield)
+		^4 Carte in Mano
+		^+1 Carta ogni turno
+		^Max 10 Carte nel Mazzo
+	SideDeck (Oggetti presi nel dungeon persi a fine run; 3 carte max)
+		^Max 3 Carte
+		^Trovate a caso nel Dungeon
+		^Spariscono dopo l'utilizzo/Uscito dal Dungeon
+
+Dungeon a livelli
+	^Vista Laterale
+	^1 Boss ogni X livelli
+	^Trovi carte del SideDeck in giro
+
+Lobby
+	^Mercante
+		^Deck Building
+		^Vendita Carte
+			^Carte Perse nel Dungeon (Che non ti sono state droppate)
+			^Carte Nuove
+			^Carte del Side Deck
