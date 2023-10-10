@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfoibaa8b6w07"]
+
+[ext_resource type="Script" path="res://button.gd" id="1_qplju"]
+
+[node name="Button" type="Button"]
+offset_right = 135.0
+offset_bottom = 143.0
+text = "prova"
+script = ExtResource("1_qplju")
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]
