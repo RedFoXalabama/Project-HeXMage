@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://boucvyfbnns5"]
+
+[ext_resource type="Script" path="res://Deck/Deck.cs" id="1_d1yac"]
+
+[resource]
+script = ExtResource("1_d1yac")
+capacity = 0
