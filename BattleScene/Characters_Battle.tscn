@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://duxo4ahm8ldhq"]
+
+[ext_resource type="Script" path="res://BattleScene/Characters_Battle.cs" id="1_pu5ln"]
+[ext_resource type="PackedScene" uid="uid://bm273e4lny46o" path="res://Deck/BattleDeck.tscn" id="2_4ol6x"]
+
+[node name="Sprite2D" type="Sprite2D"]
+script = ExtResource("1_pu5ln")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+
+[node name="BattleDeck" parent="." instance=ExtResource("2_4ol6x")]

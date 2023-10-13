@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class SideDeck : Deck
+[GlobalClass] public partial class SideDeck : Deck
 {
     //Deck che eredita tutte le funzioni del Deck, con un limite inferiore e con la funzione per pulirlo quando finisce il dungeon
     //FUNZIONI

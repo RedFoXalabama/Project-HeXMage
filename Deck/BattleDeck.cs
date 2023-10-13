@@ -7,7 +7,8 @@ public partial class BattleDeck : Node
     //Export
     [Export] Deck mainDeck;
     [Export] Deck sideDeck;
-    [Export] HandsCart handsCart;
+    //[Export] PackedScene exportedCards;
+    private HandsCard handsCard;
     //ATTRIBUTI
     private int capacity;
     private Dictionary<int, Card> cards; //definizione stampino delle carte, MainDeck + SideDeck
@@ -15,6 +16,18 @@ public partial class BattleDeck : Node
 
     //READY
     public override void _Ready(){
+        /* //PER TESTING
+            Card testcard1 = (Card)exportedCards.Instantiate();
+            testcard1.CardId = 1;
+            Card testcard2 = (Card)exportedCards.Instantiate();
+            testcard2.CardId = 2;
+            Card testcard3 = (Card)exportedCards.Instantiate();
+            testcard3.CardId = 3;
+            mainDeck.AddCard(testcard1);
+            mainDeck.AddCard(testcard2);
+            mainDeck.AddCard(testcard3);
+        //FINE TESTING */
+
         //inizializzo gli attributi
         capacity = mainDeck.Capacity + sideDeck.Capacity;
         cards = new Dictionary<int, Card>();
@@ -25,12 +38,21 @@ public partial class BattleDeck : Node
         foreach(KeyValuePair<int, Card> card in sideDeck.Cards){
             cards.Add(card.Key, card.Value);
         }
+        //inizializzo il mazzo temporaneo
+        tempCards = new Card[capacity];
+        //inizializzo HandsCard
+        handsCard = new HandsCard();
+
+        /* //TESTING 
+        CreateTempDeck();
+        Draw();
+        //FINE TESTING */
     }
 
     //FUNZIONI
     public void CreateTempDeck(){ //crea il mazzo temporaneo copiandolo dalla definizione per poi ordinarlo casualmente
+        int i = 0;
         foreach(KeyValuePair<int, Card> card in cards){
-            int i = 0;
             tempCards[i] = (card.Value);
             i++;
         }
@@ -45,9 +67,9 @@ public partial class BattleDeck : Node
         //cicla nel tempCards e restituisce la prima carta non nulla
         for(int i = 0; i < tempCards.Length; i++){
             if(tempCards[i] != null){
-                handsCart.AddCard(tempCards[i]);
+                handsCard.AddCard(tempCards[i]);
                 tempCards[i] = null;
-                break; //appena inserita una carta esce dal ciclo e dalla funzione
+                return; //appena inserita una carta esce dal ciclo e dalla funzione
             }
         } 
         //se non ci sono carte riempe il mazzo e richiama la funzione
@@ -58,7 +80,7 @@ public partial class BattleDeck : Node
     //SEGNALI
     public void _on_BattleStart(){ //segnale da collegare con il segnale BattleStart del nodo Battle
         CreateTempDeck(); //Creiamo il mazzo
-        for (int i = 0; i < handsCart.Capacity; i++){ //riempiamo la mano
+        for (int i = 0; i < handsCard.Capacity; i++){ //riempiamo la mano
             Draw();
         }
     }
@@ -73,5 +95,11 @@ public partial class BattleDeck : Node
             array[n] = array[k];
             array[k] = temp;
         }
+    }
+
+    //GETTER-SETTER
+    public HandsCard HandsCard{
+        get{return handsCard;}
+        set{handsCard = value;}
     }
 }

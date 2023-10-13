@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bm273e4lny46o"]
+[gd_scene load_steps=3 format=3 uid="uid://bm273e4lny46o"]
 
 [ext_resource type="Script" path="res://Deck/BattleDeck.cs" id="1_ifwoe"]
+[ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="2_wcsq7"]
 
 [node name="BattleDeck" type="Node"]
 script = ExtResource("1_ifwoe")
+exportedCards = ExtResource("2_wcsq7")

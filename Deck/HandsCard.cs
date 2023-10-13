@@ -2,11 +2,11 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class HandsCart : Resource
+[GlobalClass]public partial class HandsCard : Resource
 {
     //ATTRIBUTI
     private int capacity = 4;
-    private Dictionary<int, Card> cardsInHand;
+    private Dictionary<int, Card> cardsInHand = new Dictionary<int, Card>();
 
     //FUNZIONI
     public void AddCard(Card card){ //aggiunge una carta alla mano
@@ -17,7 +17,6 @@ public partial class HandsCart : Resource
     public void RemoveCard(Card card){
         cardsInHand.Remove(card.CardId);
     }
-
     //GETTER-SETTER
     public int Capacity{
         get{return capacity;}

@@ -1,0 +1,15 @@
+[gd_scene load_steps=6 format=3 uid="uid://bq5f5ju31lu75"]
+
+[ext_resource type="PackedScene" uid="uid://duxo4ahm8ldhq" path="res://BattleScene/Characters_Battle.tscn" id="1_o51tp"]
+[ext_resource type="Texture2D" uid="uid://drls3p3jaykh5" path="res://icon.svg" id="2_1ku12"]
+[ext_resource type="Script" path="res://BattleScene/Player_BattleScene/Player_BattleScene.cs" id="2_d2pdh"]
+[ext_resource type="Resource" uid="uid://bftinnyy3a5lq" path="res://BattleScene/Player_BattleScene/PlayerDeck.tres" id="5_r3uv2"]
+[ext_resource type="Resource" uid="uid://cyxiqryvtbhyn" path="res://BattleScene/Player_BattleScene/PlayerSideDeck.tres" id="6_ybeuk"]
+
+[node name="Sprite2D" instance=ExtResource("1_o51tp")]
+texture = ExtResource("2_1ku12")
+script = ExtResource("2_d2pdh")
+
+[node name="BattleDeck" parent="." index="2"]
+mainDeck = ExtResource("5_r3uv2")
+sideDeck = ExtResource("6_ybeuk")

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 	//Export
 	[Export] int capacity;
 	//ATTRIBUTI
-	private Dictionary<int, Card> cards; //dizionario di carte
+	private Dictionary<int, Card> cards = new Dictionary<int, Card>(); //dizionario di carte
 
 	//FUNZIONI
 	public void AddCard(Card card){ //aggiunge una carta al mazzo se non è pieno
