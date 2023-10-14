@@ -1,118 +1,192 @@
+# Dillinger
+## _The Last Markdown Editor, Ever_
 
-# Progetto Scelto
+[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
 
-Combattimento carte
-	^MainDeck (Mosse, Shield)
-		^4 Carte in Mano
-		^+1 Carta ogni turno
-		^Max 10 Carte nel Mazzo
-	SideDeck (Oggetti presi nel dungeon persi a fine run; 3 carte max)
-		^Max 3 Carte
-		^Trovate a caso nel Dungeon
-		^Spariscono dopo l'utilizzo/Uscito dal Dungeon
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-Dungeon a livelli
-	^Vista Laterale
-	^1 Boss ogni X livelli
-	^Trovi carte del SideDeck in giro
+Dillinger is a cloud-enabled, mobile-ready, offline-storage compatible,
+AngularJS-powered HTML5 Markdown editor.
 
-Lobby
-	^Mercante
-		^Deck Building
-		^Vendita Carte
-			^Carte Perse nel Dungeon (Che non ti sono state droppate)
-			^Carte Nuove
-			^Carte del Side Deck
+- Type some Markdown on the left
+- See HTML in the right
+- ✨Magic ✨
 
-# --------------------------------------------------
+## Features
 
-# Ruoli
+- Import a HTML file and watch it magically convert to Markdown
+- Drag and drop images (requires your Dropbox account be linked)
+- Import and save files from GitHub, Dropbox, Google Drive and One Drive
+- Drag and drop markdown and HTML files into Dillinger
+- Export documents as Markdown, HTML and PDF
 
-### Gianfranco
-Programmazione Generale e del Battle System;
+Markdown is a lightweight markup language based on the formatting conventions
+that people naturally use in email.
+As [John Gruber] writes on the [Markdown site][df1]
 
-### Matteo
-Audio e Bilanciamento generale
+> The overriding design goal for Markdown's
+> formatting syntax is to make it as readable
+> as possible. The idea is that a
+> Markdown-formatted document should be
+> publishable as-is, as plain text, without
+> looking like it's been marked up with tags
+> or formatting instructions.
 
-### Marcello
-Grafica
+This text you see here is *actually- written in Markdown! To get a feel
+for Markdown's syntax, type some text into the left window and
+watch the results in the right.
 
+## Tech
 
-# --------------------------------------------------
-# --------------------------------------------------
+Dillinger uses a number of open source projects to work properly:
 
-- Dungeon crawler
-	- generazione procedurale
-	- mappa del dungeon
-- Isometrico **χ**
-	- combattimento stile wow
-	- combattimento stile disgaea
-- rpg vecchia scuola
-- metroidvania con combattimento a turni
-	- combattimento con carte
-	- mana a pepite
-### Stili di combattimento
-- combattimento a turni con carte e pepite
-	- area di combattimento
-		- stile arena
-			- arena esagonale, 3vs3, un personaggio per lato
-				- (_presenza di alleati che si auto controllano_)
-		- plat-former, combattimento in loco 1vs1
-	- carte con elementi
-	- 4 elementi + 1 neutrale {1-2, 3-4, 5}
-	- Creiamo 25 carte, 5 carte per elemento (deve essere un prototipo di gioco)
-- combattimento action con spada e roll
-	- armatura composta da tre oggetti: elmo, pettorina e gambali
-	- 2 tipi di armi: spada e arco
-	- 3 magie: palla di fuoco, mina a terra, scudo
-	- pozioni: vita e mana
-- combattimento a turni stile Classic RPG
-	- armatura composta da tre oggetti: elmo, pettorina e gambali
-	- 4 tipologie di armi, variazione nulla, solo aspetto grafico
-	- 4 magie elementali:
-		- fuoco, danni ogni turno
-		- aria, danni medi e 50% di togliere un turno
-		- acqua, curi te stesso
-		- terra, grossi danni
-	- party singolo o con un alleato che si controlla
-### Stili livello
-- Dungeon Crawler
-	- gioco one-shoot, si ricomincia sempre da capo con un nuovo dungeon. (generazione procedurale)
-	- il dungeon presenta:
-		- stanza iniziale
-		- stanza del tesoro
-			- tesori possibili: arma o armatura più potente
-		- corridoi/stanze
-			- possibile presenza di loot
-		- stanza del boss
-			- se sconfitto si va avanti generando un nuovo dungeon e conservando il loot
-				- incremento della difficoltà
-	- la mappa non è presente, funzione per poterla disegnare
-- Stile Top-down
-	- esplorazione di un'ampia area / o ampie aree. (Se è 2d non penso sia un problema caricare tutto in una volta, oppure possiamo dividerle con una schermata di caricamento)
-	- Ambientazione cittadina labirintica (alto dispendio di assets)
-		- diverse case in cui esplorare, quasi prettamente monolocali
-		- persone ed oggetti con cui interagire
-- Plat-former
-	- esplorazione di un'ampia area / o ampie aree. (Se è 2d non penso sia un problema caricare tutto in una volta, oppure possiamo dividerle con una schermata di caricamento)
-	- enigmi ambientali (lo ambienterei in un castello pieno di trappole e passaggi segreti)
-## Elementi di teoria
-- DB concettuale con modello E-R, utilizzeremo però hashmap e json
-- Fare versioning del progetto
-- UML, scrivere nel report la spiegazione di come funziona il gioco con astrazione e metafore cosi da facilitarne la comprensione
-## Gestione tempi
-Mancano 74 giorni
-- 1 settimana per progettare l'intero gioco
-- 1 mese e 2 settimana per realizzarlo, contemporanea stesura di abbozzo del report
-- 2 settimane per testing e completamento report
-Una settimana di scarto per ritardi ed eventuali problemi
+- [AngularJS] - HTML enhanced for web apps!
+- [Ace Editor] - awesome web-based text editor
+- [markdown-it] - Markdown parser done right. Fast and easy to extend.
+- [Twitter Bootstrap] - great UI boilerplate for modern web apps
+- [node.js] - evented I/O for the backend
+- [Express] - fast node.js network app framework [@tjholowaychuk]
+- [Gulp] - the streaming build system
+- [Breakdance](https://breakdance.github.io/breakdance/) - HTML
+to Markdown converter
+- [jQuery] - duh
 
------------------------------------------------------------------------------------------------------
+And of course Dillinger itself is open source with a [public repository][dill]
+ on GitHub.
 
-##IDEE DI FUNZIONI DA IMPLEMENTARE [SCARTATO]
-Vita condivisa tra Battaglia ed esplorazione;
-Database carte;
-Database Equipaggiabili;
-Effetti doppi per gli oggetti (es: stivali che ti fanno correre più veloce, ma in battaglia hanno effetto X);
-Vantaggio-Svantaggio in base all'interazione nell'esplorazione (es: attacco il mostro da dietro, inizio io la prima mano);
-Mappa esplorabile sia in orizzontale che in Verticale;
+## Installation
+
+Dillinger requires [Node.js](https://nodejs.org/) v10+ to run.
+
+Install the dependencies and devDependencies and start the server.
+
+```sh
+cd dillinger
+npm i
+node app
+```
+
+For production environments...
+
+```sh
+npm install --production
+NODE_ENV=production node app
+```
+
+## Plugins
+
+Dillinger is currently extended with the following plugins.
+Instructions on how to use them in your own application are linked below.
+
+| Plugin | README |
+| ------ | ------ |
+| Dropbox | [plugins/dropbox/README.md][PlDb] |
+| GitHub | [plugins/github/README.md][PlGh] |
+| Google Drive | [plugins/googledrive/README.md][PlGd] |
+| OneDrive | [plugins/onedrive/README.md][PlOd] |
+| Medium | [plugins/medium/README.md][PlMe] |
+| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
+
+## Development
+
+Want to contribute? Great!
+
+Dillinger uses Gulp + Webpack for fast developing.
+Make a change in your file and instantaneously see your updates!
+
+Open your favorite Terminal and run these commands.
+
+First Tab:
+
+```sh
+node app
+```
+
+Second Tab:
+
+```sh
+gulp watch
+```
+
+(optional) Third:
+
+```sh
+karma test
+```
+
+#### Building for source
+
+For production release:
+
+```sh
+gulp build --prod
+```
+
+Generating pre-built zip archives for distribution:
+
+```sh
+gulp build dist --prod
+```
+
+## Docker
+
+Dillinger is very easy to install and deploy in a Docker container.
+
+By default, the Docker will expose port 8080, so change this within the
+Dockerfile if necessary. When ready, simply use the Dockerfile to
+build the image.
+
+```sh
+cd dillinger
+docker build -t <youruser>/dillinger:${package.json.version} .
+```
+
+This will create the dillinger image and pull in the necessary dependencies.
+Be sure to swap out `${package.json.version}` with the actual
+version of Dillinger.
+
+Once done, run the Docker image and map the port to whatever you wish on
+your host. In this example, we simply map port 8000 of the host to
+port 8080 of the Docker (or whatever port was exposed in the Dockerfile):
+
+```sh
+docker run -d -p 8000:8080 --restart=always --cap-add=SYS_ADMIN --name=dillinger <youruser>/dillinger:${package.json.version}
+```
+
+> Note: `--capt-add=SYS-ADMIN` is required for PDF rendering.
+
+Verify the deployment by navigating to your server address in
+your preferred browser.
+
+```sh
+127.0.0.1:8000
+```
+
+## License
+
+MIT
+
+**Free Software, Hell Yeah!**
+
+[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
+
+   [dill]: <https://github.com/joemccann/dillinger>
+   [git-repo-url]: <https://github.com/joemccann/dillinger.git>
+   [john gruber]: <http://daringfireball.net>
+   [df1]: <http://daringfireball.net/projects/markdown/>
+   [markdown-it]: <https://github.com/markdown-it/markdown-it>
+   [Ace Editor]: <http://ace.ajax.org>
+   [node.js]: <http://nodejs.org>
+   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
+   [jQuery]: <http://jquery.com>
+   [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
+   [express]: <http://expressjs.com>
+   [AngularJS]: <http://angularjs.org>
+   [Gulp]: <http://gulpjs.com>
+
+   [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
+   [PlGh]: <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>
+   [PlGd]: <https://github.com/joemccann/dillinger/tree/master/plugins/googledrive/README.md>
+   [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
+   [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
+   [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md>

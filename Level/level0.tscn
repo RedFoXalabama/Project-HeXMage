@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://dl3kroow2wmhd"]
+[gd_scene load_steps=11 format=3 uid="uid://dl3kroow2wmhd"]
 
 [ext_resource type="PackedScene" uid="uid://ck1gvib4r183m" path="res://Assets/3D Model/table.dae" id="1_ygbqk"]
 [ext_resource type="Script" path="res://Level/PlayerController.cs" id="2_orekk"]
 [ext_resource type="QuadMesh" uid="uid://clkbwg8ar430q" path="res://Assets/3D Model/Material/Player.tres" id="3_y8b8t"]
+[ext_resource type="PackedScene" uid="uid://by7jqnbk2vp2e" path="res://Assets/3D Model/stairs.dae" id="4_p4eaf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_neblk"]
 sky_top_color = Color(0.384314, 0.454902, 0.54902, 1)
@@ -44,7 +45,6 @@ skeleton = NodePath("../../WORLD")
 [node name="StaticBody3D" type="StaticBody3D" parent="MAP/MeshInstance3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MAP/MeshInstance3D/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_om42x")
 
 [node name="FURNITURE" type="Node3D" parent="MAP"]
@@ -70,3 +70,6 @@ transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ACTORS/Player"]
 transform = Transform3D(0.75, 0, 0, 0, 1.25, 0, 0, 0, 0.1, 0, -0.115, 0)
 shape = SubResource("BoxShape3D_xxk7k")
+
+[node name="stairs" parent="." instance=ExtResource("4_p4eaf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38268, 0.0704455, -1.37958)
