@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://dl3kroow2wmhd"]
+
+[ext_resource type="PackedScene" uid="uid://ck1gvib4r183m" path="res://Assets/3D Model/table.dae" id="1_ygbqk"]
+[ext_resource type="Script" path="res://Level/PlayerController.cs" id="2_orekk"]
+[ext_resource type="QuadMesh" uid="uid://clkbwg8ar430q" path="res://Assets/3D Model/Material/Player.tres" id="3_y8b8t"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_neblk"]
+sky_top_color = Color(0.384314, 0.454902, 0.54902, 1)
+sky_horizon_color = Color(0.646078, 0.655975, 0.670505, 1)
+ground_horizon_color = Color(0.646078, 0.655975, 0.670505, 1)
+
+[sub_resource type="Sky" id="Sky_iflec"]
+sky_material = SubResource("ProceduralSkyMaterial_neblk")
+
+[sub_resource type="Environment" id="Environment_6h1kp"]
+background_mode = 1
+background_color = Color(0.513726, 0.184314, 0.380392, 1)
+sky = SubResource("Sky_iflec")
+tonemap_mode = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_447e5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_om42x"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xxk7k"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WORLD" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="WORLD"]
+environment = SubResource("Environment_6h1kp")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WORLD"]
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 5, 0)
+
+[node name="MAP" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MAP"]
+transform = Transform3D(4.5739, 0, 0, 0, 0.140891, 0, 0, 0, 2.54273, 0, 0, 0)
+mesh = SubResource("BoxMesh_447e5")
+skeleton = NodePath("../../WORLD")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MAP/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MAP/MeshInstance3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_om42x")
+
+[node name="FURNITURE" type="Node3D" parent="MAP"]
+
+[node name="table" parent="MAP/FURNITURE" instance=ExtResource("1_ygbqk")]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, -1.158, 0.07, 0)
+
+[node name="ACTORS" type="Node3D" parent="."]
+
+[node name="Player" type="CharacterBody3D" parent="ACTORS"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("2_orekk")
+
+[node name="Mesh" type="MeshInstance3D" parent="ACTORS/Player"]
+transform = Transform3D(0.58, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0.26, 0)
+mesh = ExtResource("3_y8b8t")
+skeleton = NodePath("../..")
+metadata/_edit_lock_ = true
+
+[node name="Camera3D" type="Camera3D" parent="ACTORS/Player"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1, 2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ACTORS/Player"]
+transform = Transform3D(0.75, 0, 0, 0, 1.25, 0, 0, 0, 0.1, 0, -0.115, 0)
+shape = SubResource("BoxShape3D_xxk7k")
