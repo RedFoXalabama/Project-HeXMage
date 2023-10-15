@@ -1,9 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://dl3kroow2wmhd"]
+[gd_scene load_steps=17 format=3 uid="uid://dl3kroow2wmhd"]
 
+[ext_resource type="Texture2D" uid="uid://r46b478gqfhg" path="res://Assets/3D Model/Texture/floor/color_map.jpg" id="1_vpcv7"]
 [ext_resource type="PackedScene" uid="uid://ck1gvib4r183m" path="res://Assets/3D Model/table.dae" id="1_ygbqk"]
 [ext_resource type="Script" path="res://Level/PlayerController.cs" id="2_orekk"]
+[ext_resource type="Texture2D" uid="uid://wixtvechfiwf" path="res://Assets/3D Model/Texture/floor/normal_map_opengl.jpg" id="2_sejt8"]
+[ext_resource type="Texture2D" uid="uid://ii788htdtw5j" path="res://Assets/3D Model/Texture/floor/roughness_map.jpg" id="3_jfky6"]
 [ext_resource type="QuadMesh" uid="uid://clkbwg8ar430q" path="res://Assets/3D Model/Material/Player.tres" id="3_y8b8t"]
 [ext_resource type="PackedScene" uid="uid://by7jqnbk2vp2e" path="res://Assets/3D Model/stairs.dae" id="4_p4eaf"]
+[ext_resource type="PackedScene" uid="uid://b4xhjp3wvgode" path="res://Assets/3D Model/chair.dae" id="7_8ign0"]
+[ext_resource type="PackedScene" uid="uid://d2te1k50oat72" path="res://Assets/3D Model/stool.dae" id="8_kpfmh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_neblk"]
 sky_top_color = Color(0.384314, 0.454902, 0.54902, 1)
@@ -19,7 +24,14 @@ background_color = Color(0.513726, 0.184314, 0.380392, 1)
 sky = SubResource("Sky_iflec")
 tonemap_mode = 2
 
-[sub_resource type="BoxMesh" id="BoxMesh_447e5"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bjkhp"]
+albedo_texture = ExtResource("1_vpcv7")
+roughness_texture = ExtResource("3_jfky6")
+normal_enabled = true
+normal_texture = ExtResource("2_sejt8")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_vqki2"]
+material = SubResource("StandardMaterial3D_bjkhp")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_om42x"]
 
@@ -37,20 +49,30 @@ transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 
 
 [node name="MAP" type="Node3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MAP"]
-transform = Transform3D(4.5739, 0, 0, 0, 0.140891, 0, 0, 0, 2.54273, 0, 0, 0)
-mesh = SubResource("BoxMesh_447e5")
+[node name="floor" type="MeshInstance3D" parent="MAP"]
+transform = Transform3D(12, 0, 0, 0, 1, 0, 0, 0, 7, 0, 0, 0)
+mesh = SubResource("PlaneMesh_vqki2")
 skeleton = NodePath("../../WORLD")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MAP/MeshInstance3D"]
+[node name="StaticBody3D" type="StaticBody3D" parent="MAP/floor"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MAP/MeshInstance3D/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MAP/floor/StaticBody3D"]
+transform = Transform3D(2.022, 0, 0, 0, 1.015, 0, 0, 0, 2, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_om42x")
 
 [node name="FURNITURE" type="Node3D" parent="MAP"]
 
 [node name="table" parent="MAP/FURNITURE" instance=ExtResource("1_ygbqk")]
 transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, -1.158, 0.07, 0)
+
+[node name="stairs" parent="MAP/FURNITURE" instance=ExtResource("4_p4eaf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38268, 0.00100919, -1.37958)
+
+[node name="stool" parent="MAP/FURNITURE" instance=ExtResource("8_kpfmh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.69138, 0.00749999, 0.004035)
+
+[node name="chair" parent="MAP/FURNITURE" instance=ExtResource("7_8ign0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.19785, 0.00749999, -0.194437)
 
 [node name="ACTORS" type="Node3D" parent="."]
 
@@ -70,6 +92,3 @@ transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ACTORS/Player"]
 transform = Transform3D(0.75, 0, 0, 0, 1.25, 0, 0, 0, 0.1, 0, -0.115, 0)
 shape = SubResource("BoxShape3D_xxk7k")
-
-[node name="stairs" parent="." instance=ExtResource("4_p4eaf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38268, 0.0704455, -1.37958)
