@@ -11,11 +11,14 @@ using System.Collections.Generic;
     //FUNZIONI
     public void AddCard(Card card){ //aggiunge una carta alla mano
         if(cardsInHand.Count < capacity){
-            cardsInHand.Add(card.CardId, card);
+            card.CardHandPosition = cardsInHand.Count;
+            cardsInHand.Add(card.CardHandPosition, card);
         }
+        //FUNZIONE PER AGGIORNARE LA GUI
     }
-    public void RemoveCard(Card card){
-        cardsInHand.Remove(card.CardId);
+    public void RemoveCard(Card card){ //rimuove una carta dalla mano
+        cardsInHand.Remove(card.CardHandPosition);
+        //FUNZIONE PER AGGIORNARE LA GUI
     }
     //GETTER-SETTER
     public int Capacity{

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfo6bm0dg4vm5"]
+
+[ext_resource type="Texture2D" uid="uid://s0n4a4o1mg5r" path="res://Assets/Cards/prototype.png" id="1_4fi6t"]
+[ext_resource type="Script" path="res://Deck/Card/Card.cs" id="2_w6086"]
+
+[node name="Card" type="TextureRect"]
+offset_right = 150.0
+offset_bottom = 200.0
+size_flags_horizontal = 3
+texture = ExtResource("1_4fi6t")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_w6086")
+card_name = "Card_Prova"

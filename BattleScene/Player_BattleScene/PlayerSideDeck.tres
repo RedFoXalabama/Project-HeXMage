@@ -5,3 +5,4 @@
 [resource]
 script = ExtResource("1_c4xdr")
 capacity = 3
+exportedCards = [null, null, null]

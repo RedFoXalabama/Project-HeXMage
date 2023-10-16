@@ -1,0 +1,17 @@
+[gd_scene load_steps=6 format=3 uid="uid://nqfxp72ytkc2"]
+
+[ext_resource type="PackedScene" uid="uid://duxo4ahm8ldhq" path="res://BattleScene/Characters_Battle.tscn" id="1_i8k5k"]
+[ext_resource type="Texture2D" uid="uid://drls3p3jaykh5" path="res://icon.svg" id="2_p5d4r"]
+[ext_resource type="Script" path="res://BattleScene/Enemy_BattleScene/Enemy_BattleScene.cs" id="3_2pwsv"]
+[ext_resource type="Resource" uid="uid://bduc74gdut2ru" path="res://BattleScene/Enemy_BattleScene/EnemyTest/EnemyTestDeck.tres" id="4_4a1kc"]
+[ext_resource type="Resource" uid="uid://b2ulrhh1t3bno" path="res://BattleScene/Enemy_BattleScene/EnemyTest/EnemyTestSideDeck.tres" id="5_32bd1"]
+
+[node name="Sprite2D" instance=ExtResource("1_i8k5k")]
+texture = ExtResource("2_p5d4r")
+script = ExtResource("3_2pwsv")
+
+[node name="BattleDeck" parent="." index="2"]
+mainDeck = ExtResource("4_4a1kc")
+sideDeck = ExtResource("5_32bd1")
+
+[connection signal="PrepareBattleDeckSignal" from="." to="BattleDeck" method="_on_PrepareBattleDeck_Enemy"]

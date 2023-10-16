@@ -1,48 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://b6cae6ieantv4"]
+[gd_scene load_steps=3 format=3 uid="uid://b6cae6ieantv4"]
 
 [ext_resource type="Script" path="res://Deck/Card/Card.cs" id="1_uievq"]
 [ext_resource type="Texture2D" uid="uid://s0n4a4o1mg5r" path="res://Assets/Cards/prototype.png" id="2_vxyjd"]
-[ext_resource type="Texture2D" uid="uid://drls3p3jaykh5" path="res://icon.svg" id="3_o1e5e"]
-[ext_resource type="LabelSettings" uid="uid://b2ov3uasi8nlb" path="res://Assets/GD_Theme/Card_LabelSetting.tres" id="4_e78te"]
 
-[node name="Card" type="Node2D"]
-script = ExtResource("1_uievq")
-
-[node name="Sfondo" type="Sprite2D" parent="."]
-scale = Vector2(0.26087, 0.26087)
+[node name="Card" type="TextureRect"]
+offset_right = 150.0
+offset_bottom = 200.0
+size_flags_horizontal = 3
 texture = ExtResource("2_vxyjd")
-
-[node name="Immagine" type="Sprite2D" parent="."]
-position = Vector2(0, -54)
-scale = Vector2(1.01563, 0.671875)
-texture = ExtResource("3_o1e5e")
-
-[node name="Nome" type="Label" parent="."]
-offset_left = -60.0
-offset_top = -9.0
-offset_right = 60.0
-offset_bottom = 9.0
-text = "Nome"
-label_settings = ExtResource("4_e78te")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Descrizione" type="Label" parent="."]
-offset_left = -60.0
-offset_top = 12.0
-offset_right = 64.0
-offset_bottom = 87.0
-text = "descrizione"
-label_settings = ExtResource("4_e78te")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Mana" type="Label" parent="."]
-offset_left = 48.0
-offset_top = 77.0
-offset_right = 72.0
-offset_bottom = 100.0
-text = "0"
-label_settings = ExtResource("4_e78te")
-horizontal_alignment = 1
-vertical_alignment = 1
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("1_uievq")

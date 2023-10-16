@@ -11,8 +11,17 @@ config_version=5
 [application]
 
 config/name="Project-IdS"
-run/main_scene="res://BattleScene/Player_BattleScene/Player_BattleScene.tscn"
+config/tags=PackedStringArray("university")
+run/main_scene="res://BattleScene/BattleScene.tscn"
 config/features=PackedStringArray("4.1", "C#", "GL Compatibility")
+
+[autoload]
+
+GlobalDeck="*res://Deck/Global_Deck.cs"
+
+[display]
+
+window/stretch/mode="viewport"
 
 [dotnet]
 

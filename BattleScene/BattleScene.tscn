@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cttnu5lhnv0yl"]
+
+[ext_resource type="PackedScene" uid="uid://bq5f5ju31lu75" path="res://BattleScene/Player_BattleScene/Player_BattleScene.tscn" id="1_phflj"]
+[ext_resource type="Script" path="res://BattleScene/BattleScene.cs" id="1_rvc4i"]
+[ext_resource type="PackedScene" uid="uid://nqfxp72ytkc2" path="res://BattleScene/Enemy_BattleScene/EnemyTest/EnemyTest.tscn" id="2_jabw4"]
+[ext_resource type="PackedScene" uid="uid://db87r6f4sp7hw" path="res://BattleScene/HandsCard_GUI.tscn" id="4_nakdf"]
+
+[node name="BattleScene" type="Node2D"]
+script = ExtResource("1_rvc4i")
+enemy_packedScene = Array[PackedScene]([ExtResource("2_jabw4"), ExtResource("2_jabw4"), ExtResource("2_jabw4")])
+
+[node name="HandsCard_GUI" parent="." instance=ExtResource("4_nakdf")]
+
+[node name="PlayerPosition" type="Marker2D" parent="."]
+position = Vector2(160, 300)
+
+[node name="Player" parent="PlayerPosition" instance=ExtResource("1_phflj")]
+
+[node name="EnemyPosition1" type="Marker2D" parent="."]
+position = Vector2(900, 200)
+
+[node name="EnemyPosition2" type="Marker2D" parent="."]
+position = Vector2(900, 300)
+
+[node name="EnemyPosition3" type="Marker2D" parent="."]
+position = Vector2(900, 400)
+
+[connection signal="BattleStart" from="." to="PlayerPosition/Player" method="_on_BattleStart_Signal"]
+[connection signal="CardsOnGUI" from="PlayerPosition/Player" to="HandsCard_GUI" method="_on_player_cards_on_gui"]

@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="Deck" load_steps=2 format=3 uid="uid://bftinnyy3a5lq"]
+[gd_resource type="Resource" script_class="Deck" load_steps=3 format=3 uid="uid://bftinnyy3a5lq"]
 
+[ext_resource type="PackedScene" uid="uid://bfo6bm0dg4vm5" path="res://Deck/Card/Cards-Scene/Card_Prova.tscn" id="1_dab7b"]
 [ext_resource type="Script" path="res://Deck/Deck.cs" id="1_sdmx0"]
 
 [resource]
 script = ExtResource("1_sdmx0")
 capacity = 10
+exportedCards = [ExtResource("1_dab7b"), ExtResource("1_dab7b"), ExtResource("1_dab7b"), null, null, null, null, null, null, null]

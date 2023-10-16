@@ -1,13 +1,13 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 public partial class BattleDeck : Node
 {
     //Export
     [Export] Deck mainDeck;
     [Export] Deck sideDeck;
-    //[Export] PackedScene exportedCards;
     private HandsCard handsCard;
     //ATTRIBUTI
     private int capacity;
@@ -27,22 +27,6 @@ public partial class BattleDeck : Node
             mainDeck.AddCard(testcard2);
             mainDeck.AddCard(testcard3);
         //FINE TESTING */
-
-        //inizializzo gli attributi
-        capacity = mainDeck.Capacity + sideDeck.Capacity;
-        cards = new Dictionary<int, Card>();
-        //Inizializzo il cards
-        foreach(KeyValuePair<int, Card> card in mainDeck.Cards){
-            cards.Add(card.Key, card.Value);
-        }
-        foreach(KeyValuePair<int, Card> card in sideDeck.Cards){
-            cards.Add(card.Key, card.Value);
-        }
-        //inizializzo il mazzo temporaneo
-        tempCards = new Card[capacity];
-        //inizializzo HandsCard
-        handsCard = new HandsCard();
-
         /* //TESTING 
         CreateTempDeck();
         Draw();
@@ -50,10 +34,26 @@ public partial class BattleDeck : Node
     }
 
     //FUNZIONI
+    public void InitBattleDeck(){ //funzione per creare il mazzo (stampino) e il mazzo temp, inizializza anche HandsCard
+        //definisco la capacità del mazzo e lo inizializzo
+        capacity = mainDeck.Capacity + sideDeck.Capacity;
+        cards = new Dictionary<int, Card>();
+        //Inizializzo il cards, prendendo le carte dal maindeck e dal side deck
+        foreach(KeyValuePair<int, Card> card in mainDeck.Cards){
+            cards.Add(card.Key, card.Value);
+        }
+        foreach(KeyValuePair<int, Card> card in sideDeck.Cards){
+            cards.Add(mainDeck.Capacity + card.Key, card.Value);
+        }
+        //inizializzo il mazzo temporaneo
+        tempCards = new Card[capacity];
+        //inizializzo HandsCard
+        handsCard = new HandsCard();
+    }
     public void CreateTempDeck(){ //crea il mazzo temporaneo copiandolo dalla definizione per poi ordinarlo casualmente
         int i = 0;
         foreach(KeyValuePair<int, Card> card in cards){
-            tempCards[i] = (card.Value);
+            tempCards[i] = card.Value;
             i++;
         }
         Sort();
@@ -84,9 +84,19 @@ public partial class BattleDeck : Node
             Draw();
         }
     }
+    public void _on_PrepareBattleDeck_Player(){ //prepare le risorse maindeck e sidedeck del player tramite json e poi inizializza il battle deck
+        GetNode<Global_Deck>("/root/GlobalDeck").InitiazlizePlayerDeckFromJson(); //funzione definita nel global_deck
+        //non inizializzo ancora il sidedeck, perchè dovrebbe essere un mazzo temporaneo
+        InitBattleDeck();
+    }
 
+    public void _on_PrepareBattleDeck_Enemy(){ //prepara il battle deck del nemico
+        mainDeck.InitForEnemy();
+        sideDeck.InitForEnemy();
+        InitBattleDeck();
+    }
     //FUNZIONI ESTENSIVE
-    public void Shuffle(Random rng, Card[] array){
+    public void Shuffle(Random rng, Card[] array){ //funzione per mischiare le carte
         int n = array.Length;
         while (n > 1) 
         {
@@ -101,5 +111,13 @@ public partial class BattleDeck : Node
     public HandsCard HandsCard{
         get{return handsCard;}
         set{handsCard = value;}
+    }
+    public Deck Maindeck{
+        get{return mainDeck;}
+        set{mainDeck = value;}
+    }
+    public Deck SideDeck{
+        get{return sideDeck;}
+        set{sideDeck = value;}
     }
 }

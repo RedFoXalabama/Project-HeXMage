@@ -13,3 +13,5 @@ script = ExtResource("2_d2pdh")
 [node name="BattleDeck" parent="." index="2"]
 mainDeck = ExtResource("5_r3uv2")
 sideDeck = ExtResource("6_ybeuk")
+
+[connection signal="PrepareBattleDeckSignal" from="." to="BattleDeck" method="_on_PrepareBattleDeck_Player"]
