@@ -8,13 +8,33 @@ public partial class Card : TextureRect
 	[Export] int cardId; //id della carta
 	[Export] int mana_value;
 	[Export] private string card_name;
+
+	//ATTRIBUTI
 	private int card_deck_position; //posizione della carta nel deck
 	private int card_hand_position; //posizione della carta nella mano
+
 	//NODI
-	//private Label descrizione;
-	
-	//GETTER-SETTER
-	public string CardName{
+	private AnimationPlayer animationPlayer; //starta con stan-by da godot
+
+	//READY
+	public override void _Ready(){
+		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+	}
+	//FUNZIONI
+	public void Animate(string animationName){
+		animationPlayer.Play(animationName);
+	}
+
+	//SEGNALI
+	public void _on_area_2d_mouse_entered(){
+		Animate("Glow");
+	}
+	public void _on_area_2d_mouse_exited(){
+		Animate("Stand-by");
+	}
+
+    //GETTER-SETTER
+    public string CardName{
 		get{return card_name;}
 		set{card_name = value;}
 	}

@@ -1,9 +1,114 @@
-[gd_scene load_steps=3 format=3 uid="uid://b6cae6ieantv4"]
+[gd_scene load_steps=10 format=3 uid="uid://b6cae6ieantv4"]
 
+[ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="1_5vgbr"]
 [ext_resource type="Script" path="res://Deck/Card/Card.cs" id="1_uievq"]
 [ext_resource type="Texture2D" uid="uid://s0n4a4o1mg5r" path="res://Assets/Cards/prototype.png" id="2_vxyjd"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vhesa"]
+resource_local_to_scene = true
+shader = ExtResource("1_5vgbr")
+shader_parameter/max_line_width = 30.0
+shader_parameter/min_line_width = 1.0
+shader_parameter/freq = 4.0
+shader_parameter/block_size = 5.0
+shader_parameter/starting_colour = Vector4(0, 0.5, 0.6, 1)
+shader_parameter/ending_colour = Vector4(0.5, 0.7, 0.8, 0.9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ashxh"]
+size = Vector2(139.5, 197)
+
+[sub_resource type="Animation" id="Animation_tpfxr"]
+resource_name = "Glow"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/freq")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/block_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [5.0]
+}
+
+[sub_resource type="Animation" id="Animation_85qvx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/freq")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/block_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [5.0]
+}
+
+[sub_resource type="Animation" id="Animation_mymu3"]
+resource_name = "Stand-by"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/freq")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/block_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oabox"]
+_data = {
+"Glow": SubResource("Animation_tpfxr"),
+"RESET": SubResource("Animation_85qvx"),
+"Stand-by": SubResource("Animation_mymu3")
+}
+
 [node name="Card" type="TextureRect"]
+material = SubResource("ShaderMaterial_vhesa")
 offset_right = 150.0
 offset_bottom = 200.0
 size_flags_horizontal = 3
@@ -11,3 +116,18 @@ texture = ExtResource("2_vxyjd")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("1_uievq")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(75.25, 98.5)
+shape = SubResource("RectangleShape2D_ashxh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Stand-by"
+libraries = {
+"": SubResource("AnimationLibrary_oabox")
+}
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
