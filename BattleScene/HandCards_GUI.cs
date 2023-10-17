@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class HandsCard_GUI : CanvasLayer
+public partial class HandCards_GUI : CanvasLayer
 {
 	//NODI
 	HBoxContainer hBoxContainer; //contenitore di carte che si hanno in mano

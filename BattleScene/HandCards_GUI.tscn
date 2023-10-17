@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://db87r6f4sp7hw"]
 
-[ext_resource type="Script" path="res://BattleScene/HandsCard_GUI.cs" id="1_knr8o"]
+[ext_resource type="Script" path="res://BattleScene/HandCards_GUI.cs" id="1_r8m6g"]
 
-[node name="CanvasLayer" type="CanvasLayer"]
-script = ExtResource("1_knr8o")
+[node name="HandCards_GUI" type="CanvasLayer"]
+script = ExtResource("1_r8m6g")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchors_preset = 7

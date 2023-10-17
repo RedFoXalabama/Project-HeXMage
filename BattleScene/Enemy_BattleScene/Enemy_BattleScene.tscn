@@ -7,3 +7,5 @@
 [node name="Sprite2D" instance=ExtResource("1_ck7vy")]
 texture = ExtResource("2_52fv2")
 script = ExtResource("2_mljsy")
+
+[connection signal="PrepareBattleDeckSignal" from="." to="BattleDeck" method="_on_PrepareBattleDeck_Enemy"]

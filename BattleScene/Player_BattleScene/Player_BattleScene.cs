@@ -5,7 +5,7 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
 {
     //SIGNALS
     [Signal] public delegate void CardsOnGUIEventHandler(HandsCard handsCard); //Segnale per aggiornare la GUI delle carte in mano
-    //Collegato Player -> Godot
+    //Collegato Player -> Godot -> HandsCard_Gui
 
     //INTERFACE
     public void _on_BattleStart_Signal(){ //funzione del segnale BattleStart, emesso da BattleScene (collegato Godot)

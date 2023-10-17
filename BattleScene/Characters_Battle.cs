@@ -5,7 +5,7 @@ using System;
 {
 	//SIGNAL
 	[Signal] public delegate void PrepareBattleDeckSignalEventHandler(); //Segnale per preparare i deck(risorse) dei characters e poi il BattleDeck, prima dell'inizio della battaglia
-	//Collegato con Godot -> Player, Godot -> Enemy
+	//Collegato con Player -> Godot -> BattleDeck, Enemy -> Godot -> BattleDeck
 	//Export
 	[Export] private int life;
 	[Export] private int mana;
