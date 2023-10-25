@@ -32,6 +32,13 @@ public partial class BattleDeck : Node
         Draw();
         //FINE TESTING */
     }
+    /*TESTING
+    public override void _Process(double delta){
+        if(Input.IsActionJustPressed("ui_select")){
+            Draw();
+        }
+    }
+    //FINE TESTING */
 
     //FUNZIONI
     public void InitBattleDeck(){ //funzione per creare il mazzo (stampino) e il mazzo temp, inizializza anche HandsCard
@@ -68,6 +75,9 @@ public partial class BattleDeck : Node
         for(int i = 0; i < tempCards.Length; i++){
             if(tempCards[i] != null){
                 handsCard.AddCard(tempCards[i]);
+                /*IN TEST
+                tempCards[i].Animate("Draw");
+                FINE IN TEST */
                 tempCards[i] = null;
                 return; //appena inserita una carta esce dal ciclo e dalla funzione
             }

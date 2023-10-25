@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://db87r6f4sp7hw"]
+[gd_scene load_steps=3 format=3 uid="uid://db87r6f4sp7hw"]
 
 [ext_resource type="Script" path="res://BattleScene/HandCards_GUI.cs" id="1_r8m6g"]
+[ext_resource type="Texture2D" uid="uid://buci04lp67u2h" path="res://Assets/GUI/TurnButton/TurnButton_Normal.png" id="2_ff8fw"]
 
 [node name="HandCards_GUI" type="CanvasLayer"]
 script = ExtResource("1_r8m6g")
@@ -11,8 +12,19 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -400.0
-offset_top = -279.0
-offset_right = 400.0
+offset_left = -401.0
+offset_top = -300.0
+offset_right = 399.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[node name="TurnButton" type="TextureButton" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("2_ff8fw")

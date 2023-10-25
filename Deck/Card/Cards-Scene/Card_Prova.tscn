@@ -15,4 +15,5 @@ shader_parameter/ending_colour = Vector4(0.5, 0.7, 0.8, 0.9)
 
 [node name="Card" instance=ExtResource("1_iu5b5")]
 material = SubResource("ShaderMaterial_ib30y")
+mana_value = 2
 card_name = "Card_Prova"

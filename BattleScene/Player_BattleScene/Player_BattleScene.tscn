@@ -9,6 +9,8 @@
 [node name="Sprite2D" instance=ExtResource("1_o51tp")]
 texture = ExtResource("2_1ku12")
 script = ExtResource("2_d2pdh")
+life = 1
+max_mana = 10
 
 [node name="BattleDeck" parent="." index="2"]
 mainDeck = ExtResource("5_r3uv2")

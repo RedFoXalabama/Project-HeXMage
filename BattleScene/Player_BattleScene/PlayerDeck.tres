@@ -6,4 +6,4 @@
 [resource]
 script = ExtResource("1_sdmx0")
 capacity = 10
-exportedCards = [ExtResource("1_dab7b"), ExtResource("1_dab7b"), ExtResource("1_dab7b"), null, null, null, null, null, null, null]
+exportedCards = [ExtResource("1_dab7b"), ExtResource("1_dab7b"), ExtResource("1_dab7b"), ExtResource("1_dab7b"), ExtResource("1_dab7b"), ExtResource("1_dab7b"), null, null, null]
