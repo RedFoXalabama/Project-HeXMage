@@ -1,11 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://ds3f7hiwnc4lq"]
+[gd_scene load_steps=5 format=3 uid="uid://ds3f7hiwnc4lq"]
 
 [ext_resource type="PackedScene" uid="uid://duxo4ahm8ldhq" path="res://BattleScene/Characters_Battle.tscn" id="1_ck7vy"]
 [ext_resource type="Texture2D" uid="uid://drls3p3jaykh5" path="res://icon.svg" id="2_52fv2"]
 [ext_resource type="Script" path="res://BattleScene/Enemy_BattleScene/Enemy_BattleScene.cs" id="2_mljsy"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wcd4e"]
+size = Vector2(130, 130)
+
 [node name="Sprite2D" instance=ExtResource("1_ck7vy")]
 texture = ExtResource("2_52fv2")
 script = ExtResource("2_mljsy")
 
+[node name="Area2D" type="Area2D" parent="." index="3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("RectangleShape2D_wcd4e")
+
 [connection signal="PrepareBattleDeckSignal" from="." to="BattleDeck" method="_on_PrepareBattleDeck_Enemy"]
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

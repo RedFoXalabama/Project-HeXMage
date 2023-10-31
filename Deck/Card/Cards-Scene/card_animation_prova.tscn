@@ -1,5 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bopwo5acoyrvp"]
+[gd_scene load_steps=3 format=3 uid="uid://bopwo5acoyrvp"]
 
 [ext_resource type="PackedScene" uid="uid://0vd1u2wbhjek" path="res://Deck/Card/CardAnimation.tscn" id="1_bhgxw"]
+[ext_resource type="Texture2D" uid="uid://cnjjs6ggrol1u" path="res://Assets/Cards/Card Effect/Explosion2_30fps_30x30_16x16.png" id="2_pgaqi"]
 
 [node name="CardAnimation" instance=ExtResource("1_bhgxw")]
+scale = Vector2(20, 20)
+texture = ExtResource("2_pgaqi")
+hframes = 6
+vframes = 5

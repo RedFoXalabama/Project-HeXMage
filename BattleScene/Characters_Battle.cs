@@ -100,8 +100,7 @@ using System;
 	#endregion
 }
 interface DeckUse {
-	void UseCard(Card card);
-	//void SelectCard(); serve una definizione diversa degli argomenti per il player e il nemico
+	void UseCard();
 	void SelectTarget();
 	void _on_BattleStart_Signal();
 	void _on_battle_scene_is_turn_signal();

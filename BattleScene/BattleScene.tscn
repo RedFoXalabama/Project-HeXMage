@@ -22,19 +22,23 @@ position = Vector2(160, 300)
 [node name="Player" parent="PlayerPosition" instance=ExtResource("1_phflj")]
 
 [node name="EnemyPosition1" type="Marker2D" parent="."]
-position = Vector2(900, 200)
+position = Vector2(900, 100)
 
 [node name="EnemyPosition2" type="Marker2D" parent="."]
-position = Vector2(900, 300)
+position = Vector2(1000, 200)
 
 [node name="EnemyPosition3" type="Marker2D" parent="."]
-position = Vector2(900, 400)
+position = Vector2(900, 300)
 
 [connection signal="AbleCardsCollision" from="." to="HandCards_GUI" method="_on_Able_Cards_Collision"]
 [connection signal="BattleStart" from="." to="PlayerPosition/Player" method="_on_BattleStart_Signal"]
 [connection signal="IsTurnSignal" from="." to="PlayerPosition/Player" method="_on_battle_scene_is_turn_signal"]
+[connection signal="PassEnemysToSelected" from="." to="PlayerPosition/Player" method="_on_battle_scene_pass_enemys_to_selected"]
 [connection signal="ConnectInputToCards" from="HandCards_GUI" to="PlayerPosition/Player" method="_on_hand_cards_gui_connect_input_to_cards"]
 [connection signal="pressed" from="HandCards_GUI/TurnButton" to="." method="_on_turn_button_pressed"]
+[connection signal="AbleCardsCollision" from="PlayerPosition/Player" to="HandCards_GUI" method="_on_Able_Cards_Collision"]
+[connection signal="AnimateCardOnEnemy" from="PlayerPosition/Player" to="." method="_on_player_animate_card_on_enemy"]
 [connection signal="CardsOnGUI" from="PlayerPosition/Player" to="HandCards_GUI" method="_on_player_cards_on_gui"]
+[connection signal="PartialAbleCardsCollision" from="PlayerPosition/Player" to="HandCards_GUI" method="_on_Partial_Able_Cards_Collision"]
 
 [editable path="HandCards_GUI"]

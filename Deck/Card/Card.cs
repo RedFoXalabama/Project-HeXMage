@@ -3,6 +3,10 @@ using System;
 
 public partial class Card : TextureRect
 {
+	#region SIGNAL ———————————————————————————————————————————————————————————————————————————
+	[Signal] public delegate void CardExpiredEventHandler(); //Segnale per dire che la carta è sparita
+	#endregion
+
 	#region ATTRIBUTI ———————————————————————————————————————————————————————————————————————————
 	[Export] int cardId; //id della carta
 	[Export] int mana_value;
@@ -12,6 +16,7 @@ public partial class Card : TextureRect
 	private int card_hand_position; //posizione della carta nella mano
 	private Boolean is_focused; //se la carta è focussata
 	private Boolean is_input_connected; //se la carta è connessa al segnale
+	[Export] private Boolean hasEnemy; //se la carta ha nemici da selezionare
 	#endregion
 
 	#region NODI ———————————————————————————————————————————————————————————————————————————
@@ -32,10 +37,11 @@ public partial class Card : TextureRect
 		animationPlayer.Play(animationName);
 	}
 	public void Expire(){ //da chiamare quando la carta viene usata
+		EmitSignal("CardExpired");
 		QueueFree();
 	}
 
-	public void ReSizeCollsion(Vector2 size, Vector2 pos){
+	public void ReSizeCollsion(Vector2 size, Vector2 pos){ //reimposta la collisione della carta
 		collisionShape2D.Shape.SetDeferred("size", size);
 		collisionShape2D.SetDeferred("position", pos);
 	}
@@ -89,6 +95,14 @@ public partial class Card : TextureRect
 	public AnimationPlayer AnimationPlayer_card{
 		get{return animationPlayer;}
 		set{animationPlayer = value;}
+	}
+	public PackedScene CardAnimation_card{
+		get{return cardAnimation;}
+		set{cardAnimation = value;}
+	}
+	public Boolean HasEnemy{
+		get{return hasEnemy;}
+		set{hasEnemy = value;}
 	}
 	#endregion
 }

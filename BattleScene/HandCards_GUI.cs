@@ -7,7 +7,7 @@ public partial class HandCards_GUI : CanvasLayer
 {
 	#region SIGNAL ———————————————————————————————————————————————————————————————————————————
 	[Signal] public delegate void ConnectInputToCardsEventHandler(HandCards_GUI handCards_GUI); //Segnale per collegare l'input alle carte in mano
-	//Connesso al player tramite godot
+	//Connesso al HandCards_GUI -> Godot -> Player
 	#endregion
 
 	#region NODI ———————————————————————————————————————————————————————————————————————————
@@ -22,7 +22,6 @@ public partial class HandCards_GUI : CanvasLayer
 	//TESTING (da sostituire con un segnale emesso quando una carta viene scartata)
 	public override void _Process(double delta){
 		ReSizeCardCollsion();
-		//DisableCardsCollision();
 	}
 	//TESTING
 	#endregion
@@ -41,7 +40,8 @@ public partial class HandCards_GUI : CanvasLayer
 			card.ReSizeCollsion(size, pos);
 		}
 	}
-	public Card GetFocusedCard(){
+
+	public Card GetFocusedCard(){ //funzione che prende la carta che è in focus (quella puntata dal mouse)
 		foreach(Card card in hBoxContainer.GetChildren()){
 			if (card.IsFocused){
 				return card;
@@ -64,31 +64,32 @@ public partial class HandCards_GUI : CanvasLayer
 			if (card == null){
 				continue; // se è nullo salta alla prossima iterazione
 			}
-			var c = ResourceLoader.Load("res://Deck/Card/Cards-Scene/"+card.CardName + ".tscn") as PackedScene;
-			hBoxContainer.AddChild(c.Instantiate());
-			var temp = card.CardHandPosition;
-			hBoxContainer.GetChild<Card>(i).CardHandPosition = temp;
-			hBoxContainer.GetChild<Card>(i).CardDeckPosition = card.CardDeckPosition;
+			var c = ResourceLoader.Load("res://Deck/Card/Cards-Scene/"+ card.CardName + ".tscn") as PackedScene; //prendiamo il packedscne attraverso il nome della carta
+			hBoxContainer.AddChild(c.Instantiate()); //istanziamo la carta
+			hBoxContainer.GetChild<Card>(i).CardHandPosition = card.CardHandPosition; //diamo posizione della mano alla carta
+			hBoxContainer.GetChild<Card>(i).CardDeckPosition = card.CardDeckPosition; //diamo posizione del deck alla carta
 			i++;
 		}
-		ReSizeCardCollsion();
-		EmitSignal("ConnectInputToCards", this);
+		ReSizeCardCollsion(); //ridimensioniamo le collisioni delle carte
+		EmitSignal("ConnectInputToCards", this); //connettiamo le carte all'input
 	}
 
 	public void _on_Able_Cards_Collision(Boolean value){ //disabilita le collisioni delle carte per non poterle selezionare
-        switch (value){
-			case true:
-				foreach(Card card in hBoxContainer.GetChildren()){
-					card.GetNode<Area2D>("Area2D").Show();
-				}
-				break;
-			case false:
-				foreach(Card card in hBoxContainer.GetChildren()){
-					card.GetNode<Area2D>("Area2D").Hide();
-				}
-				break;
+		foreach(Card card in hBoxContainer.GetChildren()){
+			card.GetNode<CollisionShape2D>("Area2D/CollisionShape2D").SetDeferred("disabled", !(value));
 		}
     }
+
+	public void _on_Partial_Able_Cards_Collision(Card card){ //disabilita le collisioni di tutte le carte tranne quella passata
+		//serve quando viene selezionata una carta
+		foreach(Card c in hBoxContainer.GetChildren()){
+			if (c == card){
+				c.GetNode<CollisionShape2D>("Area2D/CollisionShape2D").SetDeferred("disabled", false);
+			}else{
+				c.GetNode<CollisionShape2D>("Area2D/CollisionShape2D").SetDeferred("disabled", true);
+			}
+		}
+	}
 	#endregion
 
 	#region GETTER/SETTER ———————————————————————————————————————————————————————————————————————————
