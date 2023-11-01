@@ -30,15 +30,12 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
         if (Input.IsActionJustPressed("ui_select")){ //se premo il tasto sinistro della carta la seleziono
             //eseguiamo la mossa della carta
             selectedCard = handCards_GUI.GetFocusedCard();
-            /*PER TESTING*/ GD.Print(selectedCard.CardName);
             //disabilitiamo le collisioni delle altre carte
             EmitSignal("PartialAbleCardsCollision", selectedCard);
             //disconettiamo il segnale del mouse uscito per far si che l'animazione Glow sia permanente
             if (selectedCard.GetNode<Area2D>("Area2D").IsConnected("mouse_exited", new Callable (selectedCard, "_on_area_2d_mouse_exited")) == true){
                 selectedCard.GetNode<Area2D>("Area2D").Disconnect("mouse_exited", new Callable (selectedCard, "_on_area_2d_mouse_exited"));
             }
-            /*PER TESTING*/ GD.Print(selectedCard.CardName);
-            /*PER TESTING*/ GD.Print(selectedCard.CardHandPosition);
             //eseguiamo la carta sel il mana è abbastanza
             if (Mana >= selectedCard.ManaValue){
                 if (selectedCard.HasEnemy){ //Se la carta ha nemici da selezionare passiamo dalla selezione del nemico
@@ -61,7 +58,6 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
             }
             //annulliamo la carta selezionata
             selectedCard = null;
-            /*PER TESTING*/ GD.Print("Carta deselezionata");
             //non serve più poter selezionare i nemici
             foreach(Enemy_BattleScene enemy in enemys){
                 enemy.ToBeUnselected();

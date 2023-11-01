@@ -16,29 +16,7 @@ public partial class BattleDeck : Node
 
     //READY
     public override void _Ready(){
-        /* //PER TESTING
-            Card testcard1 = (Card)exportedCards.Instantiate();
-            testcard1.CardId = 1;
-            Card testcard2 = (Card)exportedCards.Instantiate();
-            testcard2.CardId = 2;
-            Card testcard3 = (Card)exportedCards.Instantiate();
-            testcard3.CardId = 3;
-            mainDeck.AddCard(testcard1);
-            mainDeck.AddCard(testcard2);
-            mainDeck.AddCard(testcard3);
-        //FINE TESTING */
-        /* //TESTING 
-        CreateTempDeck();
-        Draw();
-        //FINE TESTING */
     }
-    /*TESTING
-    public override void _Process(double delta){
-        if(Input.IsActionJustPressed("ui_select")){
-            Draw();
-        }
-    }
-    //FINE TESTING */
 
     //FUNZIONI
     public void InitBattleDeck(){ //funzione per creare il mazzo (stampino) e il mazzo temp, inizializza anche HandsCard
@@ -75,9 +53,6 @@ public partial class BattleDeck : Node
         for(int i = 0; i < tempCards.Length; i++){
             if(tempCards[i] != null){
                 handsCard.AddCard(tempCards[i]);
-                /*IN TEST
-                tempCards[i].Animate("Draw");
-                FINE IN TEST */
                 tempCards[i] = null;
                 return; //appena inserita una carta esce dal ciclo e dalla funzione
             }

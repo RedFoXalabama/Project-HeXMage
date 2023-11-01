@@ -18,18 +18,13 @@ public partial class HandCards_GUI : CanvasLayer
 	public override void _Ready(){
 		hBoxContainer = GetNode<HBoxContainer>("HBoxContainer");
 	}
-
-	//TESTING (da sostituire con un segnale emesso quando una carta viene scartata)
-	public override void _Process(double delta){
-		ReSizeCardCollsion();
-	}
-	//TESTING
 	#endregion
 
 	#region FUNZIONI ———————————————————————————————————————————————————————————————————————————
-	public void ReSizeCardCollsion(){ //funzione da chiamare ogni qual volta si aggiornano le carti presenti in mano
+	public void ReSizeCardCollsion(int num_card){ //funzione da chiamare ogni qual volta si aggiornano le carti presenti in mano
 		var size = new Vector2(
-			x: hBoxContainer.Size.X / hBoxContainer.GetChildCount(),
+			//x: hBoxContainer.Size.X / hBoxContainer.GetChildCount(), //versione precedente
+			x: hBoxContainer.Size.X / num_card,
 			y: hBoxContainer.Size.Y
 		);
 		var pos = new Vector2(
@@ -70,7 +65,7 @@ public partial class HandCards_GUI : CanvasLayer
 			hBoxContainer.GetChild<Card>(i).CardDeckPosition = card.CardDeckPosition; //diamo posizione del deck alla carta
 			i++;
 		}
-		ReSizeCardCollsion(); //ridimensioniamo le collisioni delle carte
+		ReSizeCardCollsion(i); //ridimensioniamo le collisioni delle carte
 		EmitSignal("ConnectInputToCards", this); //connettiamo le carte all'input
 	}
 
