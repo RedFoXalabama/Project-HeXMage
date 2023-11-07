@@ -89,22 +89,35 @@ public partial class BattleScene : Node2D
 				player.IsTurn = true; //abilita il turno del player a fare la mossa
 				turnButton.Disabled = false; //abilita il bottone per terminare il turno
 				turnQueue.Enqueue(char_turn); //rimetto il player in coda
+				if (player.CheckElementalStatus()){  //controlla se il player è in uno stato elementale e nel caso salta il turno
+					GD.Print("Iced"); //TO-DO EFFETTO GRAFICO ICED
+					turnButton.EmitSignal("pressed"); //funziona solo con pressed e non Pressed
+				};
 				EmitSignal("IsTurnSignal"); //segnale per far fare la mossa al player
 				EmitSignal("PassEnemysToSelected", enemys); //passa i nemici selezionati
 				break;
 			case "EnemyPosition1":
 				char_turn.GetChild<Enemy_BattleScene>(0).IsTurn = true; //abilita il turno del nemico a fare la mossa
 				turnQueue.Enqueue(char_turn); //rimetto il nemico in coda
+				if (char_turn.GetChild<Enemy_BattleScene>(0).CheckElementalStatus()){  //controlla se il player è in uno stato elementale e nel caso salta il turno
+					char_turn.GetChild<Enemy_BattleScene>(0).EndTurn();
+				};
 				EmitSignal("IsTurnSignal"); //segnale per far fare la mossa al nemico
 				break;
 			case "EnemyPosition2":
 				char_turn.GetChild<Enemy_BattleScene>(0).IsTurn = true; //abilita il turno del nemico a fare la mossa
 				turnQueue.Enqueue(char_turn); //rimetto il nemico in coda
+				if (char_turn.GetChild<Enemy_BattleScene>(0).CheckElementalStatus()){  //controlla se il player è in uno stato elementale e nel caso salta il turno
+					char_turn.GetChild<Enemy_BattleScene>(0).EndTurn();
+				};
 				EmitSignal("IsTurnSignal"); //segnale per far fare la mossa al nemico
 				break;
 			case "EnemyPosition3":
 				char_turn.GetChild<Enemy_BattleScene>(0).IsTurn = true; //abilita il turno del nemico a fare la mossa
 				turnQueue.Enqueue(char_turn); //rimetto il nemico in coda
+				if (char_turn.GetChild<Enemy_BattleScene>(0).CheckElementalStatus()){  //controlla se il player è in uno stato elementale e nel caso salta il turno
+					char_turn.GetChild<Enemy_BattleScene>(0).EndTurn();
+				};
 				EmitSignal("IsTurnSignal"); //segnale per far fare la mossa al nemico
 				break;
 		}
@@ -171,6 +184,11 @@ public partial class BattleScene : Node2D
 		enemy_BattleScene.GetParent<Marker2D>().GetChild<CardAnimation>(1).Connect("AbleCardsCollision", new Callable(handCards_GUI, "_on_Able_Cards_Collision"));
 		//avvio l'animazione
 		enemy_BattleScene.GetParent<Marker2D>().GetChild<CardAnimation>(1).PlayAnimation();
+	}
+	public void _on_player_animate_card_on_player(Card card){
+		playerPosition.AddChild(card.CardAnimation.Instantiate());
+		playerPosition.GetChild<CardAnimation>(1).Connect("AbleCardsCollision", new Callable(handCards_GUI, "_on_Able_Cards_Collision"));
+		playerPosition.GetChild<CardAnimation>(1).PlayAnimation();
 	}
 	#endregion
 }

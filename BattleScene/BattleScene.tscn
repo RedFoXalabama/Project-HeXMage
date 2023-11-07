@@ -38,6 +38,7 @@ position = Vector2(900, 300)
 [connection signal="pressed" from="HandCards_GUI/TurnButton" to="." method="_on_turn_button_pressed"]
 [connection signal="AbleCardsCollision" from="PlayerPosition/Player" to="HandCards_GUI" method="_on_Able_Cards_Collision"]
 [connection signal="AnimateCardOnEnemy" from="PlayerPosition/Player" to="." method="_on_player_animate_card_on_enemy"]
+[connection signal="AnimateCardOnPlayer" from="PlayerPosition/Player" to="." method="_on_player_animate_card_on_player"]
 [connection signal="CardsOnGUI" from="PlayerPosition/Player" to="HandCards_GUI" method="_on_player_cards_on_gui"]
 [connection signal="PartialAbleCardsCollision" from="PlayerPosition/Player" to="HandCards_GUI" method="_on_Partial_Able_Cards_Collision"]
 

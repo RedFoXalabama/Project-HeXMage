@@ -56,8 +56,10 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 
 	public void _on_battle_scene_is_turn_signal(){ //funzione del segnale IsTurnSignal per eseguire la mossa quando è il turno del nemico
         if (IsTurn){
-           //funzione che gestisce la mossa
+		    ResetMana(); //resettiamo il mana
+            DrawCard(); //peschiamo una carta
 
+			//funzione che gestisce la mossa
 			//INZIO TEST
 			Animate("Attack");
 			//FINE TEST

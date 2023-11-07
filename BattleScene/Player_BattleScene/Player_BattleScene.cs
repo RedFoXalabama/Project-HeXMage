@@ -7,6 +7,8 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
     [Signal] public delegate void CardsOnGUIEventHandler(HandsCard handsCard); //Segnale per aggiornare la GUI delle carte in mano
     [Signal] public delegate void AnimateCardOnEnemyEventHandler(Card card, Enemy_BattleScene enemy_BattleScene); //Segnale per animare la carta su un nemico
     //Collegato Player -> Godot -> BattleScne
+    [Signal] public delegate void AnimateCardOnPlayerEventHandler(Card card); //Segnale per animare la carta sul player
+    //Collegato Player -> Godot -> BattleScne
     [Signal] public delegate void AbleCardsCollisionEventHandler(Boolean value); //Segnale per disabilitare le collisioni delle carte
     //Collegato Player -> Godot -> HandsCard_Gui
     [Signal] public delegate void PartialAbleCardsCollisionEventHandler(Card card); //Segnale per disabilitare le collisioni di tutte le carte tranne una
@@ -38,7 +40,7 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
             }
             //eseguiamo la carta sel il mana è abbastanza
             if (Mana >= selectedCard.ManaValue){
-                if (selectedCard.HasEnemy){ //Se la carta ha nemici da selezionare passiamo dalla selezione del nemico
+                if (selectedCard.CardTarget == 2 /*Enemy = 2*/){ //Se la carta ha nemici da selezionare passiamo dalla selezione del nemico
                     SelectTarget();
                     //UseCard eseguito alla fine del segnale di selezione del nemico
                 }else{ //se la carta non ha nemici viene eseguita immediatamente
@@ -70,14 +72,16 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
     public void UseCard(){ //funzione chiamata per usare la carta
         UseMana(selectedCard.ManaValue); //usiamo il mana
         /*PER TESTING*/ GD.Print("Mana: " + Mana);
-        
-            //MOSSA DA ESEGUIRE
-
         //animiamo la carta passando carta e nemico selezionati se la carta ha nemici
-        if (selectedCard.HasEnemy){
+        if (selectedCard.CardTarget == 2 /*Enemy = 2*/){ //ANIMAZIONE CARTE SUI NEMICI
+            //Eseguiamo la carta sul nemico selezionato
+            selectedCard.ExecuteCard(selectedEnemy);
             EmitSignal("AnimateCardOnEnemy", selectedCard, selectedEnemy);
-        } else { //altrimenti animiamo la carta senza nemici
-            //ANIMAZIONE CARTE SENZA NEMICI
+        } else { //ANIMAZIONE CARTE SENZA NEMICI
+            //altrimenti animiamo la carta senza nemici
+            selectedCard.ExecuteCard(this);
+            EmitSignal("AnimateCardOnPlayer", selectedCard);
+            
         }
         //Rimuoviamo la carta
         BattleDeck.HandsCard.RemoveCard(selectedCard);
