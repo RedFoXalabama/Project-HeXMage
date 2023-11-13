@@ -21,3 +21,4 @@ cardAnimation = ExtResource("3_8g824")
 cardLevel = 1
 specValue = 2
 mana_value = 2
+CardTarget = 2

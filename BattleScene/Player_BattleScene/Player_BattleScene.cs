@@ -20,6 +20,7 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
     private Enemy_BattleScene[] enemys; //array di nemici
     private Enemy_BattleScene selectedEnemy; //nemico selezionato
     private Card selectedCard; //carta selezionata
+    private CardAnimation cardAnimation_toawait; //animazione della carta da aspettare
     #endregion
 
     #region INTERFACE ———————————————————————————————————————————————————————————————————————————
@@ -70,10 +71,11 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
     }
 
     public void UseCard(){ //funzione chiamata per usare la carta
+        Is_attacking = true; //il player sta attaccando
         UseMana(selectedCard.ManaValue); //usiamo il mana
         /*PER TESTING*/ GD.Print("Mana: " + Mana);
         //animiamo la carta passando carta e nemico selezionati se la carta ha nemici
-        if (selectedCard.CardTarget == 2 /*Enemy = 2*/){ //ANIMAZIONE CARTE SUI NEMICI
+        if (selectedCard.CardTarget == 2 /*Opponent = 2*/){ //ANIMAZIONE CARTE SUI NEMICI
             //Eseguiamo la carta sul nemico selezionato
             selectedCard.ExecuteCard(selectedEnemy);
             EmitSignal("AnimateCardOnEnemy", selectedCard, selectedEnemy);
@@ -88,11 +90,13 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
         AwaitCardExpired(selectedCard); //aspettiamo che prima l'animazione della carta finisca
         //riprisitinamo a null le scelte
         selectedCard = null;
-        selectedEnemy = null;
+        selectedEnemy = null;     
     }
     #region ASYNC FOR USECARD ———————————————————————————————————————————————————————————————————————————
     public async void AwaitCardExpired(Card card){
-        await ToSignal(card, "CardExpired");
+        await ToSignal(card, "CardExpired");//aspettimano che la carta scompaia dallo schermo
+        await ToSignal(cardAnimation_toawait, "PlayerCardAnimationFinished"); //aspettiamo che la carta finisca la sua animazione
+        Is_attacking = false; //il player non sta più attaccando, lo faccio qui per evitare che venga chiamato prima di finire l'animazione
         EmitSignal("CardsOnGUI", BattleDeck.HandsCard);
     }
     #endregion
@@ -131,11 +135,12 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
         }
     }
 
-    public void _on_battle_scene_pass_enemys_to_selected(Enemy_BattleScene[] enemys){ //segnale per passare i nemici al player, collegato con BattleScene -> Godot -> Player
+    public void _on_battle_scene_pass_enemys_to_select(Enemy_BattleScene[] enemys){ //segnale per passare i nemici al player, collegato con BattleScene -> Godot -> Player
         this.enemys = enemys;
     }
 
-    public void _on_Enemy_Is_Been_Selected_Signal(Enemy_BattleScene enemy_BattleScene){ //segnale per dire che il nemico è stato selezionato, collegato con Enemy_BattleScene -> Codice BattleScene -> Player
+    public void _on_Enemy_Is_Been_Selected_Signal(Enemy_BattleScene enemy_BattleScene){ //segnale per dire che il nemico è stato selezionato
+        //collegato con Enemy_BattleScene -> Codice BattleScene -> Player
         selectedEnemy = enemy_BattleScene;
         //Una volta selezionato il nemico disabilitiamo le collisioni degli altri
         foreach(Enemy_BattleScene enemy in enemys){
@@ -145,5 +150,9 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
         UseCard();
     }
 
+    public void _on_battle_scene_pass_card_animation_to_player(CardAnimation cardAnimation){ //segnale per passare l'animazione della carta al player
+        //collegato con BattleScene -> Godot -> Player
+        cardAnimation_toawait = cardAnimation;
+    }
     #endregion
 }

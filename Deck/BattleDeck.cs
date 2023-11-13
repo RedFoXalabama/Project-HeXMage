@@ -5,7 +5,7 @@ using System.Reflection;
 
 public partial class BattleDeck : Node
 {
-    //Export
+    #region ATTRIBUTI ———————————————————————————————————————————————————————————————————————————
     [Export] Deck mainDeck;
     [Export] Deck sideDeck;
     private HandsCard handsCard;
@@ -13,12 +13,9 @@ public partial class BattleDeck : Node
     private int capacity;
     private Dictionary<int, Card> cards; //definizione stampino delle carte, MainDeck + SideDeck
     private Card[] tempCards; //mazzo temporaneo, viene riempito con le carte del cards e poi mischiato. Usato per la battaglia
+    #endregion
 
-    //READY
-    public override void _Ready(){
-    }
-
-    //FUNZIONI
+    #region FUNZIONI ———————————————————————————————————————————————————————————————————————————
     public void InitBattleDeck(){ //funzione per creare il mazzo (stampino) e il mazzo temp, inizializza anche HandsCard
         //definisco la capacità del mazzo e lo inizializzo
         capacity = mainDeck.Capacity + sideDeck.Capacity;
@@ -61,8 +58,9 @@ public partial class BattleDeck : Node
         CreateTempDeck();
         Draw(); 
     }
+    #endregion
 
-    //SEGNALI
+    #region SEGNALI ———————————————————————————————————————————————————————————————————————————
     public void _on_BattleStart(){ //segnale da collegare con il segnale BattleStart del nodo Battle
         CreateTempDeck(); //Creiamo il mazzo
         for (int i = 0; i < handsCard.Capacity; i++){ //riempiamo la mano
@@ -80,7 +78,9 @@ public partial class BattleDeck : Node
         sideDeck.InitForEnemy();
         InitBattleDeck();
     }
-    //FUNZIONI ESTENSIVE
+    #endregion
+
+    #region FUNZIONI ESTENSIVE ———————————————————————————————————————————————————————————————————————————
     public void Shuffle(Random rng, Card[] array){ //funzione per mischiare le carte
         int n = array.Length;
         while (n > 1) 
@@ -91,8 +91,9 @@ public partial class BattleDeck : Node
             array[k] = temp;
         }
     }
+    #endregion
 
-    //GETTER-SETTER
+    #region GETTER-SETTER ———————————————————————————————————————————————————————————————————————————
     public HandsCard HandsCard{
         get{return handsCard;}
         set{handsCard = value;}
@@ -105,4 +106,5 @@ public partial class BattleDeck : Node
         get{return sideDeck;}
         set{sideDeck = value;}
     }
+    #endregion
 }

@@ -49,4 +49,5 @@ libraries = {
 "": SubResource("AnimationLibrary_lbnhr")
 }
 
+[connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

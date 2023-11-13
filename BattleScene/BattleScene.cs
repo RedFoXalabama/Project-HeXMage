@@ -10,9 +10,15 @@ public partial class BattleScene : Node2D
 	[Signal] public delegate void IsTurnSignalEventHandler(); //Segnale per far fare la mossa al character che ha il turno
 	//Collegato con Godot -> Player, Connect -> Enemy
 	[Signal] public delegate void AbleCardsCollisionEventHandler(Boolean value); //Segnale per disabilitare le collisioni delle carte
-	//Collegato Godot -> HandsCard_Gui
-	[Signal] public delegate void PassEnemysToSelectedEventHandler(Marker2D[] enemys); //Segnale per passare i nemici selezionabili al player
-	//Collegato Godot -> Player, facendo cosi ogni volta viene inviata un nuova versione aggiornata dell'array di nemici
+	//Collegato BattleScene -> Godot -> HandsCard_Gui
+	[Signal] public delegate void PassEnemysToSelectEventHandler(Marker2D[] enemys); //Segnale per passare i nemici selezionabili al player
+	//Collegato BattleScene -> Godot -> Player, facendo cosi ogni volta viene inviata un nuova versione aggiornata dell'array di nemici
+	[Signal] public delegate void PassPlayerToSelectEventHandler(Player_BattleScene player); //Segnale per passare il player selezionabile ai nemici
+	//Collegato BattleScene -> Code -> Enemy, facendo cosi ogni volta viene inviata un nuova versione aggiornata del player
+	[Signal] public delegate void PassCardAnimationToEnemyEventHandler(CardAnimation cardAnimation); //Segnale per passare l'animazione della carta al nemico
+	//Collegato BattleScene -> Code -> Enemy
+	[Signal] public delegate void PassCardAnimationToPlayerEventHandler(CardAnimation cardAnimation); //Segnale per passare l'animazione della carta al player
+	//Collegato BattleScene -> Godot -> Player
 	#endregion
 
 	#region PACKEDSCENE ———————————————————————————————————————————————————————————————————————————
@@ -61,13 +67,17 @@ public partial class BattleScene : Node2D
 	#region FUNZIONI PER LA CREAZIONE DELLA BATTAGLIA ———————————————————————————————————————————————————————————————————————————
 	public void CreateEnemy(PackedScene[] enemy){ //dato il paccheto di tscn di nemici, li istanzia e li mette nelle posizioni giuste
 		var enemiesPosition = new Marker2D[] {enemyPosition1, enemyPosition2, enemyPosition3};
-		for (int i = 0; i < enemy.Length; i++){ //istanzia e collega il segnale BattleStart, IsTurnSignal, IsBeenSelected, EndTurnSignal di ognuno dei nemici
+		for (int i = 0; i < enemy.Length; i++){ //istanzia e collega il segnale BattleStart, IsTurnSignal, IsBeenSelected, EndTurnSignal, AnimateCardOnPlayer, AnimateCardOnEnemy, PassCardAnimationToEnemy di ognuno dei nemici
 			enemiesPosition[i].AddChild(enemy[i].Instantiate());
 			enemys[i] = enemiesPosition[i].GetChild<Enemy_BattleScene>(0);
 			Connect("BattleStart", new Callable(enemiesPosition[i].GetChild<Enemy_BattleScene>(0), "_on_BattleStart_Signal"));
 			Connect("IsTurnSignal", new Callable(enemiesPosition[i].GetChild<Enemy_BattleScene>(0), "_on_battle_scene_is_turn_signal"));
+			Connect("PassPlayerToSelect", new Callable(enemiesPosition[i].GetChild<Enemy_BattleScene>(0), "_on_battle_scene_pass_player_to_select"));
 			enemiesPosition[i].GetChild<Enemy_BattleScene>(0).Connect("IsBeenSelectedSignal", new Callable(player, "_on_Enemy_Is_Been_Selected_Signal"));
 			enemiesPosition[i].GetChild<Enemy_BattleScene>(0).Connect("EndTurnSignal", new Callable(this, "ChangeTurn"));
+			enemiesPosition[i].GetChild<Enemy_BattleScene>(0).Connect("AnimateCardOnPlayer", new Callable(this, "_on_enemy_animate_card_on_player"));
+			enemiesPosition[i].GetChild<Enemy_BattleScene>(0).Connect("AnimateCardOnEnemy", new Callable(this, "_on_enemy_animate_card_on_enemy"));
+			Connect("PassCardAnimationToEnemy", new Callable(enemiesPosition[i].GetChild<Enemy_BattleScene>(0), "_on_enemy_pass_card_animation_to_enemy"));
 		}
 	}
 	#endregion
@@ -93,8 +103,8 @@ public partial class BattleScene : Node2D
 					GD.Print("Iced"); //TO-DO EFFETTO GRAFICO ICED
 					turnButton.EmitSignal("pressed"); //funziona solo con pressed e non Pressed
 				};
+				EmitSignal("PassEnemysToSelect", enemys); //passa i nemici selezionati
 				EmitSignal("IsTurnSignal"); //segnale per far fare la mossa al player
-				EmitSignal("PassEnemysToSelected", enemys); //passa i nemici selezionati
 				break;
 			case "EnemyPosition1":
 				char_turn.GetChild<Enemy_BattleScene>(0).IsTurn = true; //abilita il turno del nemico a fare la mossa
@@ -102,6 +112,7 @@ public partial class BattleScene : Node2D
 				if (char_turn.GetChild<Enemy_BattleScene>(0).CheckElementalStatus()){  //controlla se il player è in uno stato elementale e nel caso salta il turno
 					char_turn.GetChild<Enemy_BattleScene>(0).EndTurn();
 				};
+				EmitSignal("PassPlayerToSelect", player); //passa il player, lo faccio ad ogni cambio turno perchè bisogna aggiornare i dati del player
 				EmitSignal("IsTurnSignal"); //segnale per far fare la mossa al nemico
 				break;
 			case "EnemyPosition2":
@@ -110,6 +121,7 @@ public partial class BattleScene : Node2D
 				if (char_turn.GetChild<Enemy_BattleScene>(0).CheckElementalStatus()){  //controlla se il player è in uno stato elementale e nel caso salta il turno
 					char_turn.GetChild<Enemy_BattleScene>(0).EndTurn();
 				};
+				EmitSignal("PassPlayerToSelect", player); //passa il player, lo faccio ad ogni cambio turno perchè bisogna aggiornare i dati del player
 				EmitSignal("IsTurnSignal"); //segnale per far fare la mossa al nemico
 				break;
 			case "EnemyPosition3":
@@ -118,6 +130,7 @@ public partial class BattleScene : Node2D
 				if (char_turn.GetChild<Enemy_BattleScene>(0).CheckElementalStatus()){  //controlla se il player è in uno stato elementale e nel caso salta il turno
 					char_turn.GetChild<Enemy_BattleScene>(0).EndTurn();
 				};
+				EmitSignal("PassPlayerToSelect", player); //passa il player, lo faccio ad ogni cambio turno perchè bisogna aggiornare i dati del player
 				EmitSignal("IsTurnSignal"); //segnale per far fare la mossa al nemico
 				break;
 		}
@@ -170,7 +183,7 @@ public partial class BattleScene : Node2D
 	#region SIGNALS ———————————————————————————————————————————————————————————————————————————
 	public void _on_turn_button_pressed(){ //segnale connesso da HandsCards_GUI -> Godot -> BattleScene
 	//se il bottone per terminare il turno viene premuto, allora il turno del player finisce
-		if (player.IsTurn){
+		if (player.IsTurn && player.Is_attacking == false){
 			player.IsTurn = false;
 			turnButton.Disabled = true; //lo riattiva quando è nuovamente il turno del player
 			EmitSignal("AbleCardsCollision", false); //disabilita le collisioni delle carte
@@ -182,13 +195,36 @@ public partial class BattleScene : Node2D
 		enemy_BattleScene.GetParent<Marker2D>().AddChild(card.CardAnimation.Instantiate());
 		//connetto il segnale per abilitare le collisioni delle carte così che possa inviarlo l'animazione una volta finita
 		enemy_BattleScene.GetParent<Marker2D>().GetChild<CardAnimation>(1).Connect("AbleCardsCollision", new Callable(handCards_GUI, "_on_Able_Cards_Collision"));
+		//passo al nemico la card animation per gli await dei segnali
+		EmitSignal("PassCardAnimationToPlayer", enemy_BattleScene.GetParent<Marker2D>().GetChild<CardAnimation>(1));
 		//avvio l'animazione
-		enemy_BattleScene.GetParent<Marker2D>().GetChild<CardAnimation>(1).PlayAnimation();
+		enemy_BattleScene.GetParent<Marker2D>().GetChild<CardAnimation>(1).PlayAnimation("player");
 	}
-	public void _on_player_animate_card_on_player(Card card){
+	public void _on_player_animate_card_on_player(Card card){ //segnale collegato da Player_BattleScene -> Godot -> BattleScene
+		//serve per passare la carta, dalla carta si prende il packedscene dell'animazione e lo istanzia sul player
 		playerPosition.AddChild(card.CardAnimation.Instantiate());
+		//connetto il segnale per abilitare le collisioni delle carte così che possa inviarlo l'animazione una volta finita
 		playerPosition.GetChild<CardAnimation>(1).Connect("AbleCardsCollision", new Callable(handCards_GUI, "_on_Able_Cards_Collision"));
-		playerPosition.GetChild<CardAnimation>(1).PlayAnimation();
+		//passo al nemico la card animation per gli await dei segnali
+		EmitSignal("PassCardAnimationToPlayer", playerPosition.GetChild<CardAnimation>(1));
+		//avvio l'animazione
+		playerPosition.GetChild<CardAnimation>(1).PlayAnimation("player");
+	}
+	public void _on_enemy_animate_card_on_player(Card card){ //segnale collegato da Enemy_BattleScene -> Code BattleScene -> BattleScene
+		//serve per passare la carta, dalla carta si prende il packedscene dell'animazione e lo istanzia sul player
+		playerPosition.AddChild(card.CardAnimation.Instantiate());
+		//passo al nemico la card animation per gli await dei segnali
+		EmitSignal("PassCardAnimationToEnemy", playerPosition.GetChild<CardAnimation>(1));
+		//avvio l'animazione
+		playerPosition.GetChild<CardAnimation>(1).PlayAnimation("enemy");
+	}
+	public void _on_enemy_animate_card_on_enemy(Card card, Enemy_BattleScene enemy_BattleScene){ //segnale collegato da Enemy_BattleScene -> Code BattleScene -> BattleScene
+		//serve per passare la carta e l'enemy che la sta eseguendo, dalla carta si prende il packedscene dell'animazione e lo istanzia sull'enemy
+		enemy_BattleScene.GetParent<Marker2D>().AddChild(card.CardAnimation.Instantiate());
+		//passo al nemico la card animation per gli await dei segnali
+		EmitSignal("PassCardAnimationToEnemy", enemy_BattleScene.GetParent<Marker2D>().GetChild<CardAnimation>(1));
+		//avvio l'animazione
+		enemy_BattleScene.GetParent<Marker2D>().GetChild<CardAnimation>(1).PlayAnimation("enemy");
 	}
 	#endregion
 }

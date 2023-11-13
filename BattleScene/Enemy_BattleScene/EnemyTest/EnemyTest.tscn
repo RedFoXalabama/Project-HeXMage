@@ -5,6 +5,10 @@
 [ext_resource type="Resource" uid="uid://b2ulrhh1t3bno" path="res://BattleScene/Enemy_BattleScene/EnemyTest/EnemyTestSideDeck.tres" id="5_32bd1"]
 
 [node name="Sprite2D" instance=ExtResource("1_7i8jy")]
+reaction = 0.0
+EnemyNature = 2
+life = 100
+max_life = 100
 
 [node name="BattleDeck" parent="." index="2"]
 mainDeck = ExtResource("4_4a1kc")

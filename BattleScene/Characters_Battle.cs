@@ -14,12 +14,15 @@ using System;
 
 	#region ATTRIBUTI ———————————————————————————————————————————————————————————————————————————
 	[Export] private int life;
+	[Export] private int max_life;
 	[Export] private int mana;
 	[Export] private int max_mana;
 	[Export] private int shield;
-	BattleDeck battleDeck;
-	Boolean isTurn;
+	private BattleDeck battleDeck;
+	private Boolean isTurn;
+	private Boolean is_attacking; //controlla se il player sta attaccando
 	#endregion
+	
 	#region STATI ELEMENTALI ———————————————————————————————————————————————————————————————————————————
 	private Boolean isOnFire;
 	private Boolean isOnIce;
@@ -115,20 +118,27 @@ using System;
 		}
 		return false; // Aggiunto return false per gestire il caso in cui nessuno dei precedenti if venga soddisfatto
 	}
-
-	public void SetOnFire(Boolean value, int damage, int turns){
+	public Boolean CheckIfOnStatus(){ //serve a controllare se il character è in uno stato elementale
+		if (isOnFire || isOnIce || isOnPoison || isOnEarth){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	//funzioni per settare gli stati elementali
+	public void SetOnFire(Boolean value, int damage, int turns){ //SET FIRE
 		isOnFire = value;
 		fireDamage = new Vector2I(damage, turns);
 	}
-	public void SetOnIce(Boolean value, int turns){
+	public void SetOnIce(Boolean value, int turns){ //SET ICE
 		isOnIce = value;
 		iceTurns = turns;
 	}
-	public void SetOnPoison(Boolean value, int damage, int turns){
+	public void SetOnPoison(Boolean value, int damage, int turns){ //SET POISON
 		isOnPoison = value;
 		poisonDamage = new Vector2I(damage, turns);
 	}
-	public void SetOnEarth(Boolean value){
+	public void SetOnEarth(Boolean value){ //SET EARTH
 		isOnEarth = value;
 	}
 	#endregion
@@ -137,6 +147,10 @@ using System;
 	public int Life{
 		get{return life;}
 		set{life = value;}
+	}
+	public int Max_Life{
+		get{return max_life;}
+		set{max_life = value;}
 	}
 	public int Mana{
 		get{return mana;}
@@ -162,11 +176,13 @@ using System;
 		get{return animationPlayer_char;}
 		set{animationPlayer_char = value;}
 	}
+	public Boolean Is_attacking{
+		get{return is_attacking;}
+		set{is_attacking = value;}
+	}
 	#endregion
 }
 interface DeckUse {
-	void UseCard();
-	void SelectTarget();
 	void _on_BattleStart_Signal();
 	void _on_battle_scene_is_turn_signal();
 }

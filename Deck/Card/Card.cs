@@ -28,7 +28,7 @@ public partial class Card : TextureRect
 	//i valori a destra sono gli esponenti del 2 - 1, (2^{n-1}), le combinazioni (sembrano essere) la somma dei due valori
 	[Flags] public enum CardTargetEnum {
 		Self = 1 << 1, // 2^0=1
-   		Enemy = 1 << 2, // 2^1=2
+   		Opponent = 1 << 2, // 2^1=2
 	}
 	[Flags] public enum AttackTypeEnum {
     	AtkSoft = 1 << 1,
@@ -50,12 +50,12 @@ public partial class Card : TextureRect
 	}
 
 	[ExportGroup("EFFECT")]
-		[ExportSubgroup("Target")]
+		[ExportSubgroup("Specs")]
 			[Export] public int cardLevel;
 			[Export] public int specValue;
 			[Export] public int mana_value;
 		[ExportSubgroup("Attack Type")]
-			[Export(PropertyHint.Flags, "Self,Enemy")] public int CardTarget { get; set; } = 0;
+			[Export(PropertyHint.Flags, "Self,Opponent")] public int CardTarget { get; set; } = 0;
 			[Export(PropertyHint.Flags, "Heal,Shield")] public int StatsType { get; set; } = 0;
 			[Export(PropertyHint.Flags, "AtkSoft,AtkHard")] public int AttackType { get; set; } = 0;
 		[ExportSubgroup("Element Type")]
@@ -73,7 +73,9 @@ public partial class Card : TextureRect
 
 	#region FUNZIONI ———————————————————————————————————————————————————————————————————————————
 	public void Animate(string animationName){
-		animationPlayer.Play(animationName); //da errore se la carta che stai cercando di animare non è una scena, ma solo un oggetto
+		if (animationPlayer != null){ //serve per controllare se la carta è una scena (è una carta del player), o è solo un oggetto (carta ell'enemy)
+			animationPlayer.Play(animationName); //da errore se la carta che stai cercando di animare non è una scena, ma solo un oggetto
+		}		
 	}
 	public void Expire(){ //da chiamare quando la carta viene usata
 		EmitSignal("CardExpired");
