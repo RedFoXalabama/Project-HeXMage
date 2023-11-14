@@ -9,12 +9,14 @@
 [node name="Sprite2D" instance=ExtResource("1_o51tp")]
 texture = ExtResource("2_1ku12")
 script = ExtResource("2_d2pdh")
+<<<<<<< Updated upstream
 life = 100
 max_life = 100
 max_mana = 10
+=======
+life = 1
+>>>>>>> Stashed changes
 
 [node name="BattleDeck" parent="." index="2"]
 mainDeck = ExtResource("5_r3uv2")
 sideDeck = ExtResource("6_ybeuk")
-
-[connection signal="PrepareBattleDeckSignal" from="." to="BattleDeck" method="_on_PrepareBattleDeck_Player"]
