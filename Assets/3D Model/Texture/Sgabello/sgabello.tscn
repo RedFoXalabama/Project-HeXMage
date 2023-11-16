@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwqc0fww61jus"]
+
+[ext_resource type="PackedScene" uid="uid://4pbsvwm1f0b7" path="res://Assets/3D Model/Sgabello.dae" id="1_gxsmk"]
+[ext_resource type="Material" uid="uid://b82i4qsrp2qhd" path="res://Assets/3D Model/Texture/Sgabello/Sgabello.tres" id="2_17r13"]
+
+[node name="Sgabello" instance=ExtResource("1_gxsmk")]
+
+[node name="stool" parent="." index="0"]
+material_override = ExtResource("2_17r13")

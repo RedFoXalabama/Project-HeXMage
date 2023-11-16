@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqlfw3x8jxuer"]
+
+[ext_resource type="PackedScene" uid="uid://cx2hwd8w187tl" path="res://Assets/3D Model/Tavolo.dae" id="1_oug52"]
+[ext_resource type="Texture2D" uid="uid://d112byu2yxiy2" path="res://Assets/3D Model/Texture/Tavolo/color_map.png" id="2_fxa2s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tlgkc"]
+albedo_texture = ExtResource("2_fxa2s")
+
+[node name="Tavolo" instance=ExtResource("1_oug52")]
+
+[node name="table" parent="." index="0"]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_tlgkc")

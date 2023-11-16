@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bor21e8sqn7yv"]
+
+[ext_resource type="PackedScene" uid="uid://dp2k0uboeysrw" path="res://Assets/3D Model/Sedia.dae" id="1_x8dr2"]
+[ext_resource type="Material" uid="uid://dad7d6r74rpio" path="res://Assets/3D Model/Texture/Sedia/Sedia.tres" id="2_spv7v"]
+
+[node name="Sedia" instance=ExtResource("1_x8dr2")]
+
+[node name="chair" parent="." index="0"]
+material_override = ExtResource("2_spv7v")

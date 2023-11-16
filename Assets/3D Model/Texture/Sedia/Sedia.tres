@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dad7d6r74rpio"]
+
+[ext_resource type="Texture2D" uid="uid://dg7yoku3m7a0g" path="res://Assets/3D Model/Texture/Sedia/chairtexture.png" id="1_orudg"]
+
+[resource]
+albedo_texture = ExtResource("1_orudg")

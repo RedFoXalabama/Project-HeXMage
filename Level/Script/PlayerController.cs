@@ -74,9 +74,13 @@ public partial class PlayerController : CharacterBody3D
 
 		inputDirection = inputDirection.Normalized();
 
+		animationTree.Set("parameters/Walk/blend_position", new Vector2(0, 0));
 
 
-		if (inputDirection.X != 0 && inputDirection.Z != 0){
+		GD.Print(animationTree.Get("parameters/Walk/blend_position"));
+		animationTree.Set("parameters/Walk/blend_position", new Vector2(inputDirection.X, inputDirection.Z));
+
+		/*if (inputDirection.X != 0 && inputDirection.Z != 0){
 			animationTree.Set("parameters/IDLE/blend_position", inputDirection);
 			animationTree.Set("parameters/Walk/blend_position", inputDirection);
 			velocity = velocity.MoveToward(inputDirection * 500, (float)(700 * delta));
@@ -92,37 +96,41 @@ public partial class PlayerController : CharacterBody3D
 		}
 
 		Velocity = velocity;
-		MoveAndSlide();
+		MoveAndSlide();*/
 
-
-		/*if (Input.IsActionPressed("PlayerMoveLEFT")){
+		if (Input.IsActionPressed("PlayerMoveLEFT")){
 			inputDirection.X = -Speed;
-			animationState.Travel("Walk"); 
+			animationTree.Set("parameters/Walk/blend_position", new Vector2(1, 0));
+			//animationState.Travel("Walk"); 
 			//GetNode<AnimationPlayer>("AnimationPlayer").Play("Left");
 			}
 
 		if (Input.IsActionPressed("PlayerMoveRIGHT")){
 			inputDirection.X = Speed;
-			animationState.Travel("Walk"); 
+			
+			animationTree.Set("parameters/Walk/blend_position", new Vector2(-1, 0));
+			//animationState.Travel("Walk"); 
 			//GetNode<AnimationPlayer>("AnimationPlayer").Play("Left");
 			}
 
 		if (Input.IsActionPressed("PlayerMoveUP")){
 			inputDirection.Z = -Speed;
-			animationState.Travel("Walk"); 
+			animationTree.Set("parameters/Walk/blend_position", new Vector2(0, 1));
+			//animationState.Travel("Walk"); 
 			//GetNode<AnimationPlayer>("AnimationPlayer").Play("Up");
 			}
 
 		if (Input.IsActionPressed("PlayerMoveDOWN")){
 			inputDirection.Z = Speed;
-			animationState.Travel("Walk"); 
+			animationTree.Set("parameters/Walk/blend_position", new Vector2(0, -1));
+			//animationState.Travel("Walk"); 
 			//GetNode<AnimationPlayer>("AnimationPlayer").Play("Down");
 			}
 		
 
 
         Velocity = inputDirection;
-        MoveAndSlide();*/
+        MoveAndSlide();
 	}
 
 	#endregion

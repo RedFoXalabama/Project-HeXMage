@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b7mmrad4uy4ns"]
+
+[ext_resource type="Texture2D" uid="uid://2rmv6gxcdv0k" path="res://Assets/3D Model/Texture/Bancone/color_map.png" id="1_7svnm"]
+
+[resource]
+albedo_texture = ExtResource("1_7svnm")

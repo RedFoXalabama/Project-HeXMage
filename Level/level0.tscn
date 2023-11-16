@@ -1,28 +1,21 @@
 [gd_scene load_steps=40 format=3 uid="uid://dl3kroow2wmhd"]
 
 [ext_resource type="Texture2D" uid="uid://r46b478gqfhg" path="res://Assets/3D Model/Texture/floor/color_map.jpg" id="1_vpcv7"]
-[ext_resource type="PackedScene" uid="uid://ck1gvib4r183m" path="res://Assets/3D Model/table.dae" id="1_ygbqk"]
 [ext_resource type="Texture2D" uid="uid://wixtvechfiwf" path="res://Assets/3D Model/Texture/floor/normal_map_opengl.jpg" id="2_sejt8"]
 [ext_resource type="Texture2D" uid="uid://ii788htdtw5j" path="res://Assets/3D Model/Texture/floor/roughness_map.jpg" id="3_jfky6"]
 [ext_resource type="PackedScene" uid="uid://by7jqnbk2vp2e" path="res://Assets/3D Model/stairs.dae" id="4_p4eaf"]
-[ext_resource type="PackedScene" uid="uid://b4xhjp3wvgode" path="res://Assets/3D Model/chair.dae" id="7_8ign0"]
-[ext_resource type="PackedScene" uid="uid://d2te1k50oat72" path="res://Assets/3D Model/stool.dae" id="8_kpfmh"]
+[ext_resource type="PackedScene" uid="uid://bqlfw3x8jxuer" path="res://Assets/3D Model/Texture/Tavolo/tavolo.tscn" id="7_5wl8v"]
+[ext_resource type="PackedScene" uid="uid://bor21e8sqn7yv" path="res://Assets/3D Model/Texture/Sedia/sedia.tscn" id="7_dq0qe"]
+[ext_resource type="Script" path="res://Level/Script/Player.cs" id="8_5fbel"]
 [ext_resource type="Texture2D" uid="uid://xmbrphjv6tc3" path="res://Assets/3D Model/Texture/Character.png" id="9_dfmui"]
-[ext_resource type="Script" path="res://Level/Script/PlayerController.cs" id="10_nymjp"]
+[ext_resource type="PackedScene" uid="uid://cwqc0fww61jus" path="res://Assets/3D Model/Texture/Sgabello/sgabello.tscn" id="10_3h1i0"]
+[ext_resource type="PackedScene" uid="uid://bns5ts7ys4slv" path="res://Assets/3D Model/Texture/Bancone/bancone.tscn" id="10_5b82m"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_neblk"]
-sky_top_color = Color(0.384314, 0.454902, 0.54902, 1)
-sky_horizon_color = Color(0.646078, 0.655975, 0.670505, 1)
-ground_horizon_color = Color(0.646078, 0.655975, 0.670505, 1)
-
-[sub_resource type="Sky" id="Sky_iflec"]
-sky_material = SubResource("ProceduralSkyMaterial_neblk")
-
-[sub_resource type="Environment" id="Environment_6h1kp"]
+[sub_resource type="Environment" id="Environment_35six"]
 background_mode = 1
-background_color = Color(0.513726, 0.184314, 0.380392, 1)
-sky = SubResource("Sky_iflec")
+background_color = Color(1, 0.625, 0.25, 1)
 tonemap_mode = 2
+tonemap_white = 0.95
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bjkhp"]
 albedo_texture = ExtResource("1_vpcv7")
@@ -32,6 +25,7 @@ normal_texture = ExtResource("2_sejt8")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_vqki2"]
 material = SubResource("StandardMaterial3D_bjkhp")
+size = Vector2(1.75, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_om42x"]
 
@@ -201,75 +195,81 @@ _data = {
 "Up": SubResource("Animation_gyrd6")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vbexn"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0f456"]
 animation = &"IDLELeft"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j8jht"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mn1su"]
 animation = &"IDLEUp"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_he0jk"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_34q0t"]
 animation = &"IDLEDown"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cuis5"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mrc6k"]
 animation = &"IDLERight"
 
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_l4xrh"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_vbexn")
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_x34oa"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_0f456")
 blend_point_0/pos = Vector2(-1, 0)
-blend_point_1/node = SubResource("AnimationNodeAnimation_j8jht")
+blend_point_1/node = SubResource("AnimationNodeAnimation_mn1su")
 blend_point_1/pos = Vector2(0, 1)
-blend_point_2/node = SubResource("AnimationNodeAnimation_he0jk")
+blend_point_2/node = SubResource("AnimationNodeAnimation_34q0t")
 blend_point_2/pos = Vector2(0, -1)
-blend_point_3/node = SubResource("AnimationNodeAnimation_cuis5")
+blend_point_3/node = SubResource("AnimationNodeAnimation_mrc6k")
+blend_point_3/pos = Vector2(1, 0)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kh5tg"]
+animation = &"Left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_knreu"]
+animation = &"Up"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jlgyw"]
+animation = &"Down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pbycj"]
+animation = &"Right"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_f7nvy"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_kh5tg")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_knreu")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_jlgyw")
+blend_point_2/pos = Vector2(0, -1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_pbycj")
 blend_point_3/pos = Vector2(1, 0)
 blend_mode = 1
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c8diw"]
-animation = &"Up"
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vn743"]
+advance_mode = 2
+advance_condition = &"isWalk"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_03p3d"]
-animation = &"Down"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tm6j4"]
-animation = &"Right"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v6fis"]
-animation = &"Left"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_vuqxe"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_c8diw")
-blend_point_0/pos = Vector2(0, 1)
-blend_point_1/node = SubResource("AnimationNodeAnimation_03p3d")
-blend_point_1/pos = Vector2(0, -1)
-blend_point_2/node = SubResource("AnimationNodeAnimation_tm6j4")
-blend_point_2/pos = Vector2(1, 0)
-blend_point_3/node = SubResource("AnimationNodeAnimation_v6fis")
-blend_point_3/pos = Vector2(-1, 0)
-blend_mode = 1
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vxx42"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wk7kb"]
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3fj06"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3lpjf"]
 advance_mode = 2
+advance_condition = &"isIdle"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_gbwm7"]
-states/IDLE/node = SubResource("AnimationNodeBlendSpace2D_l4xrh")
-states/IDLE/position = Vector2(437, 73)
-states/Walk/node = SubResource("AnimationNodeBlendSpace2D_vuqxe")
-states/Walk/position = Vector2(663, 73)
-transitions = ["IDLE", "Walk", SubResource("AnimationNodeStateMachineTransition_vxx42"), "Walk", "IDLE", SubResource("AnimationNodeStateMachineTransition_3fj06")]
-graph_offset = Vector2(-80.2438, -37)
+states/Idle/node = SubResource("AnimationNodeBlendSpace2D_x34oa")
+states/Idle/position = Vector2(440.756, 100)
+states/Start/position = Vector2(256, 100)
+states/Walk/node = SubResource("AnimationNodeBlendSpace2D_f7nvy")
+states/Walk/position = Vector2(598.756, 100)
+transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_vn743"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_wk7kb"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_3lpjf")]
+graph_offset = Vector2(-12.2438, 19)
 
 [node name="Node3D" type="Node3D"]
 
 [node name="WORLD" type="Node3D" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="WORLD"]
-environment = SubResource("Environment_6h1kp")
+environment = SubResource("Environment_35six")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WORLD"]
 transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 5, 0)
+light_color = Color(1, 0.95, 0.9, 1)
 
 [node name="MAP" type="Node3D" parent="."]
 
@@ -284,25 +284,109 @@ skeleton = NodePath("../../WORLD")
 transform = Transform3D(2.022, 0, 0, 0, 1.015, 0, 0, 0, 2, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_om42x")
 
+[node name="floor2" type="MeshInstance3D" parent="MAP"]
+transform = Transform3D(-5.24537e-07, 1, 0, -12, -4.37114e-08, 0, 0, 0, 7, -10, 0, 0)
+mesh = SubResource("PlaneMesh_vqki2")
+skeleton = NodePath("../../WORLD")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MAP/floor2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MAP/floor2/StaticBody3D"]
+transform = Transform3D(2.022, 0, 0, 0, 1.015, 0, 0, 0, 2, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_om42x")
+
+[node name="floor3" type="MeshInstance3D" parent="MAP"]
+transform = Transform3D(2.29282e-14, -4.37114e-08, -11.2, -12, -4.37114e-08, 0, -5.24537e-07, 1, -4.89568e-07, 0, 0, -7)
+mesh = SubResource("PlaneMesh_vqki2")
+skeleton = NodePath("../../WORLD")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MAP/floor3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MAP/floor3/StaticBody3D"]
+transform = Transform3D(2.022, 0, 0, 0, 1.015, 0, 0, 8.88178e-16, 2, 3.79256e-17, -0.5, 0)
+shape = SubResource("BoxShape3D_om42x")
+
+[node name="floor4" type="MeshInstance3D" parent="MAP"]
+transform = Transform3D(5.24537e-07, -1, 9.79135e-07, -12, -4.37114e-08, 0, 4.58564e-14, -8.74228e-08, -11.2, 10, 0, -2)
+mesh = SubResource("PlaneMesh_vqki2")
+skeleton = NodePath("../../WORLD")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MAP/floor4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MAP/floor4/StaticBody3D"]
+transform = Transform3D(2.022, 0, 0, 0, 1.015, 0, 0, 8.88178e-16, 2, 3.79256e-17, -0.5, 0)
+shape = SubResource("BoxShape3D_om42x")
+
 [node name="FURNITURE" type="Node3D" parent="MAP"]
 
-[node name="table" parent="MAP/FURNITURE" instance=ExtResource("1_ygbqk")]
-transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, -1.158, 0.07, 0)
-
 [node name="stairs" parent="MAP/FURNITURE" instance=ExtResource("4_p4eaf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38268, 0.00100919, -1.37958)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.28959, 0.00100919, 4.11693)
 
-[node name="stool" parent="MAP/FURNITURE" instance=ExtResource("8_kpfmh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.69138, 0.00749999, 0.004035)
+[node name="Sedia" parent="MAP/FURNITURE" instance=ExtResource("7_dq0qe")]
+transform = Transform3D(0.579566, 0, 0.814926, 0, 1, 0, -0.814926, 0, 0.579566, 0.461426, 0.00749999, 2.82083)
 
-[node name="chair" parent="MAP/FURNITURE" instance=ExtResource("7_8ign0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.19785, 0.00749999, -0.194437)
+[node name="Sedia13" parent="MAP/FURNITURE" instance=ExtResource("7_dq0qe")]
+transform = Transform3D(0.579566, 0, 0.814926, 0, 1, 0, -0.814926, 0, 0.579566, -7.42623, 0.00749999, -1.83088)
+
+[node name="Sedia2" parent="MAP/FURNITURE" instance=ExtResource("7_dq0qe")]
+transform = Transform3D(0.112926, 0, -0.993603, 0, 1, 0, 0.993603, 0, 0.112926, 2.37959, 0.00749999, 3.31407)
+
+[node name="Sedia3" parent="MAP/FURNITURE" instance=ExtResource("7_dq0qe")]
+transform = Transform3D(0.112926, 0, -0.993603, 0, 1, 0, 0.993603, 0, 0.112926, 7.55077, 0.00749999, -3.69711)
+
+[node name="Sedia4" parent="MAP/FURNITURE" instance=ExtResource("7_dq0qe")]
+transform = Transform3D(-0.423978, -3.70653e-08, 0.905672, 8.74228e-08, -1, 0, 0.905672, 7.91764e-08, 0.423978, -8.7161, 1.71685, -4.76223)
+
+[node name="Sedia5" parent="MAP/FURNITURE" instance=ExtResource("7_dq0qe")]
+transform = Transform3D(0.597373, 5.2224e-08, -0.801963, 8.74228e-08, -1, 0, -0.801963, -7.01099e-08, -0.597373, -7.62408, 1.74644, -4.2429)
+
+[node name="Sedia12" parent="MAP/FURNITURE" instance=ExtResource("7_dq0qe")]
+transform = Transform3D(0.932525, 8.1524e-08, 0.361104, 8.74228e-08, -1, -2.84915e-15, 0.361104, 3.15687e-08, -0.932525, -8.46964, 1.74644, -3.94479)
+
+[node name="Sedia6" parent="MAP/FURNITURE" instance=ExtResource("7_dq0qe")]
+transform = Transform3D(-0.240567, 0, -0.970632, 0, 1, 0, 0.970632, 0, -0.240567, 4.294, 0.00749999, 0.367996)
+
+[node name="Sedia7" parent="MAP/FURNITURE" instance=ExtResource("7_dq0qe")]
+transform = Transform3D(-0.483481, 0, 0.875355, 0, 1, 0, -0.875355, 0, -0.483481, 2.49062, 0.00749999, 0.367996)
+
+[node name="Sedia8" parent="MAP/FURNITURE" instance=ExtResource("7_dq0qe")]
+transform = Transform3D(0.828676, 0, 0.559728, 0, 1, 0, -0.559728, 0, 0.828676, 2.82782, 0.00749999, -0.603328)
+
+[node name="Sedia9" parent="MAP/FURNITURE" instance=ExtResource("7_dq0qe")]
+transform = Transform3D(0.828676, 0, 0.559728, 0, 1, 0, -0.559728, 0, 0.828676, 5.47485, 0.00749999, 3.99901)
+
+[node name="Sedia10" parent="MAP/FURNITURE" instance=ExtResource("7_dq0qe")]
+transform = Transform3D(0.362405, 0, -0.932021, 0, 1, 0, 0.932021, 0, 0.362405, 7.11845, 0.00749999, 4.42439)
+
+[node name="Sedia11" parent="MAP/FURNITURE" instance=ExtResource("7_dq0qe")]
+transform = Transform3D(-0.998488, 0, 0.0549677, 0, 1, 0, -0.0549677, 0, -0.998488, 5.94316, 0.00749999, 5.31452)
+
+[node name="Sgabello" parent="MAP/FURNITURE" instance=ExtResource("10_3h1i0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.52728, 0.00749999, -0.694507)
+
+[node name="Tavolo" parent="MAP/FURNITURE" instance=ExtResource("7_5wl8v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.91371, 0.00749999, 4.58249)
+
+[node name="Tavolo6" parent="MAP/FURNITURE" instance=ExtResource("7_5wl8v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2971, 0.00749999, 3.30989)
+
+[node name="Tavolo3" parent="MAP/FURNITURE" instance=ExtResource("7_5wl8v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.15505, 0.00749999, -4.4961)
+
+[node name="Tavolo4" parent="MAP/FURNITURE" instance=ExtResource("7_5wl8v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.64976, 0.00749999, -1.35388)
+
+[node name="Tavolo5" parent="MAP/FURNITURE" instance=ExtResource("7_5wl8v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.61096, 0.00749999, -3.25782)
+
+[node name="Tavolo2" parent="MAP/FURNITURE" instance=ExtResource("7_5wl8v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.40138, 0.00749999, 0.103752)
 
 [node name="ACTORS" type="Node3D" parent="."]
 
 [node name="CharacterBody3D2" type="CharacterBody3D" parent="ACTORS"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.19538, 0)
-script = ExtResource("10_nymjp")
+transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 2.19538, 0)
+script = ExtResource("8_5fbel")
 
 [node name="Sprite3D" type="Sprite3D" parent="ACTORS/CharacterBody3D2"]
 texture = ExtResource("9_dfmui")
@@ -311,13 +395,13 @@ vframes = 8
 frame = 48
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ACTORS/CharacterBody3D2"]
+transform = Transform3D(0.21, 0, 0, 0, 0.25, 0, 0, 0, 0.1, 0, 0, 0)
 shape = SubResource("BoxShape3D_1eb4g")
 
 [node name="Camera3D" type="Camera3D" parent="ACTORS/CharacterBody3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.337647, 1.62497)
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 0.5, 0.75)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ACTORS/CharacterBody3D2"]
-autoplay = "IDLEDown"
 libraries = {
 "": SubResource("AnimationLibrary_1h50r")
 }
@@ -326,5 +410,10 @@ libraries = {
 tree_root = SubResource("AnimationNodeStateMachine_gbwm7")
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/IDLE/blend_position = Vector2(0, 0)
+parameters/conditions/isIdle = false
+parameters/conditions/isWalk = false
+parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="bancone" parent="." instance=ExtResource("10_5b82m")]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0, 0, -3)

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bns5ts7ys4slv"]
+
+[ext_resource type="PackedScene" uid="uid://c8o5dfubgqq2g" path="res://Assets/3D Model/bancone.dae" id="1_xmt5d"]
+[ext_resource type="Material" uid="uid://b7mmrad4uy4ns" path="res://Assets/3D Model/Texture/Bancone/Bancone.tres" id="2_ysatm"]
+
+[node name="bancone" instance=ExtResource("1_xmt5d")]
+
+[node name="balcone" parent="." index="0"]
+material_override = ExtResource("2_ysatm")
