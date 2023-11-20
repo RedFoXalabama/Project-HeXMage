@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://dn8fn2pjqrrja"]
+
+[ext_resource type="Script" path="res://BattleScene/GUI/Stats_GUI.cs" id="1_0a7w1"]
+[ext_resource type="Texture2D" uid="uid://cliu08kdyan1x" path="res://Assets/GUI/ShildBar/Shield empty.png" id="1_r2giq"]
+[ext_resource type="Texture2D" uid="uid://cc8e1s7guvi70" path="res://Assets/GUI/ShildBar/Shield full.png" id="2_tp3r8"]
+[ext_resource type="Texture2D" uid="uid://dbffidbqj5q3w" path="res://Assets/GUI/LifeBar/Heart empty.png" id="3_7rpix"]
+[ext_resource type="Texture2D" uid="uid://c6n0rsav0uli8" path="res://Assets/GUI/LifeBar/Heart full.png" id="4_y80gw"]
+[ext_resource type="Texture2D" uid="uid://so3xqmukpsxa" path="res://Assets/GUI/ManaBar/Mana empty.png" id="5_rb2ca"]
+[ext_resource type="Texture2D" uid="uid://ba7k6uptkr7vx" path="res://Assets/GUI/ManaBar/Mana full.png" id="6_qacmw"]
+
+[node name="Stats_GUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0a7w1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_right = 164.0
+offset_bottom = 87.0
+
+[node name="CharIcon" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+stretch_mode = 5
+
+[node name="BarContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="CharName" type="Label" parent="HBoxContainer/BarContainer"]
+layout_mode = 2
+
+[node name="ShieldBar" type="TextureProgressBar" parent="HBoxContainer/BarContainer"]
+layout_mode = 2
+texture_under = ExtResource("1_r2giq")
+texture_progress = ExtResource("2_tp3r8")
+
+[node name="LifeBar" type="TextureProgressBar" parent="HBoxContainer/BarContainer"]
+layout_mode = 2
+texture_under = ExtResource("3_7rpix")
+texture_progress = ExtResource("4_y80gw")
+
+[node name="ManaBar" type="TextureProgressBar" parent="HBoxContainer/BarContainer"]
+layout_mode = 2
+texture_under = ExtResource("5_rb2ca")
+texture_progress = ExtResource("6_qacmw")
+
+[node name="StatusContainer" type="HBoxContainer" parent="HBoxContainer/BarContainer"]
+layout_mode = 2
+
+[node name="Fire" type="TextureRect" parent="HBoxContainer/BarContainer/StatusContainer"]
+layout_mode = 2
+
+[node name="Ice" type="TextureRect" parent="HBoxContainer/BarContainer/StatusContainer"]
+layout_mode = 2
+
+[node name="Poison" type="TextureRect" parent="HBoxContainer/BarContainer/StatusContainer"]
+layout_mode = 2
+
+[node name="Earth" type="TextureRect" parent="HBoxContainer/BarContainer/StatusContainer"]
+layout_mode = 2

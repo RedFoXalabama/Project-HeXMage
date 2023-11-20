@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cr8bhu1ahnfa0"]
+[gd_scene load_steps=6 format=3 uid="uid://cr8bhu1ahnfa0"]
 
 [ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_uca7s"]
 [ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_x50db"]
-[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Card/Cards-Scene/card_animation_prova.tscn" id="3_hrf43"]
+[ext_resource type="Texture2D" uid="uid://djoo8t1oe3qpi" path="res://Assets/Cards/prototype Colpo Grosso.png" id="3_2t37s"]
+[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="3_nbv5v"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cr32s"]
 resource_local_to_scene = true
@@ -16,8 +17,9 @@ shader_parameter/ending_colour = Vector4(0.5, 0.3, 0.8, 0.9)
 
 [node name="Card" instance=ExtResource("1_uca7s")]
 material = SubResource("ShaderMaterial_cr32s")
-card_name = "Colpo Grosso"
-cardAnimation = ExtResource("3_hrf43")
+texture = ExtResource("3_2t37s")
+card_name = "Colpo Grosso_Card"
+cardAnimation = ExtResource("3_nbv5v")
 cardLevel = 1
 mana_value = 3
 CardTarget = 2

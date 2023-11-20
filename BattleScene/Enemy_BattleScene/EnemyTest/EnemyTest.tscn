@@ -1,14 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://nqfxp72ytkc2"]
+[gd_scene load_steps=5 format=3 uid="uid://nqfxp72ytkc2"]
 
 [ext_resource type="PackedScene" uid="uid://ds3f7hiwnc4lq" path="res://BattleScene/Enemy_BattleScene/Enemy_BattleScene.tscn" id="1_7i8jy"]
+[ext_resource type="Texture2D" uid="uid://dytkojtatw2rd" path="res://Assets/Characters/EnemyTest/EnemyTest Battle Icon.png" id="2_jcda8"]
 [ext_resource type="Resource" uid="uid://bduc74gdut2ru" path="res://BattleScene/Enemy_BattleScene/EnemyTest/EnemyTestDeck.tres" id="4_4a1kc"]
 [ext_resource type="Resource" uid="uid://b2ulrhh1t3bno" path="res://BattleScene/Enemy_BattleScene/EnemyTest/EnemyTestSideDeck.tres" id="5_32bd1"]
 
 [node name="Sprite2D" instance=ExtResource("1_7i8jy")]
-reaction = 0.0
 EnemyNature = 2
-life = 100
-max_life = 100
+char_name = "Maranza"
+life = 30
+max_life = 30
+icon = ExtResource("2_jcda8")
 
 [node name="BattleDeck" parent="." index="2"]
 mainDeck = ExtResource("4_4a1kc")

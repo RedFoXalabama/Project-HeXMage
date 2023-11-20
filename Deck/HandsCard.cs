@@ -12,7 +12,7 @@ using System.Collections.Generic;
     #region FUNZIONI ———————————————————————————————————————————————————————————————————————————
     public void AddCard(Card card){ //aggiunge una carta alla mano, dizionario di carte
         //contiamo le carte presenti nella mano
-        var count = CountCardInHands();
+        var count = CountCardsInHand();
         //Se c'è spazio aggiungiamo una carta e segniamo la sua posizione nella mano come quella del count
         if(count < capacity){
             card.CardHandPosition = count;
@@ -30,7 +30,20 @@ using System.Collections.Generic;
         }
         card.Animate("Expire"); //animazione di sparizione
     }
-    public int CountCardInHands(){ //serve a contare quante carte ci sono nella mano
+
+    public void SortCardsInHands(){ //funzione per ordinare le carte nella mano spostando gli spazii vuoti alla fine
+        Card[] sortedCards = new Card[cardsInHand.Length];
+        int cardIndex = 0;
+        foreach (Card card in cardsInHand) {
+            if (card != null) {
+                sortedCards[cardIndex] = card;
+                cardIndex++;
+            }
+        }
+        cardsInHand = sortedCards;
+    }
+
+    public int CountCardsInHand(){ //serve a contare quante carte ci sono nella mano
     //non si può usare cardsInHand.Length perchè ci sono spazi vuoti null, ma che vengono conteggiati perchè hanno info di godot
         int count = 0;
         for(int i = 0; i < cardsInHand.Length; i++){

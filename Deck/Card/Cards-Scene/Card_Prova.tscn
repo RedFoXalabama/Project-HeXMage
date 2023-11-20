@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_iu5b5"]
 [ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_e4xau"]
-[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Card/Cards-Scene/card_animation_prova.tscn" id="3_8g824"]
+[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="3_8g824"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ib30y"]
 resource_local_to_scene = true

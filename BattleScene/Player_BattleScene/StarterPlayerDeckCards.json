@@ -1,6 +1,6 @@
 {
-	"0" : "res://Deck/Card/Cards-Scene/Card_Prova.tscn",
-	"1" : "res://Deck/Card/Cards-Scene/Card_Prova.tscn",
-	"2" : "res://Deck/Card/Cards-Scene/Card_Prova.tscn"
+	"0" : "res://Deck/Card/Cards-Scene/Colpo Grosso_Card.tscn",
+	"1" : "res://Deck/Card/Cards-Scene/Colpo_Card.tscn",
+	"2" : "res://Deck/Card/Cards-Scene/Pozione_Card.tscn"
 	
 }

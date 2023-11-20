@@ -23,6 +23,7 @@ public partial class BattleScene : Node2D
 
 	#region PACKEDSCENE ———————————————————————————————————————————————————————————————————————————
 	[Export] PackedScene[] enemy_packedScene; //array di packedScene dei nemici
+	[Export] PackedScene stats_GUI_packedScene; //packedScene della gui delle stats
 	#endregion
 
 	#region NODE ———————————————————————————————————————————————————————————————————————————
@@ -49,7 +50,7 @@ public partial class BattleScene : Node2D
 		enemyPosition2 = GetNode<Marker2D>("EnemyPosition2");
 		enemyPosition3 = GetNode<Marker2D>("EnemyPosition3");
 		handCards_GUI = GetNode<HandCards_GUI>("HandCards_GUI");
-		turnButton = handCards_GUI.GetNode<TextureButton>("TurnButton");
+		turnButton = handCards_GUI.GetNode<TextureButton>("MarginContainer/UpHBoxContainer/TurnButton");
 
 		//inizializzo gli attributi
 		turnQueue = new Queue<Marker2D>();
@@ -57,6 +58,8 @@ public partial class BattleScene : Node2D
 		//creo i nemici
 		enemys = new Enemy_BattleScene[enemy_packedScene.Length];
 		CreateEnemy(enemy_packedScene);
+		//creo le StatsGUI
+		CreateStatsGUI();
 		//emetto il segnale per iniziare la battaglia che fa preparare i mazzi temp dei characters
 		EmitSignal("BattleStart");
 		//prepato la turnazione, da modificare in base alla formulla della velocità ancora da elaborare
@@ -70,14 +73,30 @@ public partial class BattleScene : Node2D
 		for (int i = 0; i < enemy.Length; i++){ //istanzia e collega il segnale BattleStart, IsTurnSignal, IsBeenSelected, EndTurnSignal, AnimateCardOnPlayer, AnimateCardOnEnemy, PassCardAnimationToEnemy di ognuno dei nemici
 			enemiesPosition[i].AddChild(enemy[i].Instantiate());
 			enemys[i] = enemiesPosition[i].GetChild<Enemy_BattleScene>(0);
-			Connect("BattleStart", new Callable(enemiesPosition[i].GetChild<Enemy_BattleScene>(0), "_on_BattleStart_Signal"));
-			Connect("IsTurnSignal", new Callable(enemiesPosition[i].GetChild<Enemy_BattleScene>(0), "_on_battle_scene_is_turn_signal"));
-			Connect("PassPlayerToSelect", new Callable(enemiesPosition[i].GetChild<Enemy_BattleScene>(0), "_on_battle_scene_pass_player_to_select"));
-			enemiesPosition[i].GetChild<Enemy_BattleScene>(0).Connect("IsBeenSelectedSignal", new Callable(player, "_on_Enemy_Is_Been_Selected_Signal"));
-			enemiesPosition[i].GetChild<Enemy_BattleScene>(0).Connect("EndTurnSignal", new Callable(this, "ChangeTurn"));
-			enemiesPosition[i].GetChild<Enemy_BattleScene>(0).Connect("AnimateCardOnPlayer", new Callable(this, "_on_enemy_animate_card_on_player"));
-			enemiesPosition[i].GetChild<Enemy_BattleScene>(0).Connect("AnimateCardOnEnemy", new Callable(this, "_on_enemy_animate_card_on_enemy"));
-			Connect("PassCardAnimationToEnemy", new Callable(enemiesPosition[i].GetChild<Enemy_BattleScene>(0), "_on_enemy_pass_card_animation_to_enemy"));
+			Connect("BattleStart", new Callable(enemys[i], "_on_BattleStart_Signal"));
+			Connect("IsTurnSignal", new Callable(enemys[i], "_on_battle_scene_is_turn_signal"));
+			Connect("PassPlayerToSelect", new Callable(enemys[i], "_on_battle_scene_pass_player_to_select"));
+			enemys[i].Connect("IsBeenSelectedSignal", new Callable(player, "_on_Enemy_Is_Been_Selected_Signal"));
+			enemys[i].Connect("EndTurnSignal", new Callable(this, "ChangeTurn"));
+			enemys[i].Connect("AnimateCardOnPlayer", new Callable(this, "_on_enemy_animate_card_on_player"));
+			enemys[i].Connect("AnimateCardOnEnemy", new Callable(this, "_on_enemy_animate_card_on_enemy"));
+			Connect("PassCardAnimationToEnemy", new Callable(enemys[i], "_on_enemy_pass_card_animation_to_enemy"));
+		}
+	}
+	public void CreateStatsGUI(){
+		var upHBoxContainer = handCards_GUI.GetNode<HBoxContainer>("MarginContainer/UpHBoxContainer");
+		//PLAYER
+		//player.Connect("SetStatsGUI", new Callable(upHBoxContainer.GetChild<Stats_GUI>(0), "_on_character_set_stats"));
+		//player.Connect("UpdateStatsGUI", new Callable(upHBoxContainer.GetChild<Stats_GUI>(0), "_on_character_update_stats"));
+		player.EmitSignal("SetStatsGUI", player.Icon, player.Char_Name, player.Max_Shield, player.Max_Life, player.Max_Mana);
+		player.EmitSignal("UpdateStatsGUI", player.Shield, player.Life, player.Mana, player.IsOnFire, player.IsOnIce, player.IsOnPoison, player.IsOnEarth);
+		//ENEMY, saltiamo i primi due elementi nel boxcontainer perchè [0] player, [1] turnbutton
+		for (int i = 0; i < enemys.Length; i++){
+			upHBoxContainer.AddChild(stats_GUI_packedScene.Instantiate());
+			enemys[i].Connect("SetStatsGUI", new Callable(upHBoxContainer.GetChild<Stats_GUI>(i+2), "_on_character_set_stats"));
+			enemys[i].Connect("UpdateStatsGUI", new Callable(upHBoxContainer.GetChild<Stats_GUI>(i+2), "_on_character_update_stats"));
+			enemys[i].EmitSignal("SetStatsGUI", enemys[i].Icon, enemys[i].Char_Name, enemys[i].Max_Shield, enemys[i].Max_Life, enemys[i].Max_Mana);
+			enemys[i].EmitSignal("UpdateStatsGUI", enemys[i].Shield, enemys[i].Life, enemys[i].Mana, enemys[i].IsOnFire, enemys[i].IsOnIce, enemys[i].IsOnPoison, enemys[i].IsOnEarth);
 		}
 	}
 	#endregion
@@ -87,6 +106,7 @@ public partial class BattleScene : Node2D
 		//FUNZIONE DA SCRIVERE PER IL CALCOLO DI CHI PRIMA INIZIA
 		//per ora metto per primo il player e poi tutti i nemici
 		turnQueue.Enqueue(playerPosition);
+		player.FirstTurn = true; //dico al player che è il primo turno, cosi da abilitare le collisioni senza aspettare l'aggiornamento delle carte
 		turnQueue.Enqueue(enemyPosition1);
 		turnQueue.Enqueue(enemyPosition2);
 		turnQueue.Enqueue(enemyPosition3);
@@ -186,7 +206,7 @@ public partial class BattleScene : Node2D
 		if (player.IsTurn && player.Is_attacking == false){
 			player.IsTurn = false;
 			turnButton.Disabled = true; //lo riattiva quando è nuovamente il turno del player
-			EmitSignal("AbleCardsCollision", false); //disabilita le collisioni delle carte
+			EmitSignal("AbleCardsCollision", false, false); //disabilita le collisioni delle carte
 			ChangeTurn(); //passa al turno successivo
 		}
 	}

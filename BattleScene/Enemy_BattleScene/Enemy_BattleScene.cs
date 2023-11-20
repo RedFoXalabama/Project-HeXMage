@@ -106,7 +106,7 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 				break;
 		}
 		//CONTROLLO CARTE IN MANO PLAYER
-		var cardsPlayer = player.BattleDeck.HandsCard.CountCardInHands(); //contiamo le carte in mano al player
+		var cardsPlayer = player.BattleDeck.HandsCard.CountCardsInHand(); //contiamo le carte in mano al player
 		switch (cardsPlayer){
 			case int cards when (cards == 4): //se il player ha 4
 				switch (EnemyNature){
@@ -282,17 +282,18 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 	}
 	public Queue<Card> CardsInHandAnalysis(){ //Analizziamo le carte in mano dell'enemy, si riordinano per mana e si scelgono in base alla reazione -> ChoosenCards
 		//CONTROLLO E SUDDIVISIONE CARTE IN MANO
-		var cards = BattleDeck.HandsCard.CardsInHand;
-			//CARTE ATTIVE
-		Card[] activeCards = new Card[4]; //creiamo un array di 4 carte
-		for(int i = 0; i < BattleDeck.HandsCard.CountCardInHands(); i++){ //scorriamo le carte in mano
-			if (cards[i].CardTarget == 2 /*player = 2*/){
-				activeCards[i] = cards[i]; //se la carta ha come target il player la aggiungiamo all'array
-			}
-		}	
+	BattleDeck.HandsCard.SortCardsInHands(); //riordiniamo le carte nella mano
+	var cards = BattleDeck.HandsCard.CardsInHand;
+		//CARTE ATTIVE
+	Card[] activeCards = new Card[4]; //creiamo un array di 4 carte
+	for(int i = 0; i < BattleDeck.HandsCard.CountCardsInHand(); i++){ //scorriamo le carte in mano
+		if (cards[i].CardTarget == 2 /*player = 2*/){
+			activeCards[i] = cards[i]; //se la carta ha come target il player la aggiungiamo all'array
+		}
+	}
 			//CARTE PASSIVE
 		Card[] passiveCards = new Card[4]; //creiamo un array di 4 carte
-		for(int i = 0; i < BattleDeck.HandsCard.CountCardInHands(); i++){ //scorriamo le carte in mano
+		for(int i = 0; i < BattleDeck.HandsCard.CountCardsInHand(); i++){ //scorriamo le carte in mano
 			if (cards[i].CardTarget == 1 /*Self = 1*/){
 				passiveCards[i] = cards[i]; //se la carta ha come target il nemico la aggiungiamo all'array
 			}
@@ -305,7 +306,7 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 		var scelta_percentuale = ((reaction + 1) / (14 + 1)) *100; // la reaction va da -1 a 14, quindi + 1 per rendere tutto positivo
 		Queue<Card> choosenCards = new Queue<Card>(); //creiamo una coda di carte
 		Random random = new Random();
-		for(int i = 0; i < BattleDeck.HandsCard.CountCardInHands(); i++){//scorriamo le carte
+		for(int i = 0; i < BattleDeck.HandsCard.CountCardsInHand(); i++){//scorriamo le carte
 			var random_number = random.Next(0, 100); //generiamo un numero random da 0 a 100
 			switch (random_number){
 				case int n when n < scelta_percentuale: //carte attive

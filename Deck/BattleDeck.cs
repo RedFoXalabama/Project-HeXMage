@@ -35,7 +35,8 @@ public partial class BattleDeck : Node
     public void CreateTempDeck(){ //crea il mazzo temporaneo copiandolo dalla definizione per poi ordinarlo casualmente
         int i = 0;
         foreach(KeyValuePair<int, Card> card in cards){
-            tempCards[i] = card.Value;
+            var card_copy = card.Value.DeepCopy();
+            tempCards[i] = card_copy;
             i++;
         }
         Sort();

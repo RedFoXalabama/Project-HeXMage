@@ -35,7 +35,7 @@ public partial class CardAnimation : Sprite2D //Scena da allegare alla Card, è 
 				//prima dichiaro che è finito e sblocco l'await
 				EmitSignal("PlayerCardAnimationFinished"); //segnale per dire che l'animazione è finita
 				//dopo abilito le collisioni delle carte
-				EmitSignal("AbleCardsCollision", true); //se il caster è il player, riabilitiamo la collisione delle carte per una nuova selezione
+				EmitSignal("AbleCardsCollision", true, true); //se il caster è il player, riabilitiamo la collisione delle carte per una nuova selezione
 				break;
 			case "enemy":
 				EmitSignal("EnemyCardAnimationFinished"); //segnale per dire che l'animazione è finita

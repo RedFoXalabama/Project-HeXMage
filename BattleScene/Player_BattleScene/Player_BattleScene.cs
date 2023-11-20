@@ -26,7 +26,7 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
     #region INTERFACE ———————————————————————————————————————————————————————————————————————————
     public void _on_BattleStart_Signal(){ //funzione del segnale BattleStart, emesso da BattleScene (collegato Godot)
         BattleDeck._on_BattleStart();//Prepara il battle deck
-        EmitSignal("CardsOnGUI", BattleDeck.HandsCard); //aggiorniamo lo stato delle carte in mano
+        //(rimosso perchè non necessario, carte aggiornante una volta che inizia il turno) //EmitSignal("CardsOnGUI", BattleDeck.HandsCard); //aggiorniamo lo stato delle carte in mano
     }
 
     public void SelectCard(Node viewport, InputEvent @event, long shapeIdx){ //segnale delle carte in mano, collegato con Codice Player(handscard_gui) -> Codice -> Card
@@ -44,7 +44,7 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
                 if (selectedCard.CardTarget == 2 /*Enemy = 2*/){ //Se la carta ha nemici da selezionare passiamo dalla selezione del nemico
                     SelectTarget();
                     //UseCard eseguito alla fine del segnale di selezione del nemico
-                }else{ //se la carta non ha nemici viene eseguita immediatamente
+                } else if (selectedCard.CardTarget == 1 /*Self = 1*/){ //se la carta non ha nemici viene eseguita immediatamente
                     UseCard();
                 }
             } else { //non c'è abbastanza mana
@@ -66,7 +66,7 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
                 enemy.ToBeUnselected();
             }
             //riabilitiamo le collisioni delle carte cosi da poterle scegliere tutte
-            EmitSignal("AbleCardsCollision", true);
+            EmitSignal("AbleCardsCollision", true, false);
         }
     }
 
@@ -79,11 +79,10 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
             //Eseguiamo la carta sul nemico selezionato
             selectedCard.ExecuteCard(selectedEnemy);
             EmitSignal("AnimateCardOnEnemy", selectedCard, selectedEnemy);
-        } else { //ANIMAZIONE CARTE SENZA NEMICI
+        } else if (selectedCard.CardTarget == 1 /*Self = 1*/) { //ANIMAZIONE CARTE SENZA NEMICI
             //altrimenti animiamo la carta senza nemici
             selectedCard.ExecuteCard(this);
             EmitSignal("AnimateCardOnPlayer", selectedCard);
-            
         }
         //Rimuoviamo la carta
         BattleDeck.HandsCard.RemoveCard(selectedCard);
@@ -131,7 +130,12 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
             DrawCard(); //peschiamo una carta
             EmitSignal("CardsOnGUI", BattleDeck.HandsCard); //aggiornaimo la GUI delle carte in mano
             handCards_GUI.HBoxContainer.GetChild<Card>(handCards_GUI.HBoxContainer.GetChildCount() -1).Animate("Draw"); //Animiamo l'ultima carta pescata
-            EmitSignal("AbleCardsCollision", true); //abilita le collisioni delle carte
+            if (FirstTurn){
+                EmitSignal("AbleCardsCollision", true, false); //abilità le collisioni delle carte senza aspettare
+                FirstTurn = false;
+            } else {
+                EmitSignal("AbleCardsCollision", true, true); //abilita le collisioni delle carte aspettando che le carte siano state aggiornate
+            }
         }
     }
 

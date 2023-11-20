@@ -1,23 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://cttnu5lhnv0yl"]
+[gd_scene load_steps=7 format=3 uid="uid://cttnu5lhnv0yl"]
 
 [ext_resource type="PackedScene" uid="uid://bq5f5ju31lu75" path="res://BattleScene/Player_BattleScene/Player_BattleScene.tscn" id="1_phflj"]
 [ext_resource type="Script" path="res://BattleScene/BattleScene.cs" id="1_rvc4i"]
 [ext_resource type="PackedScene" uid="uid://nqfxp72ytkc2" path="res://BattleScene/Enemy_BattleScene/EnemyTest/EnemyTest.tscn" id="2_jabw4"]
-[ext_resource type="PackedScene" uid="uid://db87r6f4sp7hw" path="res://BattleScene/HandCards_GUI.tscn" id="3_vviuv"]
+[ext_resource type="PackedScene" uid="uid://dn8fn2pjqrrja" path="res://BattleScene/GUI/Stats_GUI.tscn" id="3_5khxe"]
+[ext_resource type="PackedScene" uid="uid://db87r6f4sp7hw" path="res://BattleScene/GUI/HandCards_GUI.tscn" id="3_vviuv"]
+[ext_resource type="Texture2D" uid="uid://bcptff37o4r8f" path="res://Assets/Characters/Player/Player Battle Icon.png" id="5_7ikr7"]
 
 [node name="BattleScene" type="Node2D"]
 script = ExtResource("1_rvc4i")
 enemy_packedScene = Array[PackedScene]([ExtResource("2_jabw4"), ExtResource("2_jabw4"), ExtResource("2_jabw4")])
+stats_GUI_packedScene = ExtResource("3_5khxe")
 
 [node name="HandCards_GUI" parent="." instance=ExtResource("3_vviuv")]
-
-[node name="TurnButton" parent="HandCards_GUI" index="1"]
-disabled = true
 
 [node name="PlayerPosition" type="Marker2D" parent="."]
 position = Vector2(160, 300)
 
 [node name="Player" parent="PlayerPosition" instance=ExtResource("1_phflj")]
+char_name = "Belzebù"
+icon = ExtResource("5_7ikr7")
 
 [node name="EnemyPosition1" type="Marker2D" parent="."]
 position = Vector2(900, 100)
@@ -34,11 +36,13 @@ position = Vector2(900, 300)
 [connection signal="PassCardAnimationToPlayer" from="." to="PlayerPosition/Player" method="_on_battle_scene_pass_card_animation_to_player"]
 [connection signal="PassEnemysToSelect" from="." to="PlayerPosition/Player" method="_on_battle_scene_pass_enemys_to_select"]
 [connection signal="ConnectInputToCards" from="HandCards_GUI" to="PlayerPosition/Player" method="_on_hand_cards_gui_connect_input_to_cards"]
-[connection signal="pressed" from="HandCards_GUI/TurnButton" to="." method="_on_turn_button_pressed"]
+[connection signal="pressed" from="HandCards_GUI/MarginContainer/UpHBoxContainer/TurnButton" to="." method="_on_turn_button_pressed"]
 [connection signal="AbleCardsCollision" from="PlayerPosition/Player" to="HandCards_GUI" method="_on_Able_Cards_Collision"]
 [connection signal="AnimateCardOnEnemy" from="PlayerPosition/Player" to="." method="_on_player_animate_card_on_enemy"]
 [connection signal="AnimateCardOnPlayer" from="PlayerPosition/Player" to="." method="_on_player_animate_card_on_player"]
 [connection signal="CardsOnGUI" from="PlayerPosition/Player" to="HandCards_GUI" method="_on_player_cards_on_gui"]
 [connection signal="PartialAbleCardsCollision" from="PlayerPosition/Player" to="HandCards_GUI" method="_on_Partial_Able_Cards_Collision"]
+[connection signal="SetStatsGUI" from="PlayerPosition/Player" to="HandCards_GUI/MarginContainer/UpHBoxContainer/Player_Stats_GUI" method="_on_character_set_stats"]
+[connection signal="UpdateStatsGUI" from="PlayerPosition/Player" to="HandCards_GUI/MarginContainer/UpHBoxContainer/Player_Stats_GUI" method="_on_character_update_stats"]
 
 [editable path="HandCards_GUI"]

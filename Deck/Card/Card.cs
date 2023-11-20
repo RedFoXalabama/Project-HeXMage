@@ -12,8 +12,8 @@ public partial class Card : TextureRect
 	[Export] int cardId; //id della carta
 	[Export] private string card_name;
 
-	private int card_deck_position; //posizione della carta nel deck
-	private int card_hand_position; //posizione della carta nella mano
+	/*TESTING*/[Export] private int card_deck_position; //posizione della carta nel deck
+	/*TESTING*/[Export] private int card_hand_position; //posizione della carta nella mano
 	private Boolean is_focused; //se la carta è focussata
 	private Boolean is_input_connected; //se la carta è connessa al segnale
 	#endregion
@@ -174,6 +174,25 @@ public partial class Card : TextureRect
 				break;
 		}
 	}
+
+	public Card DeepCopy(){ //funzione per creare una copia della risorsa
+	//necessaria nella creazione del TempDeck perchè altrimenti le carte sarebbero le stesse, copiando solo il riferimento alla risorsa e non duplicando la carta
+        Card newCard = new Card();
+		newCard.cardId = this.cardId;
+		newCard.card_name = this.card_name;
+        newCard.cardLevel = this.cardLevel;
+		newCard.card_deck_position = this.card_deck_position;
+        newCard.specValue = this.specValue;
+        newCard.mana_value = this.mana_value;
+        newCard.CardTarget = this.CardTarget;
+        newCard.StatsType = this.StatsType;
+        newCard.AttackType = this.AttackType;
+        newCard.ElementType = this.ElementType;
+        newCard.Passive = this.Passive;
+		newCard.cardAnimation = this.cardAnimation;
+        // Copia altri campi e proprietà qui
+        return newCard;
+    }
 	#endregion
 
 	#region SEGNALI ———————————————————————————————————————————————————————————————————————————

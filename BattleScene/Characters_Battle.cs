@@ -6,6 +6,11 @@ using System;
 	#region SIGNALS ———————————————————————————————————————————————————————————————————————————
 	[Signal] public delegate void PrepareBattleDeckSignalEventHandler(); //Segnale per preparare i deck(risorse) dei characters e poi il BattleDeck, prima dell'inizio della battaglia
 	//Collegato con Player -> Godot -> BattleDeck, Enemy -> Godot -> BattleDeck
+	[Signal] public delegate void SetStatsGUIEventHandler(Texture2D icon, string name, int maxShield, int maxLife, int maxMana); //Segnale per settare le stats del character nella gui
+	//Collegato con Player -> BattleScene Code -> Stats_GUI, Enemy ->  BattleScene Code -> Stats_GUI
+	//emesso nel battlescene dopo essersi assicurati che le statsGUI siano state create
+	[Signal] public delegate void UpdateStatsGUIEventHandler(int shield, int life, int mana, Boolean isOnFire, Boolean isOnIce, Boolean isOnPoison, Boolean isOnEarth); //Segnale per aggiornare le stats del character nella gui
+	//Collegato con Player -> BattleScene Code -> Stats_GUI, Enemy ->  BattleScene Code -> Stats_GUI
 	#endregion
 	
 	#region NODI ———————————————————————————————————————————————————————————————————————————
@@ -13,14 +18,18 @@ using System;
 	#endregion
 
 	#region ATTRIBUTI ———————————————————————————————————————————————————————————————————————————
+	[Export] private string char_name;
 	[Export] private int life;
 	[Export] private int max_life;
 	[Export] private int mana;
 	[Export] private int max_mana;
 	[Export] private int shield;
+	[Export] private int max_shield;
 	private BattleDeck battleDeck;
 	private Boolean isTurn;
 	private Boolean is_attacking; //controlla se il player sta attaccando
+	private bool firstTurn; //se è il primo turno
+	[Export] private Texture2D icon;
 	#endregion
 	
 	#region STATI ELEMENTALI ———————————————————————————————————————————————————————————————————————————
@@ -55,19 +64,35 @@ using System;
 		}else {//se lo scudo è 0, il danno viene sottratto alla vita
 			life -= value;
 		}
+		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 		animationPlayer_char.Play("TakeDamage");
 	}
 	public void Animate(string animationName){
 		animationPlayer_char.Play(animationName);
 	}
 	public void AddLife(int value){
-		life += value;
+		if(life + value > max_life){
+			life = max_life;
+		} else {
+			life += value;
+		}
+		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 	}
 	public void AddMana(int value){ //non dovrebbe servire
-		mana += value;
+		if (mana + value > max_mana){
+			mana = max_mana;
+		} else {
+			mana += value;
+		}
+		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 	}
 	public void UseMana(int value){
-		mana -= value;
+		if (mana - value < 0){
+			mana = 0;
+		} else {
+			mana -= value;
+		}
+		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 	}
 	public void ResetMana(){
 		if (isOnPoison){
@@ -75,9 +100,15 @@ using System;
 		} else {
 			mana = max_mana;
 		}
+		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 	}
 	public void AddShield(int value){
-		shield += value;
+		if( shield + value > max_shield){
+			shield = max_shield;
+		} else {
+			shield += value;
+		}
+		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 	}
 	public void DrawCard(){
 		battleDeck.Draw();
@@ -116,6 +147,7 @@ using System;
 		if (isOnEarth){
 			//TO-DO
 		}
+		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 		return false; // Aggiunto return false per gestire il caso in cui nessuno dei precedenti if venga soddisfatto
 	}
 	public Boolean CheckIfOnStatus(){ //serve a controllare se il character è in uno stato elementale
@@ -129,21 +161,29 @@ using System;
 	public void SetOnFire(Boolean value, int damage, int turns){ //SET FIRE
 		isOnFire = value;
 		fireDamage = new Vector2I(damage, turns);
+		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 	}
 	public void SetOnIce(Boolean value, int turns){ //SET ICE
 		isOnIce = value;
 		iceTurns = turns;
+		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 	}
 	public void SetOnPoison(Boolean value, int damage, int turns){ //SET POISON
 		isOnPoison = value;
 		poisonDamage = new Vector2I(damage, turns);
+		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 	}
 	public void SetOnEarth(Boolean value){ //SET EARTH
 		isOnEarth = value;
+		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 	}
 	#endregion
 
 	#region GETTER/SETTER ———————————————————————————————————————————————————————————————————————————
+	public string Char_Name{
+		get{return char_name;}
+		set{char_name = value;}
+	}
 	public int Life{
 		get{return life;}
 		set{life = value;}
@@ -164,6 +204,10 @@ using System;
 		get{return shield;}
 		set{shield = value;}
 	}
+	public int Max_Shield{
+		get{return max_shield;}
+		set{max_shield = value;}
+	}
 	public BattleDeck BattleDeck{
 		get{return battleDeck;}
 		set{battleDeck = value;}
@@ -179,6 +223,31 @@ using System;
 	public Boolean Is_attacking{
 		get{return is_attacking;}
 		set{is_attacking = value;}
+	}
+	public Boolean IsOnFire{
+		get{return isOnFire;}
+		set{isOnFire = value;}
+	}
+	public Boolean IsOnIce{
+		get{return isOnIce;}
+		set{isOnIce = value;}
+	}
+	public Boolean IsOnPoison{
+		get{return isOnPoison;}
+		set{isOnPoison = value;}
+	}
+	public Boolean IsOnEarth{
+		get{return isOnEarth;}
+		set{isOnEarth = value;}
+	}
+	public bool FirstTurn{
+		get{return firstTurn;}
+		set{firstTurn = value;}
+	
+	}
+	public Texture2D Icon{
+		get{return icon;}
+		set{icon = value;}
 	}
 	#endregion
 }
