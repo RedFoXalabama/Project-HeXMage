@@ -12,8 +12,8 @@ public partial class Card : TextureRect
 	[Export] int cardId; //id della carta
 	[Export] private string card_name;
 
-	/*TESTING*/[Export] private int card_deck_position; //posizione della carta nel deck
-	/*TESTING*/[Export] private int card_hand_position; //posizione della carta nella mano
+	[Export] private int card_deck_position; //posizione della carta nel deck
+	[Export] private int card_hand_position; //posizione della carta nella mano
 	private Boolean is_focused; //se la carta è focussata
 	private Boolean is_input_connected; //se la carta è connessa al segnale
 	#endregion
@@ -94,22 +94,22 @@ public partial class Card : TextureRect
 	public void ExecuteCard(Enemy_BattleScene enemy){
 		switch(AttackType){
 			case 1: //AtkSoft
-				enemy.TakeDamage(1+cardLevel);
+				enemy.TakeDamage(1+cardLevel+specValue);
 				break;
 			case 2: //AtkHard
-				enemy.TakeDamage(3+2*cardLevel);
+				enemy.TakeDamage(3+2*cardLevel+specValue);
 				break;
 		}
 		switch(StatsType){
 			case 1: //Heal
-				enemy.AddLife(1+cardLevel); //DA CAMBIARE
+				enemy.AddLife(1+cardLevel+specValue); //DA CAMBIARE
 				break;
 			case 2: //Shield
-				enemy.AddShield(1+cardLevel); //DA CAMBIARE
+				enemy.AddShield(1+cardLevel+specValue); //DA CAMBIARE
 				break;
 			case 3: //HealAndShield
-				enemy.AddLife(1+cardLevel); //DA CAMBIARE
-				enemy.AddShield(1+cardLevel); //DA CAMBIARE
+				enemy.AddLife(1+cardLevel+specValue); //DA CAMBIARE
+				enemy.AddShield(1+cardLevel+specValue); //DA CAMBIARE
 				break;
 		}
 		switch(ElementType){
@@ -136,22 +136,22 @@ public partial class Card : TextureRect
 	public void ExecuteCard(Player_BattleScene player){
 		switch(AttackType){
 			case 1: //AtkSoft
-				player.TakeDamage(1+cardLevel);
+				player.TakeDamage(1+cardLevel+specValue);
 				break;
 			case 2: //AtkHard
-				player.TakeDamage(3+2*cardLevel);
+				player.TakeDamage(3+2*cardLevel+specValue);
 				break;
 		}
 		switch(StatsType){
 			case 1: //Heal
-				player.AddLife(1+cardLevel); //DA CAMBIARE
+				player.AddLife(1+cardLevel+specValue); //DA CAMBIARE
 				break;
 			case 2: //Shield
-				player.AddShield(1+cardLevel); //DA CAMBIARE
+				player.AddShield(1+cardLevel+specValue); //DA CAMBIARE
 				break;
 			case 3: //HealAndShield
-				player.AddLife(1+cardLevel); //DA CAMBIARE
-				player.AddShield(1+cardLevel); //DA CAMBIARE
+				player.AddLife(1+cardLevel+specValue); //DA CAMBIARE
+				player.AddShield(1+cardLevel+specValue); //DA CAMBIARE
 				break;
 		}
 		switch(ElementType){

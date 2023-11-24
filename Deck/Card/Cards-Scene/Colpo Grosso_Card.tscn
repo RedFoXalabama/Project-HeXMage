@@ -21,6 +21,7 @@ texture = ExtResource("3_2t37s")
 card_name = "Colpo Grosso_Card"
 cardAnimation = ExtResource("3_nbv5v")
 cardLevel = 1
+specValue = 20
 mana_value = 3
 CardTarget = 2
 AttackType = 2

@@ -14,21 +14,24 @@ stats_GUI_packedScene = ExtResource("3_5khxe")
 
 [node name="HandCards_GUI" parent="." instance=ExtResource("3_vviuv")]
 
+[node name="EnemyContainer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="EnemyPosition1" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(900, 100)
+
+[node name="EnemyPosition2" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(1000, 200)
+
+[node name="EnemyPosition3" type="Marker2D" parent="EnemyContainer"]
+position = Vector2(900, 300)
+
 [node name="PlayerPosition" type="Marker2D" parent="."]
 position = Vector2(160, 300)
 
 [node name="Player" parent="PlayerPosition" instance=ExtResource("1_phflj")]
 char_name = "Belzebù"
 icon = ExtResource("5_7ikr7")
-
-[node name="EnemyPosition1" type="Marker2D" parent="."]
-position = Vector2(900, 100)
-
-[node name="EnemyPosition2" type="Marker2D" parent="."]
-position = Vector2(1000, 200)
-
-[node name="EnemyPosition3" type="Marker2D" parent="."]
-position = Vector2(900, 300)
 
 [connection signal="AbleCardsCollision" from="." to="HandCards_GUI" method="_on_Able_Cards_Collision"]
 [connection signal="BattleStart" from="." to="PlayerPosition/Player" method="_on_BattleStart_Signal"]
@@ -41,6 +44,7 @@ position = Vector2(900, 300)
 [connection signal="AnimateCardOnEnemy" from="PlayerPosition/Player" to="." method="_on_player_animate_card_on_enemy"]
 [connection signal="AnimateCardOnPlayer" from="PlayerPosition/Player" to="." method="_on_player_animate_card_on_player"]
 [connection signal="CardsOnGUI" from="PlayerPosition/Player" to="HandCards_GUI" method="_on_player_cards_on_gui"]
+[connection signal="CheckStatusBattleSignal" from="PlayerPosition/Player" to="." method="CheckStatusBattle"]
 [connection signal="PartialAbleCardsCollision" from="PlayerPosition/Player" to="HandCards_GUI" method="_on_Partial_Able_Cards_Collision"]
 [connection signal="SetStatsGUI" from="PlayerPosition/Player" to="HandCards_GUI/MarginContainer/UpHBoxContainer/Player_Stats_GUI" method="_on_character_set_stats"]
 [connection signal="UpdateStatsGUI" from="PlayerPosition/Player" to="HandCards_GUI/MarginContainer/UpHBoxContainer/Player_Stats_GUI" method="_on_character_update_stats"]

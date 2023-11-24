@@ -21,6 +21,7 @@ texture = ExtResource("3_c264l")
 card_name = "Colpo_Card"
 cardAnimation = ExtResource("3_66mow")
 cardLevel = 1
+specValue = 10
 mana_value = 1
 CardTarget = 2
 AttackType = 1

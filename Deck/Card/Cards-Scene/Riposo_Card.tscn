@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://be1jl3g4r2qvr"]
+
+[ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_wsn5g"]
+[ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_122rk"]
+[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="3_6hei4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rji70"]
+resource_local_to_scene = true
+shader = ExtResource("2_122rk")
+shader_parameter/max_line_width = 30.0
+shader_parameter/min_line_width = 1.0
+shader_parameter/freq = 4.0
+shader_parameter/block_size = 5.0
+shader_parameter/starting_colour = Vector4(0.6, 0.5, 0.6, 1)
+shader_parameter/ending_colour = Vector4(0.5, 0.3, 0.8, 0.9)
+
+[node name="Card" instance=ExtResource("1_wsn5g")]
+material = SubResource("ShaderMaterial_rji70")
+card_name = "Riposo_Card"
+cardAnimation = ExtResource("3_6hei4")
+cardLevel = 2
+specValue = 6
+mana_value = 3
+CardTarget = 1
+StatsType = 1

@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0y2j5lel440p"]
+
+[ext_resource type="Script" path="res://BattleScene/Dungeon.cs" id="1_1w63x"]
+[ext_resource type="PackedScene" uid="uid://cttnu5lhnv0yl" path="res://BattleScene/BattleScene.tscn" id="2_tn04t"]
+[ext_resource type="PackedScene" uid="uid://blgg0l00nf4xa" path="res://BattleScene/GUI/GameOver_Screen.tscn" id="2_vjijt"]
+[ext_resource type="PackedScene" uid="uid://blaj3ky1f56kx" path="res://BattleScene/GUI/BattleWin_Screen.tscn" id="3_s841g"]
+
+[node name="Dungeon" type="Node"]
+script = ExtResource("1_1w63x")
+rooms = [ExtResource("2_tn04t"), null, null, null, null, null, null, null, null, null]
+
+[node name="StartView" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartButton" type="Button" parent="StartView"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -142.0
+offset_top = -38.5
+offset_right = 142.0
+offset_bottom = 38.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = "Start Battle"
+
+[node name="RoomContainer" type="Node" parent="."]
+
+[node name="Win_OverContainer" type="Node" parent="."]
+
+[node name="GameOver_Screen" parent="Win_OverContainer" instance=ExtResource("2_vjijt")]
+visible = false
+
+[node name="BattleWin_Screen" parent="Win_OverContainer" instance=ExtResource("3_s841g")]
+visible = false
+
+[connection signal="pressed" from="StartView/StartButton" to="." method="_on_start_button_pressed"]

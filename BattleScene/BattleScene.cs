@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class BattleScene : Node2D
 {
@@ -19,6 +20,10 @@ public partial class BattleScene : Node2D
 	//Collegato BattleScene -> Code -> Enemy
 	[Signal] public delegate void PassCardAnimationToPlayerEventHandler(CardAnimation cardAnimation); //Segnale per passare l'animazione della carta al player
 	//Collegato BattleScene -> Godot -> Player
+	[Signal] public delegate void WinSignalEventHandler(); //Segnale per la vittoria
+	//Collegato BattleScene -> Dungeon Code -> Dungeon
+	[Signal] public delegate void GameOverSignalEventHandler(); //Segnale per il gameover
+	//Collegato BattleScene -> Dungeon Code -> Dungeon
 	#endregion
 
 	#region PACKEDSCENE ———————————————————————————————————————————————————————————————————————————
@@ -38,6 +43,7 @@ public partial class BattleScene : Node2D
 
 	#region ATTRIBUTI ———————————————————————————————————————————————————————————————————————————
 	private Enemy_BattleScene[] enemys; //array di nemici
+	private Enemy_BattleScene[] dead_enemys; //array di nemici morti
 	private Queue<Marker2D> turnQueue; //coda dei turni, prendo le loro posizioni cosi da poterli tenere tutti in una sola coda
 	#endregion
 
@@ -46,9 +52,9 @@ public partial class BattleScene : Node2D
 		//inizializzo i nodi
 		playerPosition = GetNode<Marker2D>("PlayerPosition");
 		player = GetNode<Player_BattleScene>("PlayerPosition/Player");
-		enemyPosition1 = GetNode<Marker2D>("EnemyPosition1");
-		enemyPosition2 = GetNode<Marker2D>("EnemyPosition2");
-		enemyPosition3 = GetNode<Marker2D>("EnemyPosition3");
+		enemyPosition1 = GetNode<Marker2D>("EnemyContainer/EnemyPosition1");
+		enemyPosition2 = GetNode<Marker2D>("EnemyContainer/EnemyPosition2");
+		enemyPosition3 = GetNode<Marker2D>("EnemyContainer/EnemyPosition3");
 		handCards_GUI = GetNode<HandCards_GUI>("HandCards_GUI");
 		turnButton = handCards_GUI.GetNode<TextureButton>("MarginContainer/UpHBoxContainer/TurnButton");
 
@@ -57,6 +63,8 @@ public partial class BattleScene : Node2D
 
 		//creo i nemici
 		enemys = new Enemy_BattleScene[enemy_packedScene.Length];
+		dead_enemys = new Enemy_BattleScene[enemy_packedScene.Length];
+		
 		CreateEnemy(enemy_packedScene);
 		//creo le StatsGUI
 		CreateStatsGUI();
@@ -95,6 +103,7 @@ public partial class BattleScene : Node2D
 			upHBoxContainer.AddChild(stats_GUI_packedScene.Instantiate());
 			enemys[i].Connect("SetStatsGUI", new Callable(upHBoxContainer.GetChild<Stats_GUI>(i+2), "_on_character_set_stats"));
 			enemys[i].Connect("UpdateStatsGUI", new Callable(upHBoxContainer.GetChild<Stats_GUI>(i+2), "_on_character_update_stats"));
+			enemys[i].Connect("CheckStatusBattleSignal", new Callable(this, "CheckStatusBattle"));
 			enemys[i].EmitSignal("SetStatsGUI", enemys[i].Icon, enemys[i].Char_Name, enemys[i].Max_Shield, enemys[i].Max_Life, enemys[i].Max_Mana);
 			enemys[i].EmitSignal("UpdateStatsGUI", enemys[i].Shield, enemys[i].Life, enemys[i].Mana, enemys[i].IsOnFire, enemys[i].IsOnIce, enemys[i].IsOnPoison, enemys[i].IsOnEarth);
 		}
@@ -156,45 +165,39 @@ public partial class BattleScene : Node2D
 		}
 	}
 
-	public void LoopBattle(){ //WORKING ON
-		while (player.Life > 0){
-			//player.Turn();
-			//player.DrawCard(); //pesca una carta
-			//enemy.Turn();
-			
-		}
-	}
-
-	public Boolean CheckStatusBattle(){ //controlla lo stato della battaglia 
+	public void CheckStatusBattle(){ //controlla lo stato della battaglia 
 		//return false se la battaglia non è finita, ritorna true se la battaglia è finita
 		CheckEnemysLife(); // controlla quali nemici sono morti e li rimuove
 		if (player.Life <= 0){
 			//gameover
 			GameOver();
-			return false;
-		} else if (enemys.Length == 0){
+		} else if (CountElements(enemys) == 0){
 			//vittoria
 			Win();
-			return false;
-		} else {
-			//La battaglia non è finita
-			return true;
 		}
 	}
 	
 	public void Win(){//funzione vittoria da definire
-		//vittoria
+		//gestito poi da Dungeon
+		EmitSignal("WinSignal");
 	}
 
 	public void GameOver(){//funzione gameover da definire
-		//gameover
+		//gestito poi da Dungeon
+		EmitSignal("GameOverSignal");
 	}
 
 	public void CheckEnemysLife(){// controlla quali nemici sono morti e li rimuove
-		for (int i = 0; i < enemys.Length; i++){
+		for (int i = 0; i < CountElements(enemys); i++){
 			if (enemys[i].Life <= 0){
+				//rimuoviamolo dalla coda
+				RemoveElementFromQueue(turnQueue, enemys[i].GetParent<Marker2D>());
+				//salviamo prima le informazioni del nemico morto
+				dead_enemys[i] = enemys[i];
+				//poi liberiamo la posizione
 				enemys[i].QueueFree();
 				enemys[i] = null;
+				EmitSignal("PassEnemysToSelect", enemys); //se i nemici sono morti allora passiamo nuovamente l'array aggiornato
 			}
 		}
 	}
@@ -246,5 +249,40 @@ public partial class BattleScene : Node2D
 		//avvio l'animazione
 		enemy_BattleScene.GetParent<Marker2D>().GetChild<CardAnimation>(1).PlayAnimation("enemy");
 	}
+
+	/*public void _on_player_character_is_dead(){
+		//se il player muore, allora la battaglia finisce
+		GameOver();
+	}*/
+	#endregion
+
+	#region FUNCTIONALITY ————————————————————————————————————————————————————————————————————
+	public static int CountElements<T>(T[] array){
+		int count = 0;
+        for(int i = 0; i < array.Length; i++){
+            if(array[i] != null){
+                count++;
+            }
+        }
+        return count;
+	}
+	public static void RemoveElementFromQueue<T>(Queue<T> queue, T elementToRemove){
+        // Creazione di una coda temporanea per memorizzare gli elementi non rimossi
+        Queue<T> tempQueue = new Queue<T>();
+
+        // Iterazione sulla coda originale
+        while (queue.Count > 0){
+            T currentElement = queue.Dequeue();
+            // Verifica se l'elemento corrente è quello da rimuovere
+            if (!EqualityComparer<T>.Default.Equals(currentElement, elementToRemove)){
+                // Se non è l'elemento da rimuovere, lo aggiunge alla coda temporanea
+                tempQueue.Enqueue(currentElement);
+            }
+        }
+        // Ripristino della coda originale con gli elementi non rimossi
+        while (tempQueue.Count > 0){
+            queue.Enqueue(tempQueue.Dequeue());
+        }
+    }
 	#endregion
 }

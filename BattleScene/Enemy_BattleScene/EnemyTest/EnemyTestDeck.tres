@@ -1,13 +1,15 @@
-[gd_resource type="Resource" script_class="Deck" load_steps=5 format=3 uid="uid://bduc74gdut2ru"]
+[gd_resource type="Resource" script_class="Deck" load_steps=7 format=3 uid="uid://bduc74gdut2ru"]
 
-[ext_resource type="PackedScene" uid="uid://pysug2bfefyw" path="res://Deck/Card/Cards-Scene/Colpo_Card.tscn" id="1_3jo01"]
+[ext_resource type="PackedScene" uid="uid://bn37r3c43fgcd" path="res://Deck/Card/Cards-Scene/Attacco Base_Card.tscn" id="1_t7nsm"]
+[ext_resource type="PackedScene" uid="uid://qgvnv3q2hllt" path="res://Deck/Card/Cards-Scene/Punto Debole_Card.tscn" id="2_ercbp"]
 [ext_resource type="Script" path="res://Deck/Deck.cs" id="2_hi6b1"]
-[ext_resource type="PackedScene" uid="uid://cr8bhu1ahnfa0" path="res://Deck/Card/Cards-Scene/Colpo Grosso_Card.tscn" id="2_l73a0"]
-[ext_resource type="PackedScene" uid="uid://ig31u5rkab5t" path="res://Deck/Card/Cards-Scene/Pozione_Card.tscn" id="3_ycg5u"]
+[ext_resource type="PackedScene" uid="uid://be1jl3g4r2qvr" path="res://Deck/Card/Cards-Scene/Riposo_Card.tscn" id="3_plr2r"]
+[ext_resource type="PackedScene" uid="uid://ccwo282s4lbv7" path="res://Deck/Card/Cards-Scene/Attacco Finale_Card.tscn" id="4_wpd45"]
+[ext_resource type="PackedScene" uid="uid://djo760p607c8v" path="res://Deck/Card/Cards-Scene/LOL_Card.tscn" id="5_6844g"]
 
 [resource]
 resource_local_to_scene = true
 resource_name = "EnemyTestDeck"
 script = ExtResource("2_hi6b1")
 capacity = 10
-exportedCards = [ExtResource("2_l73a0"), ExtResource("3_ycg5u"), ExtResource("1_3jo01"), null, null, null, null, null, null]
+exportedCards = [ExtResource("1_t7nsm"), ExtResource("2_ercbp"), ExtResource("3_plr2r"), ExtResource("4_wpd45"), ExtResource("5_6844g"), null, null, null, null, null]

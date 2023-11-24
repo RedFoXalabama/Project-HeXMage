@@ -11,6 +11,12 @@ using System;
 	//emesso nel battlescene dopo essersi assicurati che le statsGUI siano state create
 	[Signal] public delegate void UpdateStatsGUIEventHandler(int shield, int life, int mana, Boolean isOnFire, Boolean isOnIce, Boolean isOnPoison, Boolean isOnEarth); //Segnale per aggiornare le stats del character nella gui
 	//Collegato con Player -> BattleScene Code -> Stats_GUI, Enemy ->  BattleScene Code -> Stats_GUI
+	[Signal] public delegate void CheckStatusBattleSignalEventHandler(); //Segnale per controllare se il character è morto o ha ucciso qualcuno
+	//Collegato con Player -> Godot -> BattleScene, Enemy -> BattleScene Code -> BattleScene
+
+	//[Signal] public delegate void CharacterIsDeadEventHandler(); //Segnale per dire che il character è morto
+	//Collegato con Player -> Godot -> BattleScene, Enemy -> BattleScene Code -> BattleScene
+
 	#endregion
 	
 	#region NODI ———————————————————————————————————————————————————————————————————————————
@@ -57,15 +63,22 @@ using System;
 		//se lo scudo è maggiore di 0, lo scudo assorbe il danno
 		if (shield > 0){
 			shield -= value;
-			if (shield < 0){ //se lo scudo è stato distrutto, il danno in eccesso viene sottratto alla vita
-				life += shield;
+			if (shield < 0){ //se lo scudo è stato distrutto, il danno in eccesso non viene calcolato
+				//life += shield;
 				shield = 0;
 			}
 		}else {//se lo scudo è 0, il danno viene sottratto alla vita
 			life -= value;
 		}
+		//controlliamo se la vita è arrivata a 0 e nel caso emettiamo il segnale per dire che il character è morto
+		if(life <= 0){
+				life = 0;
+
+		}
 		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 		animationPlayer_char.Play("TakeDamage");
+		//TO-DO: PROBABILE AWAIT
+		EmitSignal("CheckStatusBattleSignal"); //emette il segnale per controllare se il character è morto o ha ucciso qualcuno
 	}
 	public void Animate(string animationName){
 		animationPlayer_char.Play(animationName);
@@ -76,6 +89,10 @@ using System;
 		} else {
 			life += value;
 		}
+		//controlliamo se la vita è arrivata a 0 e nel caso emettiamo il segnale per dire che il character è morto
+		if(life <= 0){
+				life = 0;
+			}
 		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 	}
 	public void AddMana(int value){ //non dovrebbe servire
@@ -136,7 +153,7 @@ using System;
 		}
 		if (isOnPoison){
 			if (poisonDamage.Y > 0){
-				TakeDamage(poisonDamage.X); //arrechiamo danno
+				AddLife(- poisonDamage.X); //arrechiamo danno solo alla vita aggiungengo un valore negativo
 				poisonDamage.Y--; //diminuiamo il turno
 				//mana dimezzata nella funzione ResetMana()				
 			} else {
@@ -148,6 +165,7 @@ using System;
 			//TO-DO
 		}
 		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
+		EmitSignal("CheckStatusBattleSignal"); //emette il segnale per controllare se il character è morto o ha ucciso qualcuno
 		return false; // Aggiunto return false per gestire il caso in cui nessuno dei precedenti if venga soddisfatto
 	}
 	public Boolean CheckIfOnStatus(){ //serve a controllare se il character è in uno stato elementale

@@ -39,13 +39,13 @@ public partial class Stats_GUI : Control{
 	}
 
 	public void _on_character_update_stats(int shield, int life, int mana, Boolean isOnFire, Boolean isOnIce, Boolean isOnPoison, Boolean isOnEarth){ //segnale per aggiornare le stats
-		ShieldBar.Value = shield;
-		LifeBar.Value = life;
-		ManaBar.Value = mana;
-		fireIcon.Visible = isOnFire;
-		iceIcon.Visible = isOnIce;
-		poisonIcon.Visible = isOnPoison;
-		earthIcon.Visible = isOnEarth;
+		ShieldBar.SetDeferred("value", shield);
+		LifeBar.SetDeferred("value", life);
+		ManaBar.SetDeferred("value", mana);
+		fireIcon.SetDeferred("visible", isOnFire);
+		iceIcon.SetDeferred("visible", isOnIce);
+		poisonIcon.SetDeferred("visible", isOnPoison);
+		earthIcon.SetDeferred("visible", isOnEarth);
 	}
 	#endregion
 }

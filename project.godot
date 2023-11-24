@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Project-IdS"
 config/tags=PackedStringArray("university")
-run/main_scene="res://BattleScene/BattleScene.tscn"
+run/main_scene="res://BattleScene/Dungeon.tscn"
 config/features=PackedStringArray("4.1", "C#", "GL Compatibility")
 
 [autoload]

@@ -340,6 +340,7 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 					EmitSignal("AnimateCardOnEnemy", selectedCard, this); //animiamo la carta sul nemico
 				}
 				await ToSignal(cardAnimation_toawait, "EnemyCardAnimationFinished"); //aspettiamo che l'animazione finisca
+				EmitSignal("CheckStatusBattleSignal"); //controlliamo lo stato della battaglia se qualcuno è morto
 			} else {
 				/*TESTING*/ GD.Print("Carta non eseguita: " + cards.Peek().Name);
 				continue;

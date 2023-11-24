@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dn8fn2pjqrrja"]
+[gd_scene load_steps=12 format=3 uid="uid://dn8fn2pjqrrja"]
 
 [ext_resource type="Script" path="res://BattleScene/GUI/Stats_GUI.cs" id="1_0a7w1"]
 [ext_resource type="Texture2D" uid="uid://cliu08kdyan1x" path="res://Assets/GUI/ShildBar/Shield empty.png" id="1_r2giq"]
@@ -7,6 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://c6n0rsav0uli8" path="res://Assets/GUI/LifeBar/Heart full.png" id="4_y80gw"]
 [ext_resource type="Texture2D" uid="uid://so3xqmukpsxa" path="res://Assets/GUI/ManaBar/Mana empty.png" id="5_rb2ca"]
 [ext_resource type="Texture2D" uid="uid://ba7k6uptkr7vx" path="res://Assets/GUI/ManaBar/Mana full.png" id="6_qacmw"]
+[ext_resource type="Texture2D" uid="uid://cfnbkjrqu4ro4" path="res://Assets/GUI/Status/Icon/Fire Icon.png" id="8_vvnav"]
+[ext_resource type="Texture2D" uid="uid://d2rfc456al2df" path="res://Assets/GUI/Status/Icon/Ice Icon.png" id="9_36lpt"]
+[ext_resource type="Texture2D" uid="uid://cff1ct1t37bp8" path="res://Assets/GUI/Status/Icon/Poison Icon.png" id="10_y5kir"]
+[ext_resource type="Texture2D" uid="uid://de0dsmx13le2b" path="res://Assets/GUI/Status/Icon/Earth Icon.png" id="11_wmvsw"]
 
 [node name="Stats_GUI" type="Control"]
 layout_mode = 3
@@ -52,12 +56,16 @@ layout_mode = 2
 
 [node name="Fire" type="TextureRect" parent="HBoxContainer/BarContainer/StatusContainer"]
 layout_mode = 2
+texture = ExtResource("8_vvnav")
 
 [node name="Ice" type="TextureRect" parent="HBoxContainer/BarContainer/StatusContainer"]
 layout_mode = 2
+texture = ExtResource("9_36lpt")
 
 [node name="Poison" type="TextureRect" parent="HBoxContainer/BarContainer/StatusContainer"]
 layout_mode = 2
+texture = ExtResource("10_y5kir")
 
 [node name="Earth" type="TextureRect" parent="HBoxContainer/BarContainer/StatusContainer"]
 layout_mode = 2
+texture = ExtResource("11_wmvsw")

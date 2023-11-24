@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class Player_BattleScene : Characters_Battle, DeckUse
 {
@@ -72,7 +73,7 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
 
     public void UseCard(){ //funzione chiamata per usare la carta
         Is_attacking = true; //il player sta attaccando
-        UseMana(selectedCard.ManaValue); //usiamo il mana
+        UseMana(selectedCard.ManaValue); //usiamo il mana //ERROR OGNI TANTO GENATATO UN ERRORE IN CUI LA CARTA SELEZIONATA NON ESISTE, NON SO PERCHE
         /*PER TESTING*/ GD.Print("Mana: " + Mana);
         //animiamo la carta passando carta e nemico selezionati se la carta ha nemici
         if (selectedCard.CardTarget == 2 /*Opponent = 2*/){ //ANIMAZIONE CARTE SUI NEMICI
@@ -87,6 +88,7 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
         //Rimuoviamo la carta
         BattleDeck.HandsCard.RemoveCard(selectedCard);
         AwaitCardExpired(selectedCard); //aspettiamo che prima l'animazione della carta finisca
+        EmitSignal("CheckStatusBattleSignal"); //controlliamo lo stato della battaglia se qualcuno è morto
         //riprisitinamo a null le scelte
         selectedCard = null;
         selectedEnemy = null;     
@@ -102,7 +104,7 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
 
 	public void SelectTarget(){ //serve per abilitare le collisioni del nemico, chiamata quando la carta ha nemici da selezionare
         //abilitiamo le collisioni dei nemici per poter selezionarlo
-        foreach(Enemy_BattleScene enemy in enemys){
+        foreach(Enemy_BattleScene enemy in enemys.Where(e => e != null)){
             enemy.ToBeSelected();
         }
 	}
@@ -147,7 +149,7 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
         //collegato con Enemy_BattleScene -> Codice BattleScene -> Player
         selectedEnemy = enemy_BattleScene;
         //Una volta selezionato il nemico disabilitiamo le collisioni degli altri
-        foreach(Enemy_BattleScene enemy in enemys){
+        foreach(Enemy_BattleScene enemy in enemys.Where(e => e != null)){
             enemy.ToBeUnselected();
         }
         //eseguiamo la carta poichè il nemico è stato selezionato
