@@ -35,34 +35,30 @@ public partial class Player : CharacterBody3D
 
 		if (Input.IsActionPressed("PlayerMoveLEFT")){
 			inputDirection.X = -Speed;
-			animationTree.Set("parameters/conditions/isIdle", false);
-			animationTree.Set("parameters/conditions/isWalk", true);
 			move.X = -1;
-			animationTree.Set("parameters/Idle/blend_position", move);
-			animationTree.Set("parameters/Walk/blend_position", move);
+			setAll(move, animationTree);
 		}
 
 		if (Input.IsActionPressed("PlayerMoveRIGHT")){
 			inputDirection.X = Speed;
-			animationTree.Set("parameters/conditions/isIdle", false);
-			animationTree.Set("parameters/conditions/isWalk", true);
 			move.X = 1;
-			animationTree.Set("parameters/Idle/blend_position", move);
-			animationTree.Set("parameters/Walk/blend_position", move);
+			setAll(move, animationTree);
 		}
 
 		if (Input.IsActionPressed("PlayerMoveUP")){
 			inputDirection.Z = -Speed;
-			animationTree.Set("parameters/conditions/isIdle", false);
-			animationTree.Set("parameters/conditions/isWalk", true);
 			move.Y = 1;
-			animationTree.Set("parameters/Idle/blend_position", move);
-			animationTree.Set("parameters/Walk/blend_position", move);
+			setAll(move, animationTree);
 		}
 
 		if (Input.IsActionPressed("PlayerMoveDOWN")){
 			inputDirection.Z = Speed;
 			move.Y = -1;
+			setAll(move, animationTree);
+			
+		}
+
+		static void setAll(Vector2 move, AnimationTree animationTree){
 			animationTree.Set("parameters/conditions/isIdle", false);
 			animationTree.Set("parameters/conditions/isWalk", true);
 			animationTree.Set("parameters/Idle/blend_position", move);
