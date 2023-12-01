@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfpc3spshx00m"]
+
+[ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_er842"]
+[ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_7pmqb"]
+[ext_resource type="Texture2D" uid="uid://blq5fahq41dki" path="res://Assets/Cards/DEF.002.png" id="3_38fxl"]
+[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="4_qkphd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bxb7h"]
+resource_local_to_scene = true
+shader = ExtResource("2_7pmqb")
+shader_parameter/max_line_width = 30.0
+shader_parameter/min_line_width = 1.0
+shader_parameter/freq = 4.0
+shader_parameter/block_size = 5.0
+shader_parameter/starting_colour = Vector4(0.6, 0.13, 0.85, 1)
+shader_parameter/ending_colour = Vector4(1, 0.83, 0, 1)
+
+[node name="Card" instance=ExtResource("1_er842")]
+material = SubResource("ShaderMaterial_bxb7h")
+texture = ExtResource("3_38fxl")
+card_name = "Difensore_Inamovibile_Card"
+cardAnimation = ExtResource("4_qkphd")
+damageValue = 3
+foreachEnemy = true
+mana_value = 5
+CardTarget = 1
+StatsType = 2

@@ -47,17 +47,20 @@ public partial class BattleDeck : Node
     }
 
     public void Draw(){ //Serve a pescare una carta dal mazzo temporaneo e metterla in mano
-        //cicla nel tempCards e restituisce la prima carta non nulla
+        while(handsCard.CountCardsInHand() < handsCard.Capacity){ //finchè la mano non è piena
+            //cicla nel tempCards e restituisce la prima carta non nulla
         for(int i = 0; i < tempCards.Length; i++){
             if(tempCards[i] != null){
                 handsCard.AddCard(tempCards[i]);
                 tempCards[i] = null;
-                return; //appena inserita una carta esce dal ciclo e dalla funzione
+                //return;
             }
         } 
         //se non ci sono carte riempe il mazzo e richiama la funzione
         CreateTempDeck();
-        Draw(); 
+        Draw();
+        }
+        
     }
     #endregion
 

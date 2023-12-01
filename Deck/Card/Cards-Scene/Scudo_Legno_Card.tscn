@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://dl6q8wdnwodck"]
+
+[ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_402oh"]
+[ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_n5fat"]
+[ext_resource type="Texture2D" uid="uid://wr0uxg88srq6" path="res://Assets/Cards/DEF.001.png" id="3_cgmgm"]
+[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="4_xgjxr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_66odi"]
+resource_local_to_scene = true
+shader = ExtResource("2_n5fat")
+shader_parameter/max_line_width = 30.0
+shader_parameter/min_line_width = 1.0
+shader_parameter/freq = 4.0
+shader_parameter/block_size = 5.0
+shader_parameter/starting_colour = Vector4(0.6, 0.13, 0.85, 1)
+shader_parameter/ending_colour = Vector4(1, 0.83, 0, 1)
+
+[node name="Card" instance=ExtResource("1_402oh")]
+material = SubResource("ShaderMaterial_66odi")
+texture = ExtResource("3_cgmgm")
+card_name = "Scudo_Legno_Card"
+cardAnimation = ExtResource("4_xgjxr")
+damageValue = 15
+mana_value = 3
+CardTarget = 1
+StatsType = 2

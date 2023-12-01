@@ -15,6 +15,7 @@ public partial class Dungeon : Node
 	private Node roomContainer;
 	private Control gameover_Screen;
 	private Control battleWin_Screen;
+	private AudioStreamPlayer selectSound;
 	#endregion
 
 	#region READY ————————————————————————————————————————————————————————————————————————————
@@ -22,6 +23,7 @@ public partial class Dungeon : Node
 		roomContainer = GetNode("RoomContainer");
 		gameover_Screen = GetNode<Control>("Win_OverContainer/GameOver_Screen");
 		battleWin_Screen = GetNode<Control>("Win_OverContainer/BattleWin_Screen");
+		selectSound = GetNode<AudioStreamPlayer>("SFX&Music/SelectSound");
 
 		gameover_Screen.Hide();
 		battleWin_Screen.Hide();
@@ -37,6 +39,7 @@ public partial class Dungeon : Node
 		roomContainer.AddChild(rooms[room_number].Instantiate());
 		roomContainer.GetChild<BattleScene>(0).Connect("GameOverSignal", new Callable(this, "GameOver"));
 		roomContainer.GetChild<BattleScene>(0).Connect("WinSignal", new Callable(this, "Win"));
+		roomContainer.GetChild<BattleScene>(0).Connect("PlaySoundSignal", new Callable(this, "PlaySound"));
 	}
 	public void GameOver(){
 		//blocco il processamento della stanza, senza eliminarla
@@ -58,12 +61,27 @@ public partial class Dungeon : Node
 		}
 		
 	}
+	public void HideStartScreen(){
+		GetNode<Control>("StartView").Hide();
+		GetNode<CanvasLayer>("StartView/GrassLayer").Hide();
+		GetNode<CanvasLayer>("StartView/WallLayer").Hide();
+		GetNode<CanvasLayer>("StartView/StartButtonLayer").Hide();
+	}
+	public void PlaySound(string sound){
+		switch (sound){
+			case "select":
+				selectSound.Play();
+				break;
+		}
+	}
 	#endregion
 
 	#region SIGNAL CALLBACKS ———————————————————————————————————————————————————————————————————
 	public void _on_start_button_pressed(){
+		PlaySound("select");
+		GetNode<AudioStreamPlayer>("SFX&Music/Water&BirdMusic").Stop();
 		ChangeRoomTo(0);
-		GetNode<Control>("StartView").Hide();
+		HideStartScreen();
 	}
 	#endregion
 

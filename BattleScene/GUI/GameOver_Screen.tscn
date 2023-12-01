@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://blgg0l00nf4xa"]
+[gd_scene load_steps=2 format=3 uid="uid://blgg0l00nf4xa"]
+
+[ext_resource type="FontFile" uid="uid://d3vvagi6amgye" path="res://Assets/Fonts/VCR OSD Mono 400.ttf" id="1_1fprd"]
 
 [node name="GameOver_Screen" type="Control"]
 layout_mode = 3
@@ -22,5 +24,6 @@ offset_right = 46.0
 offset_bottom = 13.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_1fprd")
 theme_override_font_sizes/font_size = 100
 text = "GAME OVER"

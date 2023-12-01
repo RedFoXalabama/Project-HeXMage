@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bw6316ro85a38"]
+
+[ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="1_hfego"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_hfego")
+shader_parameter/max_line_width = 30.0
+shader_parameter/min_line_width = 1.0
+shader_parameter/freq = 4.0
+shader_parameter/block_size = 5.0
+shader_parameter/starting_colour = Vector4(0.6, 0.13, 0.85, 1)
+shader_parameter/ending_colour = Vector4(1, 0.83, 0, 1)

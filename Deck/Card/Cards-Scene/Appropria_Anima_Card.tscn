@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://cv80xali64il"]
+
+[ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_3b06j"]
+[ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_wepti"]
+[ext_resource type="Texture2D" uid="uid://dmwphvqvor3uf" path="res://Assets/Cards/PS.002.png" id="3_6p3cj"]
+[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="4_bffu0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6e42b"]
+resource_local_to_scene = true
+shader = ExtResource("2_wepti")
+shader_parameter/max_line_width = 30.0
+shader_parameter/min_line_width = 1.0
+shader_parameter/freq = 4.0
+shader_parameter/block_size = 5.0
+shader_parameter/starting_colour = Vector4(0.6, 0.13, 0.85, 1)
+shader_parameter/ending_colour = Vector4(1, 0.83, 0, 1)
+
+[node name="Card" instance=ExtResource("1_3b06j")]
+material = SubResource("ShaderMaterial_6e42b")
+texture = ExtResource("3_6p3cj")
+card_name = "Appropria_Anima_Card"
+cardAnimation = ExtResource("4_bffu0")
+damageValue = 8
+foreachEnemy = true
+mana_value = 5

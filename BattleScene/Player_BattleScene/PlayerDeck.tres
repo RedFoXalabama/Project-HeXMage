@@ -1,11 +1,8 @@
-[gd_resource type="Resource" script_class="Deck" load_steps=5 format=3 uid="uid://bftinnyy3a5lq"]
+[gd_resource type="Resource" script_class="Deck" load_steps=2 format=3 uid="uid://bftinnyy3a5lq"]
 
 [ext_resource type="Script" path="res://Deck/Deck.cs" id="1_sdmx0"]
-[ext_resource type="PackedScene" uid="uid://cr8bhu1ahnfa0" path="res://Deck/Card/Cards-Scene/Colpo Grosso_Card.tscn" id="1_sfpn4"]
-[ext_resource type="PackedScene" uid="uid://pysug2bfefyw" path="res://Deck/Card/Cards-Scene/Colpo_Card.tscn" id="2_3apxv"]
-[ext_resource type="PackedScene" uid="uid://ig31u5rkab5t" path="res://Deck/Card/Cards-Scene/Pozione_Card.tscn" id="3_4xmy4"]
 
 [resource]
 script = ExtResource("1_sdmx0")
 capacity = 10
-exportedCards = [ExtResource("1_sfpn4"), ExtResource("2_3apxv"), ExtResource("3_4xmy4"), null, null, null, null, null, null, null]
+exportedCards = [null, null, null, null, null, null, null, null, null, null]

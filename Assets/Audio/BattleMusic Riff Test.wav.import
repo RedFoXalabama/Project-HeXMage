@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bewljyubmxudy"
+path="res://.godot/imported/BattleMusic Riff Test.wav-a246e1ba6681323e8ea94ff4d67c91f3.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/BattleMusic Riff Test.wav"
+dest_files=["res://.godot/imported/BattleMusic Riff Test.wav-a246e1ba6681323e8ea94ff4d67c91f3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

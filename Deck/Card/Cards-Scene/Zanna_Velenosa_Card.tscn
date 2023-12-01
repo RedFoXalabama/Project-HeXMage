@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://o1jmw03sark6"]
+
+[ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_5axyt"]
+[ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_mn75y"]
+[ext_resource type="Texture2D" uid="uid://qlcx52andrdp" path="res://Assets/Cards/ATK.004.png" id="3_waopw"]
+[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="4_pmcc2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gynl0"]
+resource_local_to_scene = true
+shader = ExtResource("2_mn75y")
+shader_parameter/max_line_width = 30.0
+shader_parameter/min_line_width = 1.0
+shader_parameter/freq = 4.0
+shader_parameter/block_size = 5.0
+shader_parameter/starting_colour = Vector4(0.6, 0.13, 0.85, 1)
+shader_parameter/ending_colour = Vector4(1, 0.83, 0, 1)
+
+[node name="Card" instance=ExtResource("1_5axyt")]
+material = SubResource("ShaderMaterial_gynl0")
+texture = ExtResource("3_waopw")
+card_name = "Zanna_Velenosa_Card"
+cardAnimation = ExtResource("4_pmcc2")
+damageValue = 6
+specValue = 3
+probValue = 100
+mana_value = 3
+CardTarget = 2
+ElementType = 4

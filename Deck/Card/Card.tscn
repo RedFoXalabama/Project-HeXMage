@@ -1,18 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://b6cae6ieantv4"]
+[gd_scene load_steps=11 format=3 uid="uid://b6cae6ieantv4"]
 
-[ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="1_5vgbr"]
+[ext_resource type="Material" uid="uid://bw6316ro85a38" path="res://Deck/Card/Card_ShaderMaterial.tres" id="1_35yte"]
 [ext_resource type="Script" path="res://Deck/Card/Card.cs" id="1_uievq"]
 [ext_resource type="Texture2D" uid="uid://s0n4a4o1mg5r" path="res://Assets/Cards/prototype.png" id="2_vxyjd"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vhesa"]
-resource_local_to_scene = true
-shader = ExtResource("1_5vgbr")
-shader_parameter/max_line_width = 30.0
-shader_parameter/min_line_width = 1.0
-shader_parameter/freq = 4.0
-shader_parameter/block_size = 5.0
-shader_parameter/starting_colour = Vector4(0.6, 0.5, 0.6, 1)
-shader_parameter/ending_colour = Vector4(0.5, 0.3, 0.8, 0.9)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ashxh"]
 size = Vector2(144, 192)
@@ -338,7 +328,7 @@ _data = {
 }
 
 [node name="Card" type="TextureRect"]
-material = SubResource("ShaderMaterial_vhesa")
+material = ExtResource("1_35yte")
 offset_right = 150.0
 offset_bottom = 200.0
 pivot_offset = Vector2(75, 100)

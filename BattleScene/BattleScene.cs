@@ -24,6 +24,8 @@ public partial class BattleScene : Node2D
 	//Collegato BattleScene -> Dungeon Code -> Dungeon
 	[Signal] public delegate void GameOverSignalEventHandler(); //Segnale per il gameover
 	//Collegato BattleScene -> Dungeon Code -> Dungeon
+	[Signal] public delegate void PlaySoundSignalEventHandler(string sound); //Segnale per far partire un suono
+	//Collegato BattleScene -> Dungeon Code -> Dungeon
 	#endregion
 
 	#region PACKEDSCENE ———————————————————————————————————————————————————————————————————————————
@@ -39,12 +41,15 @@ public partial class BattleScene : Node2D
 	private Marker2D enemyPosition3;
 	private HandCards_GUI handCards_GUI; //GUI delle carte in mano
 	private TextureButton turnButton; //bottone per terminare il turno
+	private AudioStreamPlayer battleMusic;
+	private AudioStreamPlayer battleMusic_riff;
 	#endregion
 
 	#region ATTRIBUTI ———————————————————————————————————————————————————————————————————————————
 	private Enemy_BattleScene[] enemys; //array di nemici
 	private Enemy_BattleScene[] dead_enemys; //array di nemici morti
 	private Queue<Marker2D> turnQueue; //coda dei turni, prendo le loro posizioni cosi da poterli tenere tutti in una sola coda
+	private int music_counter = 0;
 	#endregion
 
 	#region READY ———————————————————————————————————————————————————————————————————————————
@@ -57,6 +62,8 @@ public partial class BattleScene : Node2D
 		enemyPosition3 = GetNode<Marker2D>("EnemyContainer/EnemyPosition3");
 		handCards_GUI = GetNode<HandCards_GUI>("HandCards_GUI");
 		turnButton = handCards_GUI.GetNode<TextureButton>("MarginContainer/UpHBoxContainer/TurnButton");
+		battleMusic = GetNode<AudioStreamPlayer>("Music/BattleMusic");
+		battleMusic_riff = GetNode<AudioStreamPlayer>("Music/BattleMusic_Riff");
 
 		//inizializzo gli attributi
 		turnQueue = new Queue<Marker2D>();
@@ -170,6 +177,8 @@ public partial class BattleScene : Node2D
 		CheckEnemysLife(); // controlla quali nemici sono morti e li rimuove
 		if (player.Life <= 0){
 			//gameover
+			player.Animate("Dead");
+			player.PlaySound("dead");
 			GameOver();
 		} else if (CountElements(enemys) == 0){
 			//vittoria
@@ -189,7 +198,9 @@ public partial class BattleScene : Node2D
 
 	public void CheckEnemysLife(){// controlla quali nemici sono morti e li rimuove
 		for (int i = 0; i < CountElements(enemys); i++){
-			if (enemys[i].Life <= 0){
+			if (enemys[i] != null && enemys[i].Life <= 0){
+				enemys[i].PlaySound("dead");
+				enemys[i].Animate("Dead");
 				//rimuoviamolo dalla coda
 				RemoveElementFromQueue(turnQueue, enemys[i].GetParent<Marker2D>());
 				//salviamo prima le informazioni del nemico morto
@@ -254,6 +265,19 @@ public partial class BattleScene : Node2D
 		//se il player muore, allora la battaglia finisce
 		GameOver();
 	}*/
+
+	public void _on_battle_music_finished(){
+		music_counter++;
+		if (music_counter == 3){
+			battleMusic_riff.Play();
+		} else {
+			battleMusic.Play();
+		}
+	}
+	public void _on_battle_music_riff_finished(){
+		battleMusic.Play();
+		music_counter = 0;
+	}
 	#endregion
 
 	#region FUNCTIONALITY ————————————————————————————————————————————————————————————————————

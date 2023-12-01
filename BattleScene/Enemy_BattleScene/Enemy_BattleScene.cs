@@ -24,7 +24,8 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 	#endregion
 	
 	#region NATURE ———————————————————————————————————————————————————————————————————————————
-	[Export] private float reaction; //reazione del nemico
+	private float reaction; //reazione del nemico
+	[Export] bool isBoss; //se il nemico è un boss
 	[Flags] public enum EnemyNatureEnum{ //NATURA DEL NEMICO
 		Docile = 1 << 1,
 		Netural = 1 << 2,
@@ -39,7 +40,13 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 		//inizializzo i nodi
 		BattleDeck = GetNode<BattleDeck>("BattleDeck");
 		AnimationPlayer_char = GetNode<AnimationPlayer>("AnimationPlayer");
+		AnimationTree_char = GetNode<AnimationTree>("AnimationTree");
 		collisionShape2D = GetNode<CollisionShape2D>("Area2D/CollisionShape2D");
+		DeathSound = GetNode<AudioStreamPlayer>("SFX/DeathSound");
+		HitSound1 = GetNode<AudioStreamPlayer>("SFX/HitSound1");
+		HitSound2 = GetNode<AudioStreamPlayer>("SFX/HitSound2");
+		HitSound3 = GetNode<AudioStreamPlayer>("SFX/HitSound3");
+		PassiveSound = GetNode<AudioStreamPlayer>("SFX/PassiveSound");
 		//emetto il segnale per preparare il battle deck
 		EmitSignal("PrepareBattleDeckSignal"); //emette il segnale per preparare le risorse deck e poi il battledeck
 		ToBeUnselected(); //disattiva la collisione cosi da non poter ricevere input quando non desiderato
@@ -428,6 +435,9 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 	#endregion
 
 	#region GETTER/SETTER ———————————————————————————————————————————————————————————————————————————
-
+	public bool IsBoss{
+		get{return isBoss;}
+		set{isBoss = value;}
+	}
 	#endregion
 }

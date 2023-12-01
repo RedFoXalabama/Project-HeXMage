@@ -20,6 +20,7 @@ card_name = "LOL_Card"
 cardAnimation = ExtResource("3_jogqk")
 cardLevel = 5
 specValue = 2
+probValue = 100
 mana_value = 5
 CardTarget = 2
 ElementType = 4
