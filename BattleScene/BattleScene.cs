@@ -197,20 +197,28 @@ public partial class BattleScene : Node2D
 	}
 
 	public void CheckEnemysLife(){// controlla quali nemici sono morti e li rimuove
-		for (int i = 0; i < CountElements(enemys); i++){
-			if (enemys[i] != null && enemys[i].Life <= 0){
-				enemys[i].PlaySound("dead");
-				enemys[i].Animate("Dead");
+		int i = 0;
+		foreach (Enemy_BattleScene enemy in enemys){
+			if (enemy != null && enemy.Life <= 0){
+				enemy.PlaySound("dead");
+				enemy.Animate("Dead");
 				//rimuoviamolo dalla coda
-				RemoveElementFromQueue(turnQueue, enemys[i].GetParent<Marker2D>());
+				RemoveElementFromQueue(turnQueue, enemy.GetParent<Marker2D>());
 				//salviamo prima le informazioni del nemico morto
 				dead_enemys[i] = enemys[i];
-				//poi liberiamo la posizione
-				enemys[i].QueueFree();
-				enemys[i] = null;
-				EmitSignal("PassEnemysToSelect", enemys); //se i nemici sono morti allora passiamo nuovamente l'array aggiornato
+				//aspettiamo che il nemico finisca l'animazione e poi lo rimuoviamo
+				AwaitEnemyAnimateDead(i);
 			}
+			i++;
 		}
+	}
+	public async void AwaitEnemyAnimateDead(int i){ //serve per aspettare che l'animazione del nemico finisca e poi lo rimuoviamo
+		await ToSignal(enemys[i].AnimationPlayer_char, "animation_finished");
+		//poi liberiamo la posizione
+		enemys[i].QueueFree();
+		await ToSignal(enemys[i], "tree_exited");
+		enemys[i] = null;
+		EmitSignal("PassEnemysToSelect", enemys); //se i nemici sono morti allora passiamo nuovamente l'array aggiornato
 	}
 	#endregion
 

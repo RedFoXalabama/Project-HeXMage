@@ -166,6 +166,7 @@ EnemyNature = 2
 char_name = "WormTest"
 life = 50
 max_life = 50
+shield = 25
 max_shield = 25
 icon = ExtResource("3_06seg")
 
