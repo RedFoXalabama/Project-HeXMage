@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://b0y2j5lel440p"]
 
 [ext_resource type="Script" path="res://BattleScene/Dungeon.cs" id="1_1w63x"]
-[ext_resource type="PackedScene" uid="uid://cttnu5lhnv0yl" path="res://BattleScene/BattleScene.tscn" id="2_tn04t"]
+[ext_resource type="PackedScene" uid="uid://clcvdw6jbnm8g" path="res://BattleScene/BattleScene.tscn" id="2_tn04t"]
 [ext_resource type="PackedScene" uid="uid://blgg0l00nf4xa" path="res://BattleScene/GUI/GameOver_Screen.tscn" id="2_vjijt"]
 [ext_resource type="TileSet" uid="uid://crbpcufctummg" path="res://Assets/Dungeon/Dungeon TileSet Prova.tres" id="3_bl5kv"]
 [ext_resource type="Texture2D" uid="uid://bdfnelfcwlbfi" path="res://Assets/GUI/TurnButton/StartBattleButton_Normal.png" id="3_dtt06"]

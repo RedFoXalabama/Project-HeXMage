@@ -21,6 +21,7 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 	private CollisionShape2D collisionShape2D;
 	private Player_BattleScene player;
 	private CardAnimation cardAnimation_toawait;
+	private bool turnDone = false; //se il turno è finito (serve per evitare che il turno si ripeta a causa di ice)
 	#endregion
 	
 	#region NATURE ———————————————————————————————————————————————————————————————————————————
@@ -55,6 +56,8 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 	
 	#region FUNZIONI ———————————————————————————————————————————————————————————————————————————
 	public void EndTurn(){ //termina il turno
+		GD.Print("Enemy: " + GetParent().Name + " EndTurn");
+		turnDone = false;
 		IsTurn = false;
 		EmitSignal("EndTurnSignal"); //invia il segnale per terminare il turno e passare al successivo
 	}
@@ -327,12 +330,10 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 		return choosenCards; //resituiamo la coda di carte pronta per essere eseguita
 	}
 	public async void ExecutionCard(Queue<Card> cards){ //funzione per eseguire le carte
-		/*TESTING*/ GD.Print("Turno nemico iniziato");
 		Is_attacking = true; //l'enemy sta attaccando
 		var cards_count = cards.Count; //contiamo le carte, bisogna farlo prima perchè la coda cambia
 		for(int i = 0; i < cards_count; i++){
 			if (cards.Peek().ManaValue <= Mana){ //se la carta ha un costo minore o uguale al mana
-				/*TESTING*/ GD.Print("Carta eseguita: " + cards.Peek().CardName + " Mana: " + cards.Peek().ManaValue);
 				var selectedCard = cards.Dequeue(); //selezioniamo la carta
 				UseMana(selectedCard.ManaValue); //usiamo il mana
 				if (selectedCard.CardTarget == 2 /*Opponent*/){ // la carta è rivolta contro un avversario (player)
@@ -340,8 +341,8 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 					selectedCard.ExecuteCard(player);
 					BattleDeck.HandsCard.RemoveCard(selectedCard); //rimuoviamo la carta dalla mano
 					EmitSignal("AnimateCardOnPlayer", selectedCard); //Animiamo la carta sul player
-				} else { //la carta è rivolta contro se stesso (nemico)
-					Animate("Attack"); //Animiamo il nemico che attacca
+				} else if (selectedCard.CardTarget == 1 /*Self*/){ //la carta è rivolta contro se stesso (nemico)
+					Animate("Passive"); //Animiamo il nemico che attacca
 					selectedCard.ExecuteCard(this);
 					BattleDeck.HandsCard.RemoveCard(selectedCard); //rimuoviamo la carta dalla mano
 					EmitSignal("AnimateCardOnEnemy", selectedCard, this); //animiamo la carta sul nemico
@@ -349,11 +350,9 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 				await ToSignal(cardAnimation_toawait, "EnemyCardAnimationFinished"); //aspettiamo che l'animazione finisca
 				EmitSignal("CheckStatusBattleSignal"); //controlliamo lo stato della battaglia se qualcuno è morto
 			} else {
-				/*TESTING*/ GD.Print("Carta non eseguita: " + cards.Peek().Name);
 				continue;
 			}
 		}
-		/*TESTING*/ GD.Print("Turno nemico finito");
 		//una volta ciclate tutte le carte, finiamo il turno
 		Is_attacking = false;
 		EndTurn();
@@ -405,15 +404,20 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 	}
 
 	public void _on_battle_scene_is_turn_signal(){ //funzione del segnale IsTurnSignal per eseguire la mossa quando è il turno del nemico
-        if (IsTurn){
-		    ResetMana(); //resettiamo il mana
-            DrawCard(); //peschiamo una carta
-			
-			//ENEMY AI
-			PlayerStatusAnalysis(player); //analizziamo lo stato del player
-			EnemyStatusAnalysis(); //analizziamo lo stato del nemico
-			var choosenCards = CardsInHandAnalysis(); //analizziamo le carte in mano
-			ExecutionCard(choosenCards); //eseguiamo le carte
+		/*TESTING*/GD.Print("Enemy: " + GetParent().Name + " IsTurn: " + IsTurn + " TurnDone: " + turnDone);
+		if (IsTurn && turnDone == false){
+			if (IsOnIce == false){
+				ResetMana(); //resettiamo il mana
+            	DrawCard(); //peschiamo una carta
+				//ENEMY AI
+				PlayerStatusAnalysis(player); //analizziamo lo stato del player
+				EnemyStatusAnalysis(); //analizziamo lo stato del nemico
+				var choosenCards = CardsInHandAnalysis(); //analizziamo le carte in mano
+				ExecutionCard(choosenCards); //eseguiamo le carte
+				turnDone = true;
+			} else if (IsOnIce) {
+				EndTurn();
+			} 
         }
     }
 
@@ -438,6 +442,10 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 	public bool IsBoss{
 		get{return isBoss;}
 		set{isBoss = value;}
+	}
+	public bool TurnDone{
+		get{return turnDone;}
+		set{turnDone = value;}
 	}
 	#endregion
 }

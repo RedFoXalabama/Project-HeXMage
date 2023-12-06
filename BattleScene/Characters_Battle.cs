@@ -102,6 +102,7 @@ using System;
 		//faccio partire il suono
 		if (value < 0){ //controlliamo se togliamo o aggiungiamo vita
 			PlaySound("hit");
+			animationPlayer_char.Play("TakeDamage");
 		} else {
 			PlaySound("passive");
 		}
@@ -113,7 +114,7 @@ using System;
 		//controlliamo se la vita è arrivata a 0 e nel caso emettiamo il segnale per dire che il character è morto
 		if(life <= 0){
 				life = 0;
-			}
+		}
 		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 	}
 	public void AddMana(int value){ //non dovrebbe servire
@@ -133,6 +134,7 @@ using System;
 		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 	}
 	public void ResetMana(){
+		//ghiaccio priorità su veleno per questo eseguito per ultimo
 		if (isOnPoison){
 			mana = max_mana/2;
 		} else {
@@ -156,22 +158,22 @@ using System;
 	public Boolean CheckElementalStatus(){ //funzione per controllare se il character è in uno stato elementale
 	//il character può trovarsi in tutti gli stati elementali
 	//ritorna false se non salta il turno, ritorna true se lo salta.
+		bool skipTurn = false;
 		if (isOnFire){
 			if (fireDamage.Y > 0){
-				TakeDamage((1/6)*life); //riduciamo la vita ad un sesto
+				TakeDamage((int)(0.167F * life)); //riduciamo la vita ad un sesto
 				fireDamage.Y--; //diminuiamo il turno
 			} else {
 				isOnFire = false;
 			}
-			return false;
+			skipTurn = false;
 		}
 		if (isOnIce && iceTurns > 0){
 			iceTurns--; //diminuiamo il turno
 			if (iceTurns == 0){ // se il turno arriva a zero, lo stato si disattiva
 				isOnIce = false;
 			}
-			/*TESTING*/GD.Print(Name + " ice: "+ isOnIce.ToString());
-			return true;
+			skipTurn = true;
 		}
 		if (isOnPoison){
 			if (poisonDamage.Y > 0){
@@ -181,14 +183,14 @@ using System;
 			} else {
 				isOnPoison = false;
 			}
-			return false;
+			skipTurn = false; 
 		}
 		if (isOnEarth){
 			//TO-DO
 		}
 		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 		EmitSignal("CheckStatusBattleSignal"); //emette il segnale per controllare se il character è morto o ha ucciso qualcuno
-		return false; // Aggiunto return false per gestire il caso in cui nessuno dei precedenti if venga soddisfatto
+		return skipTurn; // Aggiunto return false per gestire il caso in cui nessuno dei precedenti if venga soddisfatto
 	}
 	public Boolean CheckIfOnStatus(){ //serve a controllare se il character è in uno stato elementale
 		if (isOnFire || isOnIce || isOnPoison || isOnEarth){

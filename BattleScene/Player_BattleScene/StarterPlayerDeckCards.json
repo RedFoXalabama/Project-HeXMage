@@ -1,6 +1,10 @@
 {
-	"0" : "res://Deck/Card/Cards-Scene/Colpo Grosso_Card.tscn",
-	"1" : "res://Deck/Card/Cards-Scene/Colpo_Card.tscn",
-	"2" : "res://Deck/Card/Cards-Scene/Pozione_Card.tscn"
-	
+	"0" : "res://Deck/Card/Cards-Scene/Gelato_Card.tscn",
+	"1" : "res://Deck/Card/Cards-Scene/AtkHard_Card.tscn",
+  	"2" : "res://Deck/Card/Cards-Scene/Pozione_Card.tscn",
+  	"3" : "res://Deck/Card/Cards-Scene/Salamandra_Fiammeggiante_Card.tscn",
+  	"4" : "res://Deck/Card/Cards-Scene/Scudo_Legno_Card.tscn",
+  	"5" : "res://Deck/Card/Cards-Scene/Difensore_Inamovibile_Card.tscn",
+  	"6" : "res://Deck/Card/Cards-Scene/Appropria_Anima_Card.tscn",
+	"7" : "res://Deck/Card/Cards-Scene/Zanna_Velenosa_Card.tscn"
 }

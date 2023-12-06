@@ -20,8 +20,8 @@ pescata solo se rimane da sola"
 material = SubResource("ShaderMaterial_mbx1v")
 card_name = "Attacco Finale_Card"
 cardAnimation = ExtResource("3_lkd4l")
-cardLevel = 3
-specValue = 21
+damageValue = 10
+specValue = 2
 mana_value = 10
 CardTarget = 2
 AttackType = 2
