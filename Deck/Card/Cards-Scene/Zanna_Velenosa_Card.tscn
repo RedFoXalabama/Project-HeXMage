@@ -25,4 +25,5 @@ specValue = 3
 probValue = 100
 mana_value = 3
 CardTarget = 2
+AttackType = 1
 ElementType = 4

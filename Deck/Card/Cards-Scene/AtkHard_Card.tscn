@@ -2,26 +2,25 @@
 
 [ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_uca7s"]
 [ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_x50db"]
-[ext_resource type="Texture2D" uid="uid://djoo8t1oe3qpi" path="res://Assets/Cards/prototype Colpo Grosso.png" id="3_2t37s"]
+[ext_resource type="Texture2D" uid="uid://bvwl4oxxewfu4" path="res://Assets/Cards/1.png" id="3_cnc37"]
 [ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="3_nbv5v"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cr32s"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j7rba"]
 resource_local_to_scene = true
 shader = ExtResource("2_x50db")
 shader_parameter/max_line_width = 30.0
 shader_parameter/min_line_width = 1.0
 shader_parameter/freq = 4.0
 shader_parameter/block_size = 5.0
-shader_parameter/starting_colour = Vector4(0.6, 0.5, 0.6, 1)
-shader_parameter/ending_colour = Vector4(0.5, 0.3, 0.8, 0.9)
+shader_parameter/starting_colour = Vector4(0.6, 0.13, 0.85, 1)
+shader_parameter/ending_colour = Vector4(1, 0.83, 0, 1)
 
 [node name="Card" instance=ExtResource("1_uca7s")]
-material = SubResource("ShaderMaterial_cr32s")
-texture = ExtResource("3_2t37s")
-card_name = "Colpo Grosso_Card"
+material = SubResource("ShaderMaterial_j7rba")
+texture = ExtResource("3_cnc37")
+card_name = "AtkHard_Card"
 cardAnimation = ExtResource("3_nbv5v")
-cardLevel = 1
-specValue = 20
+damageValue = 10
 mana_value = 3
 CardTarget = 2
 AttackType = 2

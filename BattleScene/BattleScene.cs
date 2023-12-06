@@ -129,6 +129,8 @@ public partial class BattleScene : Node2D
 		ChangeTurn();
 	}
 	public void ChangeTurn(){ //funzione collegata tramite segnale Connect in enemy per il cambio turno
+		GD.Print("- - - CAMBIO TURNO - - -");
+		ResetEnemyTurnDone(); //resetta il turndone dei nemici nel caso non venga resettato precedentemente da endturn
 		Marker2D char_turn = turnQueue.Dequeue();
 		switch (char_turn.Name){
 			case "PlayerPosition":
@@ -136,56 +138,59 @@ public partial class BattleScene : Node2D
 				turnButton.Disabled = false; //abilita il bottone per terminare il turno
 				turnQueue.Enqueue(char_turn); //rimetto il player in coda
 				if (player.CheckElementalStatus()){  //controlla se il player è in uno stato elementale e nel caso salta il turno
-					GD.Print("Iced"); //TO-DO EFFETTO GRAFICO ICED
 					turnButton.EmitSignal("pressed"); //funziona solo con pressed e non Pressed
 				};
 				EmitSignal("PassEnemysToSelect", enemys); //passa i nemici selezionati
+				/*TESTING*/GD.Print("IS TURN SIGNAL PLAYER");
 				EmitSignal("IsTurnSignal"); //segnale per far fare la mossa al player
 				break;
 			case "EnemyPosition1":
 				char_turn.GetChild<Enemy_BattleScene>(0).IsTurn = true; //abilita il turno del nemico a fare la mossa
 				turnQueue.Enqueue(char_turn); //rimetto il nemico in coda
-				if (char_turn.GetChild<Enemy_BattleScene>(0).CheckElementalStatus()){  //controlla se il player è in uno stato elementale e nel caso salta il turno
-					char_turn.GetChild<Enemy_BattleScene>(0).EndTurn();
-				};
+				char_turn.GetChild<Enemy_BattleScene>(0).CheckElementalStatus();
 				EmitSignal("PassPlayerToSelect", player); //passa il player, lo faccio ad ogni cambio turno perchè bisogna aggiornare i dati del player
+				/*TESTING*/GD.Print("IS TURN SIGNAL ENEMY1");
 				EmitSignal("IsTurnSignal"); //segnale per far fare la mossa al nemico
 				break;
 			case "EnemyPosition2":
 				char_turn.GetChild<Enemy_BattleScene>(0).IsTurn = true; //abilita il turno del nemico a fare la mossa
 				turnQueue.Enqueue(char_turn); //rimetto il nemico in coda
-				if (char_turn.GetChild<Enemy_BattleScene>(0).CheckElementalStatus()){  //controlla se il player è in uno stato elementale e nel caso salta il turno
-					char_turn.GetChild<Enemy_BattleScene>(0).EndTurn();
-				};
+				char_turn.GetChild<Enemy_BattleScene>(0).CheckElementalStatus();
 				EmitSignal("PassPlayerToSelect", player); //passa il player, lo faccio ad ogni cambio turno perchè bisogna aggiornare i dati del player
+				/*TESTING*/GD.Print("IS TURN SIGNAL ENEMY 2");
 				EmitSignal("IsTurnSignal"); //segnale per far fare la mossa al nemico
 				break;
 			case "EnemyPosition3":
 				char_turn.GetChild<Enemy_BattleScene>(0).IsTurn = true; //abilita il turno del nemico a fare la mossa
 				turnQueue.Enqueue(char_turn); //rimetto il nemico in coda
-				if (char_turn.GetChild<Enemy_BattleScene>(0).CheckElementalStatus()){  //controlla se il player è in uno stato elementale e nel caso salta il turno
-					char_turn.GetChild<Enemy_BattleScene>(0).EndTurn();
-				};
+				char_turn.GetChild<Enemy_BattleScene>(0).CheckElementalStatus();
 				EmitSignal("PassPlayerToSelect", player); //passa il player, lo faccio ad ogni cambio turno perchè bisogna aggiornare i dati del player
+				/*TESTING*/GD.Print("IS TURN SIGNAL ENEMY 3");
 				EmitSignal("IsTurnSignal"); //segnale per far fare la mossa al nemico
 				break;
 		}
 	}
 
-	public void CheckStatusBattle(){ //controlla lo stato della battaglia 
+	public async void CheckStatusBattle(){ //controlla lo stato della battaglia 
 		//return false se la battaglia non è finita, ritorna true se la battaglia è finita
 		CheckEnemysLife(); // controlla quali nemici sono morti e li rimuove
 		if (player.Life <= 0){
 			//gameover
 			player.Animate("Dead");
 			player.PlaySound("dead");
+			await ToSignal(player.AnimationPlayer_char, "animation_finished");
 			GameOver();
 		} else if (CountElements(enemys) == 0){
 			//vittoria
 			Win();
 		}
 	}
-	
+	public void ResetEnemyTurnDone(){
+		foreach (Enemy_BattleScene enemy in enemys.Where(enemy => enemy != null)){
+			enemy.TurnDone = false;
+		}
+	}
+
 	public void Win(){//funzione vittoria da definire
 		//gestito poi da Dungeon
 		EmitSignal("WinSignal");
@@ -268,11 +273,6 @@ public partial class BattleScene : Node2D
 		//avvio l'animazione
 		enemy_BattleScene.GetParent<Marker2D>().GetChild<CardAnimation>(1).PlayAnimation("enemy");
 	}
-
-	/*public void _on_player_character_is_dead(){
-		//se il player muore, allora la battaglia finisce
-		GameOver();
-	}*/
 
 	public void _on_battle_music_finished(){
 		music_counter++;

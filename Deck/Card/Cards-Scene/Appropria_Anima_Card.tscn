@@ -23,3 +23,5 @@ cardAnimation = ExtResource("4_bffu0")
 damageValue = 8
 foreachEnemy = true
 mana_value = 5
+CardTarget = 1
+StatsType = 1

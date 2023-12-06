@@ -74,8 +74,6 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
     public void UseCard(){ //funzione chiamata per usare la carta
         Is_attacking = true; //il player sta attaccando
         UseMana(selectedCard.ManaValue); //usiamo il mana //ERROR OGNI TANTO GENATATO UN ERRORE IN CUI LA CARTA SELEZIONATA NON ESISTE, NON SO PERCHE
-        /*PER TESTING*/ GD.Print("Mana: " + Mana);
-
         //passiamo il valore dei nemici vivi contando anche i boss che valgono 3
         var enemyValueCount = 0;
         foreach(Enemy_BattleScene enemy in enemys.Where(e => e != null)){

@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cnjjs6ggrol1u" path="res://Assets/Cards/Card Effect/Explosion2_30fps_30x30_16x16.png" id="2_pgaqi"]
 
 [node name="CardAnimation" instance=ExtResource("1_bhgxw")]
+modulate = Color(1, 1, 1, 0.180392)
 scale = Vector2(20, 20)
 texture = ExtResource("2_pgaqi")
 hframes = 6

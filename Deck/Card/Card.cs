@@ -108,7 +108,7 @@ public partial class Card : TextureRect
 				if (foreachEnemy == true) {
 					enemy.AddLife(enemyNumValue * (damageValue + specValue)); //DA CAMBIARE
 				} else if (foreachEnemy == false) {
-					enemy.AddLife(1 + damageValue + specValue); //DA CAMBIARE
+					enemy.AddLife(damageValue + specValue); //DA CAMBIARE
 				}
 				break;
 			case 2: //Shield
@@ -127,7 +127,7 @@ public partial class Card : TextureRect
 				if (foreachEnemy == true) {
 					enemy.AddShield(enemyNumValue * (damageValue + specValue)); //DA CAMBIARE
 				} else if (foreachEnemy == false){
-					enemy.AddShield(1 + damageValue + specValue); //DA CAMBIARE
+					enemy.AddShield(damageValue + specValue); //DA CAMBIARE
 				}
 				break;
 		}
@@ -171,14 +171,14 @@ public partial class Card : TextureRect
 				if (foreachEnemy == true) {
 					player.AddLife(enemyNumValue * (damageValue + specValue)); //DA CAMBIARE
 				} else if (foreachEnemy == false) {
-					player.AddLife(1 + damageValue + specValue); //DA CAMBIARE
+					player.AddLife(damageValue + specValue); //DA CAMBIARE
 				}
 				break;
 			case 2: //Shield
 				if (foreachEnemy == true) {
 					player.AddShield(enemyNumValue * (damageValue + specValue)); //DA CAMBIARE
 				} else if (foreachEnemy == false){
-					player.AddShield(1 + damageValue + specValue); //DA CAMBIARE
+					player.AddShield(damageValue + specValue); //DA CAMBIARE
 				}
 				break;
 			case 3: //HealAndShield
@@ -190,7 +190,7 @@ public partial class Card : TextureRect
 				if (foreachEnemy == true) {
 					player.AddShield(enemyNumValue * (damageValue + specValue)); //DA CAMBIARE
 				} else if (foreachEnemy == false){
-					player.AddShield(1 + damageValue + specValue); //DA CAMBIARE
+					player.AddShield(damageValue + specValue); //DA CAMBIARE
 				}
 				break;
 		}

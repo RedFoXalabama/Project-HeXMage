@@ -14,12 +14,13 @@ public partial class CardAnimation : Sprite2D //Scena da allegare alla Card, è 
 
 	#region ATTRIBUTI ———————————————————————————————————————————————————————————————————————————
 	private string caster; //nome del caster
+	private AnimationPlayer animationPlayer;
 	#endregion
 
 	#region FUNZIONI ———————————————————————————————————————————————————————————————————————————
 	public void PlayAnimation(string caster){ //eseguiamo l'animazione creta
 		this.caster = caster; //salviamo il caster, serve a capire chi esegue l'animazione
-		AnimationPlayer animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animationPlayer.Play("BattleCardAnimation");
 	}
 	#endregion

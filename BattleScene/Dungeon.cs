@@ -25,8 +25,8 @@ public partial class Dungeon : Node
 		battleWin_Screen = GetNode<Control>("Win_OverContainer/BattleWin_Screen");
 		selectSound = GetNode<AudioStreamPlayer>("SFX&Music/SelectSound");
 
-		gameover_Screen.Hide();
-		battleWin_Screen.Hide();
+		gameover_Screen.GetNode<CanvasLayer>("CanvasLayer").Hide();
+		battleWin_Screen.GetNode<CanvasLayer>("CanvasLayer").Hide();
 	}
 	#endregion
 
@@ -45,7 +45,7 @@ public partial class Dungeon : Node
 		//blocco il processamento della stanza, senza eliminarla
 		roomContainer.GetChild<BattleScene>(0).ProcessMode = Godot.Node.ProcessModeEnum.Disabled;
 		//carico la scena del gameover
-		gameover_Screen.Show();
+		gameover_Screen.GetNode<CanvasLayer>("CanvasLayer").Show();
 	}
 	public void Win(){
 		//blocco il processamento della stanza, senza eliminarla
@@ -54,7 +54,7 @@ public partial class Dungeon : Node
 		room_number++;
 		if (room_number == CountRooms()){ //nel caso il numero della stanza sia uguale alla lunghezza dell'array, significa che ho finito le stanze
 			//carico la scena della vittoria
-			battleWin_Screen.Show();
+			battleWin_Screen.GetNode<CanvasLayer>("CanvasLayer").Show();
 		} else {
 			//carico la scena della stanza successiva
 			ChangeRoomTo(room_number);

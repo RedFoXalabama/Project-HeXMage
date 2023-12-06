@@ -1,11 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bn3nsgk7780e7"]
+[gd_scene load_steps=6 format=3 uid="uid://u2exlwr2k2ou"]
 
 [ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_qs4u5"]
 [ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_ed8u8"]
 [ext_resource type="Texture2D" uid="uid://hkjsmfl5emwf" path="res://Assets/Cards/ATK.001.png" id="3_75pjj"]
 [ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="4_h0u8r"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4fpia"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ceyo4"]
 resource_local_to_scene = true
 shader = ExtResource("2_ed8u8")
 shader_parameter/max_line_width = 30.0
@@ -16,14 +16,13 @@ shader_parameter/starting_colour = Vector4(0.6, 0.13, 0.85, 1)
 shader_parameter/ending_colour = Vector4(1, 0.83, 0, 1)
 
 [node name="Card" instance=ExtResource("1_qs4u5")]
-material = SubResource("ShaderMaterial_4fpia")
+material = SubResource("ShaderMaterial_ceyo4")
 texture = ExtResource("3_75pjj")
 card_name = "Gelato_Card"
 cardAnimation = ExtResource("4_h0u8r")
 damageValue = 10
-specValue = 1
-probValue = 100
-mana_value = 3
+specValue = 2
+probValue = 25
 CardTarget = 2
 AttackType = 1
 ElementType = 2
