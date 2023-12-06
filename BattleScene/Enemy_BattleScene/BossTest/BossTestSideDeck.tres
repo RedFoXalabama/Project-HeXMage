@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SideDeck" load_steps=2 format=3 uid="uid://b2ulrhh1t3bno"]
+
+[ext_resource type="Script" path="res://Deck/SideDeck.cs" id="1_4c37a"]
+
+[resource]
+resource_local_to_scene = true
+resource_name = "BossTestDeck"
+script = ExtResource("1_4c37a")
+capacity = 3
+exportedCards = [null, null, null]

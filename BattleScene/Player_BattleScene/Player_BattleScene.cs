@@ -75,13 +75,27 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
         Is_attacking = true; //il player sta attaccando
         UseMana(selectedCard.ManaValue); //usiamo il mana //ERROR OGNI TANTO GENATATO UN ERRORE IN CUI LA CARTA SELEZIONATA NON ESISTE, NON SO PERCHE
         /*PER TESTING*/ GD.Print("Mana: " + Mana);
+
+        //passiamo il valore dei nemici vivi contando anche i boss che valgono 3
+        var enemyValueCount = 0;
+        foreach(Enemy_BattleScene enemy in enemys.Where(e => e != null)){
+            if (enemy.IsBoss){
+                enemyValueCount += 3;
+            } else {
+                enemyValueCount++;
+            } 
+        }
+        selectedCard.EnemyNumValue = enemyValueCount;
+
         //animiamo la carta passando carta e nemico selezionati se la carta ha nemici
         if (selectedCard.CardTarget == 2 /*Opponent = 2*/){ //ANIMAZIONE CARTE SUI NEMICI
             //Eseguiamo la carta sul nemico selezionato
+            Animate("Attack");
             selectedCard.ExecuteCard(selectedEnemy);
             EmitSignal("AnimateCardOnEnemy", selectedCard, selectedEnemy);
         } else if (selectedCard.CardTarget == 1 /*Self = 1*/) { //ANIMAZIONE CARTE SENZA NEMICI
             //altrimenti animiamo la carta senza nemici
+            Animate("Passive");
             selectedCard.ExecuteCard(this);
             EmitSignal("AnimateCardOnPlayer", selectedCard);
         }

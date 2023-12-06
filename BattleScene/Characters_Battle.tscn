@@ -1,86 +1,96 @@
-[gd_scene load_steps=8 format=3 uid="uid://duxo4ahm8ldhq"]
+[gd_scene load_steps=23 format=3 uid="uid://duxo4ahm8ldhq"]
 
 [ext_resource type="Script" path="res://BattleScene/Characters_Battle.cs" id="1_pu5ln"]
 [ext_resource type="PackedScene" uid="uid://bm273e4lny46o" path="res://Deck/BattleDeck.tscn" id="2_4ol6x"]
+[ext_resource type="AudioStream" uid="uid://cf4qw7l6p4lt4" path="res://Assets/Audio/SFX/Explosion.wav" id="3_kyccd"]
+[ext_resource type="AudioStream" uid="uid://dp2akyaw5ad7h" path="res://Assets/Audio/SFX/Hit_Hurt1.wav" id="4_s4upa"]
+[ext_resource type="AudioStream" uid="uid://c06dufrbq05s5" path="res://Assets/Audio/SFX/Hit_Hurt2.wav" id="5_uvu22"]
+[ext_resource type="AudioStream" uid="uid://dst1hhje5munu" path="res://Assets/Audio/SFX/Hit_Hurt3.wav" id="6_vykas"]
+[ext_resource type="AudioStream" uid="uid://dgs1474mj65jp" path="res://Assets/Audio/SFX/Powerup.wav" id="7_01s0i"]
 
-[sub_resource type="Animation" id="Animation_50s0c"]
-resource_name = "Attack"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 1, 1), Color(1, 1, 1, 1)]
-}
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bcbex"]
+animation = &"Attack"
 
-[sub_resource type="Animation" id="Animation_st36u"]
-resource_name = "Idle"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_my6k8"]
+animation = &"Dead"
 
-[sub_resource type="Animation" id="Animation_j2m4d"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 0, 0, 1)]
-}
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x3kyk"]
+animation = &"Heal"
 
-[sub_resource type="Animation" id="Animation_r8hii"]
-resource_name = "TakeDamage"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
-}
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p0jjq"]
+animation = &"Idle"
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_68qus"]
-_data = {
-"Attack": SubResource("Animation_50s0c"),
-"Idle": SubResource("Animation_st36u"),
-"RESET": SubResource("Animation_j2m4d"),
-"TakeDamage": SubResource("Animation_r8hii")
-}
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fie2n"]
+animation = &"TakeDamage"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7nfp4"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mep6a"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4l1sr"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sw5fl"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0pa40"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_g62fc"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wbb1q"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3wyst"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_e7m2i"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_e3ob0"]
+states/Attack/node = SubResource("AnimationNodeAnimation_bcbex")
+states/Attack/position = Vector2(309, 32)
+states/Dead/node = SubResource("AnimationNodeAnimation_my6k8")
+states/Dead/position = Vector2(548, 109)
+states/End/position = Vector2(704, 109)
+states/Heal/node = SubResource("AnimationNodeAnimation_x3kyk")
+states/Heal/position = Vector2(456, 32)
+states/Idle/node = SubResource("AnimationNodeAnimation_p0jjq")
+states/Idle/position = Vector2(386, 109)
+states/Start/position = Vector2(200, 109)
+states/TakeDamage/node = SubResource("AnimationNodeAnimation_fie2n")
+states/TakeDamage/position = Vector2(386, 184)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_7nfp4"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_mep6a"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_4l1sr"), "Idle", "Heal", SubResource("AnimationNodeStateMachineTransition_sw5fl"), "Heal", "Idle", SubResource("AnimationNodeStateMachineTransition_0pa40"), "Idle", "Dead", SubResource("AnimationNodeStateMachineTransition_g62fc"), "Dead", "End", SubResource("AnimationNodeStateMachineTransition_wbb1q"), "Idle", "TakeDamage", SubResource("AnimationNodeStateMachineTransition_3wyst"), "TakeDamage", "Idle", SubResource("AnimationNodeStateMachineTransition_e7m2i")]
+graph_offset = Vector2(-88, 18)
 
 [node name="Sprite2D" type="Sprite2D"]
-modulate = Color(1, 0, 0, 1)
 script = ExtResource("1_pu5ln")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
-libraries = {
-"": SubResource("AnimationLibrary_68qus")
-}
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_e3ob0")
+anim_player = NodePath("../AnimationPlayer")
 
 [node name="BattleDeck" parent="." instance=ExtResource("2_4ol6x")]
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("3_kyccd")
+
+[node name="HitSound1" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("4_s4upa")
+
+[node name="HitSound2" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("5_uvu22")
+
+[node name="HitSound3" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("6_vykas")
+
+[node name="PassiveSound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("7_01s0i")

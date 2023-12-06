@@ -28,11 +28,11 @@ public partial class Card : TextureRect
 	//i valori a destra sono gli esponenti del 2 - 1, (2^{n-1}), le combinazioni (sembrano essere) la somma dei due valori
 	[Flags] public enum CardTargetEnum {
 		Self = 1 << 1, // 2^0=1
-   		Opponent = 1 << 2, // 2^1=2
+		Opponent = 1 << 2, // 2^1=2
 	}
 	[Flags] public enum AttackTypeEnum {
-    	AtkSoft = 1 << 1,
-    	AtkHard = 1 << 2,
+		AtkSoft = 1 << 1,
+		AtkHard = 1 << 2,
 	}
 	[Flags] public enum StatsTypeEnum {
 		Heal = 1 << 1,
@@ -50,18 +50,21 @@ public partial class Card : TextureRect
 	}
 
 	[ExportGroup("EFFECT")]
-		[ExportSubgroup("Specs")]
-			[Export] public int cardLevel;
-			[Export] public int specValue;
-			[Export] public int mana_value;
-		[ExportSubgroup("Attack Type")]
-			[Export(PropertyHint.Flags, "Self,Opponent")] public int CardTarget { get; set; } = 0;
-			[Export(PropertyHint.Flags, "Heal,Shield")] public int StatsType { get; set; } = 0;
-			[Export(PropertyHint.Flags, "AtkSoft,AtkHard")] public int AttackType { get; set; } = 0;
-		[ExportSubgroup("Element Type")]
-			[Export(PropertyHint.Flags, "Fire,Ice,Poison,Earth")] public int ElementType { get; set; } = 0;
-		[ExportSubgroup("Passive")]
-			[Export(PropertyHint.Flags, "Rage")] public int Passive { get; set; } = 0;
+	[ExportSubgroup("Specs")]
+	[Export] public int damageValue;
+	[Export] public int specValue;
+	[Export] public int probValue;
+	public int enemyNumValue;
+	[Export] public bool foreachEnemy; //0 se non ha valore, 1 se ha valore
+	[Export] public int mana_value;
+	[ExportSubgroup("Attack Type")]
+	[Export(PropertyHint.Flags, "Self,Opponent")] public int CardTarget { get; set; } = 0;
+	[Export(PropertyHint.Flags, "Heal,Shield")] public int StatsType { get; set; } = 0;
+	[Export(PropertyHint.Flags, "AtkSoft,AtkHard")] public int AttackType { get; set; } = 0;
+	[ExportSubgroup("Element Type")]
+	[Export(PropertyHint.Flags, "Fire,Ice,Poison,Earth")] public int ElementType { get; set; } = 0;
+	[ExportSubgroup("Passive")]
+	[Export(PropertyHint.Flags, "Rage")] public int Passive { get; set; } = 0;
 	#endregion
 
 	#region READY ———————————————————————————————————————————————————————————————————————————
@@ -75,7 +78,7 @@ public partial class Card : TextureRect
 	public void Animate(string animationName){
 		if (animationPlayer != null){ //serve per controllare se la carta è una scena (è una carta del player), o è solo un oggetto (carta ell'enemy)
 			animationPlayer.Play(animationName); //da errore se la carta che stai cercando di animare non è una scena, ma solo un oggetto
-		}		
+		}
 	}
 	public void Expire(){ //da chiamare quando la carta viene usata
 		EmitSignal("CardExpired");
@@ -94,105 +97,146 @@ public partial class Card : TextureRect
 	public void ExecuteCard(Enemy_BattleScene enemy){
 		switch(AttackType){
 			case 1: //AtkSoft
-				enemy.TakeDamage(1+cardLevel+specValue);
+				enemy.TakeDamage(damageValue + specValue);
 				break;
 			case 2: //AtkHard
-				enemy.TakeDamage(3+2*cardLevel+specValue);
+				enemy.TakeDamage(2 * damageValue + specValue);
 				break;
 		}
 		switch(StatsType){
 			case 1: //Heal
-				enemy.AddLife(1+cardLevel+specValue); //DA CAMBIARE
+				if (foreachEnemy == true) {
+					enemy.AddLife(enemyNumValue * (damageValue + specValue)); //DA CAMBIARE
+				} else if (foreachEnemy == false) {
+					enemy.AddLife(1 + damageValue + specValue); //DA CAMBIARE
+				}
 				break;
 			case 2: //Shield
-				enemy.AddShield(1+cardLevel+specValue); //DA CAMBIARE
+				if (foreachEnemy == true) {
+					enemy.AddShield(enemyNumValue * (damageValue + specValue)); //DA CAMBIARE
+				} else if (foreachEnemy == false){
+					enemy.AddShield(damageValue + specValue); //DA CAMBIARE
+				}
 				break;
 			case 3: //HealAndShield
-				enemy.AddLife(1+cardLevel+specValue); //DA CAMBIARE
-				enemy.AddShield(1+cardLevel+specValue); //DA CAMBIARE
+				if (foreachEnemy == true) {
+					enemy.AddLife(enemyNumValue * (damageValue + specValue)); //DA CAMBIARE
+				} else if (foreachEnemy == false) {
+					enemy.AddLife(damageValue + specValue); //DA CAMBIARE
+				}
+				if (foreachEnemy == true) {
+					enemy.AddShield(enemyNumValue * (damageValue + specValue)); //DA CAMBIARE
+				} else if (foreachEnemy == false){
+					enemy.AddShield(1 + damageValue + specValue); //DA CAMBIARE
+				}
 				break;
 		}
-		switch(ElementType){
-			case 1: //Fire
-				enemy.SetOnFire(true, cardLevel, specValue);
-				break;
-			case 2: //Ice
-				enemy.SetOnIce(true, specValue);
-				//DA CAMBIARE
-				break;
-			case 4: //Poison
-				enemy.SetOnPoison(true, cardLevel, specValue);
-				break;
-			case 8: //Earth
-				//TO-DO
-				break;
-		}
-		switch (Passive){
-			case 1: //Rage
-				//TO-DO
-				break;
+		//probabilità di applicare l'effetto elementale
+		int random = new Random().Next(0, 100);
+		if (random <= probValue){
+			switch (ElementType)
+			{
+				case 1: //Fire
+					enemy.SetOnFire(true, damageValue, specValue);
+					break;
+				case 2: //Ice
+					enemy.SetOnIce(true, specValue);
+					//DA CAMBIARE
+					break;
+				case 4: //Poison
+					enemy.SetOnPoison(true, damageValue, specValue);
+					break;
+				case 8: //Earth
+						//TO-DO
+					break;
+			}
+			switch (Passive){
+				case 1: //Rage
+						//TO-DO
+					break;
+			}
 		}
 	}
 	public void ExecuteCard(Player_BattleScene player){
 		switch(AttackType){
 			case 1: //AtkSoft
-				player.TakeDamage(1+cardLevel+specValue);
+				player.TakeDamage(damageValue + specValue);
 				break;
 			case 2: //AtkHard
-				player.TakeDamage(3+2*cardLevel+specValue);
+				player.TakeDamage(2 * damageValue + specValue);
 				break;
 		}
 		switch(StatsType){
 			case 1: //Heal
-				player.AddLife(1+cardLevel+specValue); //DA CAMBIARE
+				if (foreachEnemy == true) {
+					player.AddLife(enemyNumValue * (damageValue + specValue)); //DA CAMBIARE
+				} else if (foreachEnemy == false) {
+					player.AddLife(1 + damageValue + specValue); //DA CAMBIARE
+				}
 				break;
 			case 2: //Shield
-				player.AddShield(1+cardLevel+specValue); //DA CAMBIARE
+				if (foreachEnemy == true) {
+					player.AddShield(enemyNumValue * (damageValue + specValue)); //DA CAMBIARE
+				} else if (foreachEnemy == false){
+					player.AddShield(1 + damageValue + specValue); //DA CAMBIARE
+				}
 				break;
 			case 3: //HealAndShield
-				player.AddLife(1+cardLevel+specValue); //DA CAMBIARE
-				player.AddShield(1+cardLevel+specValue); //DA CAMBIARE
+				if (foreachEnemy == true) {
+					player.AddLife(enemyNumValue * (damageValue + specValue)); //DA CAMBIARE
+				} else if (foreachEnemy == false) {
+					player.AddLife(1 + damageValue + specValue); //DA CAMBIARE
+				}
+				if (foreachEnemy == true) {
+					player.AddShield(enemyNumValue * (damageValue + specValue)); //DA CAMBIARE
+				} else if (foreachEnemy == false){
+					player.AddShield(1 + damageValue + specValue); //DA CAMBIARE
+				}
 				break;
 		}
-		switch(ElementType){
-			case 1: //Fire
-				player.SetOnFire(true, cardLevel, specValue);
-				break;
-			case 2: //Ice
-				player.SetOnIce(true, specValue);
-				break;
-			case 4: //Poison
-				player.SetOnPoison(true, cardLevel, specValue);
-				break;
-			case 8: //Earth
-				//TO-DO
-				break;
-		}
-		switch (Passive){
-			case 1: //Rage
-				//TO-DO
-				break;
+		//probabilità di applicare l'effetto elementale
+		int random = new Random().Next(0, 100);
+		if (random <= probValue) {
+			switch (ElementType) {
+				case 1: //Fire
+					player.SetOnFire(true, damageValue, specValue);
+					break;
+				case 2: //Ice
+					player.SetOnIce(true, specValue);
+					//DA CAMBIARE
+					break;
+				case 4: //Poison
+					player.SetOnPoison(true, damageValue, specValue);
+					break;
+				case 8: //Earth
+						//TO-DO
+					break;
+			}
+			switch (Passive){
+				case 1: //Rage
+						//TO-DO
+					break;
+			}
 		}
 	}
-
 	public Card DeepCopy(){ //funzione per creare una copia della risorsa
-	//necessaria nella creazione del TempDeck perchè altrimenti le carte sarebbero le stesse, copiando solo il riferimento alla risorsa e non duplicando la carta
-        Card newCard = new Card();
+	  //necessaria nella creazione del TempDeck perchè altrimenti le carte sarebbero le stesse, copiando solo il riferimento alla risorsa e non duplicando la carta
+		Card newCard = new Card();
 		newCard.cardId = this.cardId;
 		newCard.card_name = this.card_name;
-        newCard.cardLevel = this.cardLevel;
+		newCard.damageValue = this.damageValue;
 		newCard.card_deck_position = this.card_deck_position;
-        newCard.specValue = this.specValue;
-        newCard.mana_value = this.mana_value;
-        newCard.CardTarget = this.CardTarget;
-        newCard.StatsType = this.StatsType;
-        newCard.AttackType = this.AttackType;
-        newCard.ElementType = this.ElementType;
-        newCard.Passive = this.Passive;
+		newCard.specValue = this.specValue;
+		newCard.mana_value = this.mana_value;
+		newCard.CardTarget = this.CardTarget;
+		newCard.StatsType = this.StatsType;
+		newCard.AttackType = this.AttackType;
+		newCard.ElementType = this.ElementType;
+		newCard.Passive = this.Passive;
 		newCard.cardAnimation = this.cardAnimation;
-        // Copia altri campi e proprietà qui
-        return newCard;
-    }
+		// Copia altri campi e proprietà qui
+		return newCard;
+	}
 	#endregion
 
 	#region SEGNALI ———————————————————————————————————————————————————————————————————————————
@@ -207,8 +251,8 @@ public partial class Card : TextureRect
 	}
 	#endregion
 
-    #region GETTER-SETTER ———————————————————————————————————————————————————————————————————————————
-    public string CardName{
+	#region GETTER-SETTER ———————————————————————————————————————————————————————————————————————————
+	public string CardName{
 		get{return card_name;}
 		set{card_name = value;}
 	}
@@ -248,6 +292,10 @@ public partial class Card : TextureRect
 		get{return cardAnimation;}
 		set{cardAnimation = value;}
 	}
-
+	public int EnemyNumValue
+	{
+		get { return enemyNumValue; }
+		set { enemyNumValue = value; }
+	}
 	#endregion
 }

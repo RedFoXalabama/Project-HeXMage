@@ -21,6 +21,13 @@ using System;
 	
 	#region NODI ———————————————————————————————————————————————————————————————————————————
 	private AnimationPlayer animationPlayer_char;
+	private AnimationTree animationTree_char;
+	private AnimationNodeStateMachinePlayback animationState;
+	private AudioStreamPlayer deathSound;
+	private AudioStreamPlayer hitSound1;
+	private AudioStreamPlayer hitSound2;
+	private AudioStreamPlayer hitSound3;
+	private AudioStreamPlayer passiveSound;
 	#endregion
 
 	#region ATTRIBUTI ———————————————————————————————————————————————————————————————————————————
@@ -43,7 +50,7 @@ using System;
 	private Boolean isOnIce;
 	private Boolean isOnPoison;
 	private Boolean isOnEarth;
-	private Vector2I fireDamage; //x = danni, y = turni
+	private Vector2I fireDamage; //x = danni (attualmente non usato), y = turni
 	private int iceTurns; //turni da far saltare
 	private Vector2I poisonDamage; //x = danni, y = turni
 	#endregion
@@ -53,6 +60,13 @@ using System;
 		//inizializzo i nodi
 		battleDeck = GetNode<BattleDeck>("BattleDeck");
 		animationPlayer_char = GetNode<AnimationPlayer>("AnimationPlayer");
+		animationTree_char = GetNode<AnimationTree>("AnimationTree");
+		animationState = (AnimationNodeStateMachinePlayback)animationTree_char.Get("parameters/playback");
+		deathSound = GetNode<AudioStreamPlayer>("SFX/DeathSound");
+		hitSound1 = GetNode<AudioStreamPlayer>("SFX/HitSound1");
+		hitSound2 = GetNode<AudioStreamPlayer>("SFX/HitSound2");
+		hitSound3 = GetNode<AudioStreamPlayer>("SFX/HitSound3");
+		passiveSound = GetNode<AudioStreamPlayer>("SFX/PassiveSound");
 		//emetto il segnale per preparare il battle deck
 		EmitSignal("PrepareBattleDeckSignal"); //emette il segnale per preparare le risorse deck e poi il battledeck
 	}
@@ -60,6 +74,8 @@ using System;
 
 	#region FUNZIONI ———————————————————————————————————————————————————————————————————————————
 	public void TakeDamage(int value){
+		//facciamo partire il suono
+		PlaySound("hit");
 		//se lo scudo è maggiore di 0, lo scudo assorbe il danno
 		if (shield > 0){
 			shield -= value;
@@ -67,13 +83,12 @@ using System;
 				//life += shield;
 				shield = 0;
 			}
-		}else {//se lo scudo è 0, il danno viene sottratto alla vita
+		} else {//se lo scudo è 0, il danno viene sottratto alla vita
 			life -= value;
 		}
 		//controlliamo se la vita è arrivata a 0 e nel caso emettiamo il segnale per dire che il character è morto
 		if(life <= 0){
 				life = 0;
-
 		}
 		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 		animationPlayer_char.Play("TakeDamage");
@@ -84,6 +99,12 @@ using System;
 		animationPlayer_char.Play(animationName);
 	}
 	public void AddLife(int value){
+		//faccio partire il suono
+		if (value < 0){ //controlliamo se togliamo o aggiungiamo vita
+			PlaySound("hit");
+		} else {
+			PlaySound("passive");
+		}
 		if(life + value > max_life){
 			life = max_life;
 		} else {
@@ -120,6 +141,7 @@ using System;
 		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 	}
 	public void AddShield(int value){
+		PlaySound("passive");
 		if( shield + value > max_shield){
 			shield = max_shield;
 		} else {
@@ -136,7 +158,7 @@ using System;
 	//ritorna false se non salta il turno, ritorna true se lo salta.
 		if (isOnFire){
 			if (fireDamage.Y > 0){
-				TakeDamage(fireDamage.X); //arrechiamo danno
+				TakeDamage((1/6)*life); //riduciamo la vita ad un sesto
 				fireDamage.Y--; //diminuiamo il turno
 			} else {
 				isOnFire = false;
@@ -195,6 +217,32 @@ using System;
 		isOnEarth = value;
 		EmitSignal("UpdateStatsGUI", shield, life, mana, isOnFire, isOnIce, isOnPoison, isOnEarth); //emette il segnale per aggiornare le statsGUI
 	}
+
+	//FUNZIONI AUDIO
+	public void PlaySound( string sound){
+		switch (sound){
+			case "death":
+					deathSound.Play();
+					break;
+				case "hit":
+					int random = new Random().Next(1, 4);
+					switch (random){
+						case 1:
+							hitSound1.Play();
+							break;
+						case 2:
+							hitSound2.Play();
+							break;
+						case 3:
+							hitSound3.Play();
+							break;
+				}
+				break;
+			case "passive":
+				passiveSound.Play();
+				break;
+		}
+	}
 	#endregion
 
 	#region GETTER/SETTER ———————————————————————————————————————————————————————————————————————————
@@ -238,6 +286,14 @@ using System;
 		get{return animationPlayer_char;}
 		set{animationPlayer_char = value;}
 	}
+	public AnimationTree AnimationTree_char{
+		get{return animationTree_char;}
+		set{animationTree_char = value;}
+	}
+	public AnimationNodeStateMachinePlayback AnimationState{
+		get{return animationState;}
+		set{animationState = value;}
+	}
 	public Boolean Is_attacking{
 		get{return is_attacking;}
 		set{is_attacking = value;}
@@ -266,6 +322,26 @@ using System;
 	public Texture2D Icon{
 		get{return icon;}
 		set{icon = value;}
+	}
+	public AudioStreamPlayer DeathSound{
+		get{return deathSound;}
+		set{deathSound = value;}
+	}
+	public AudioStreamPlayer HitSound1{
+		get{return hitSound1;}
+		set{hitSound1 = value;}
+	}
+	public AudioStreamPlayer HitSound2{
+		get{return hitSound2;}
+		set{hitSound2 = value;}
+	}
+	public AudioStreamPlayer HitSound3{
+		get{return hitSound3;}
+		set{hitSound3 = value;}
+	}
+	public AudioStreamPlayer PassiveSound{
+		get{return passiveSound;}
+		set{passiveSound = value;}
 	}
 	#endregion
 }
