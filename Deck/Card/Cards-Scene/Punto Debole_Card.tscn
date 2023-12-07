@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_h0qou"]
 [ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_pb70t"]
-[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="3_2h1v5"]
+[ext_resource type="PackedScene" uid="uid://cp8llfcpemix1" path="res://Deck/Cards Animations/Slash_Animation.tscn" id="3_g7ddg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5lsiy"]
 resource_local_to_scene = true
@@ -17,7 +17,7 @@ shader_parameter/ending_colour = Vector4(0.5, 0.3, 0.8, 0.9)
 [node name="Card" instance=ExtResource("1_h0qou")]
 material = SubResource("ShaderMaterial_5lsiy")
 card_name = "Punto Debole_Card"
-cardAnimation = ExtResource("3_2h1v5")
+cardAnimation = ExtResource("3_g7ddg")
 damageValue = -10
 mana_value = 6
 CardTarget = 2

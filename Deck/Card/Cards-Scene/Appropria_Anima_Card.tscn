@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_3b06j"]
 [ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_wepti"]
 [ext_resource type="Texture2D" uid="uid://dmwphvqvor3uf" path="res://Assets/Cards/PS.002.png" id="3_6p3cj"]
-[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="4_bffu0"]
+[ext_resource type="PackedScene" uid="uid://r6ur6xpcry5b" path="res://Deck/Cards Animations/Heal_Animation.tscn" id="4_1hwub"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6e42b"]
 resource_local_to_scene = true
@@ -19,7 +19,7 @@ shader_parameter/ending_colour = Vector4(1, 0.83, 0, 1)
 material = SubResource("ShaderMaterial_6e42b")
 texture = ExtResource("3_6p3cj")
 card_name = "Appropria_Anima_Card"
-cardAnimation = ExtResource("4_bffu0")
+cardAnimation = ExtResource("4_1hwub")
 damageValue = 8
 foreachEnemy = true
 mana_value = 5

@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_kg114"]
 [ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_3p3iu"]
-[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="3_s6dli"]
 [ext_resource type="Texture2D" uid="uid://ed6jsmh1ochb" path="res://Assets/Cards/PS.001.png" id="3_xcesb"]
+[ext_resource type="PackedScene" uid="uid://r6ur6xpcry5b" path="res://Deck/Cards Animations/Heal_Animation.tscn" id="4_8s3ax"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gpk8f"]
 resource_local_to_scene = true
@@ -19,7 +19,7 @@ shader_parameter/ending_colour = Vector4(1, 0.83, 0, 1)
 material = SubResource("ShaderMaterial_gpk8f")
 texture = ExtResource("3_xcesb")
 card_name = "Pozione_Card"
-cardAnimation = ExtResource("3_s6dli")
+cardAnimation = ExtResource("4_8s3ax")
 damageValue = 15
 mana_value = 4
 CardTarget = 1

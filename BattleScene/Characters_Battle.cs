@@ -136,7 +136,7 @@ using System;
 	public void ResetMana(){
 		//ghiaccio priorità su veleno per questo eseguito per ultimo
 		if (isOnPoison){
-			mana = max_mana/2;
+			mana = max_mana - poisonDamage.Y;
 		} else {
 			mana = max_mana;
 		}

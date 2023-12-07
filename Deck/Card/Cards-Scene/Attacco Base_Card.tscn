@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_fppsw"]
 [ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_kl2ho"]
-[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="3_ldae0"]
+[ext_resource type="PackedScene" uid="uid://cp8llfcpemix1" path="res://Deck/Cards Animations/Slash_Animation.tscn" id="3_y67in"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cndnw"]
 resource_local_to_scene = true
@@ -17,7 +17,7 @@ shader_parameter/ending_colour = Vector4(0.5, 0.3, 0.8, 0.9)
 [node name="Card" instance=ExtResource("1_fppsw")]
 material = SubResource("ShaderMaterial_cndnw")
 card_name = "Attacco Base_Card"
-cardAnimation = ExtResource("3_ldae0")
+cardAnimation = ExtResource("3_y67in")
 damageValue = 3
 mana_value = 3
 CardTarget = 2

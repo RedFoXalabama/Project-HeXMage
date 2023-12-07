@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://6nqyqrmb88my"]
+
+[ext_resource type="PackedScene" uid="uid://0vd1u2wbhjek" path="res://Deck/Card/CardAnimation.tscn" id="1_s0r4x"]
+[ext_resource type="Texture2D" uid="uid://be4lnyr5bxo6b" path="res://Assets/Cards/Card Effect/Animazioni.png" id="2_j6urk"]
+
+[sub_resource type="Animation" id="Animation_umxh6"]
+resource_name = "BattleCardAnimation"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [21, 22, 23, 24, 25, 26, 27]
+}
+
+[sub_resource type="Animation" id="Animation_j0uj7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [21]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v04q5"]
+_data = {
+"BattleCardAnimation": SubResource("Animation_umxh6"),
+"RESET": SubResource("Animation_j0uj7")
+}
+
+[node name="CardAnimation" instance=ExtResource("1_s0r4x")]
+texture = ExtResource("2_j6urk")
+hframes = 7
+vframes = 6
+frame = 21
+
+[node name="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_v04q5")
+}

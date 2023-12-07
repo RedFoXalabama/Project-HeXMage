@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_611bh"]
 [ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_0qfyq"]
-[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="3_lkd4l"]
+[ext_resource type="PackedScene" uid="uid://cp8llfcpemix1" path="res://Deck/Cards Animations/Slash_Animation.tscn" id="3_y2tac"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mbx1v"]
 resource_local_to_scene = true
@@ -19,7 +19,7 @@ editor_description = "la carta fa 3+3*2+21.
 pescata solo se rimane da sola"
 material = SubResource("ShaderMaterial_mbx1v")
 card_name = "Attacco Finale_Card"
-cardAnimation = ExtResource("3_lkd4l")
+cardAnimation = ExtResource("3_y2tac")
 damageValue = 10
 specValue = 2
 mana_value = 10

@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://bq5f5ju31lu75"]
+[gd_scene load_steps=14 format=3 uid="uid://bq5f5ju31lu75"]
 
 [ext_resource type="PackedScene" uid="uid://duxo4ahm8ldhq" path="res://BattleScene/Characters_Battle.tscn" id="1_o51tp"]
 [ext_resource type="Script" path="res://BattleScene/Player_BattleScene/Player_BattleScene.cs" id="2_d2pdh"]
 [ext_resource type="Texture2D" uid="uid://ovbggkkv2anb" path="res://Assets/Characters/Player/Player_BattleSprite.png" id="2_g84wc"]
+[ext_resource type="FontFile" uid="uid://4uv8dwcjup7q" path="res://Assets/Fonts/alagard.ttf" id="4_fu21j"]
 [ext_resource type="Resource" uid="uid://bftinnyy3a5lq" path="res://BattleScene/Player_BattleScene/PlayerDeck.tres" id="5_r3uv2"]
 [ext_resource type="Resource" uid="uid://cyxiqryvtbhyn" path="res://BattleScene/Player_BattleScene/PlayerSideDeck.tres" id="6_ybeuk"]
 
@@ -173,8 +174,22 @@ libraries = {
 "": SubResource("AnimationLibrary_xjibm")
 }
 
-[node name="BattleDeck" parent="." index="2"]
+[node name="ManaLabel" type="Label" parent="." index="2"]
+visible = false
+offset_left = -52.5
+offset_top = -45.0
+offset_right = 52.5
+offset_bottom = -22.0
+theme_override_colors/font_color = Color(0.160784, 0.027451, 0.184314, 1)
+theme_override_fonts/font = ExtResource("4_fu21j")
+text = "No more mana"
+
+[node name="ManaLabelTimer" type="Timer" parent="." index="3"]
+one_shot = true
+
+[node name="BattleDeck" parent="." index="4"]
 mainDeck = ExtResource("5_r3uv2")
 sideDeck = ExtResource("6_ybeuk")
 
 [connection signal="PrepareBattleDeckSignal" from="." to="BattleDeck" method="_on_PrepareBattleDeck_Player"]
+[connection signal="timeout" from="ManaLabelTimer" to="." method="_on_mana_label_timer_timeout"]

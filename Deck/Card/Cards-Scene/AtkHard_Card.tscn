@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_uca7s"]
 [ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_x50db"]
 [ext_resource type="Texture2D" uid="uid://bvwl4oxxewfu4" path="res://Assets/Cards/1.png" id="3_cnc37"]
-[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="3_nbv5v"]
+[ext_resource type="PackedScene" uid="uid://cp8llfcpemix1" path="res://Deck/Cards Animations/Slash_Animation.tscn" id="4_cysfa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j7rba"]
 resource_local_to_scene = true
@@ -19,7 +19,7 @@ shader_parameter/ending_colour = Vector4(1, 0.83, 0, 1)
 material = SubResource("ShaderMaterial_j7rba")
 texture = ExtResource("3_cnc37")
 card_name = "AtkHard_Card"
-cardAnimation = ExtResource("3_nbv5v")
+cardAnimation = ExtResource("4_cysfa")
 damageValue = 10
 mana_value = 3
 CardTarget = 2

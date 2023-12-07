@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://qgvnv3q2hllt" path="res://Deck/Card/Cards-Scene/Punto Debole_Card.tscn" id="2_yfsut"]
 [ext_resource type="PackedScene" uid="uid://be1jl3g4r2qvr" path="res://Deck/Card/Cards-Scene/Riposo_Card.tscn" id="3_8umn1"]
 [ext_resource type="PackedScene" uid="uid://ccwo282s4lbv7" path="res://Deck/Card/Cards-Scene/Attacco Finale_Card.tscn" id="4_eanaq"]
-[ext_resource type="PackedScene" uid="uid://djo760p607c8v" path="res://Deck/Card/Cards-Scene/LOL_Card.tscn" id="5_ny2tx"]
+[ext_resource type="PackedScene" uid="uid://dcabn4fi11loc" path="res://Deck/Card/Cards-Scene/LOL_Card.tscn" id="5_ny2tx"]
 
 [resource]
 resource_local_to_scene = true

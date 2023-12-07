@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b6cae6ieantv4" path="res://Deck/Card/Card.tscn" id="1_5axyt"]
 [ext_resource type="Shader" path="res://Deck/Card/Card_Shader.gdshader" id="2_mn75y"]
 [ext_resource type="Texture2D" uid="uid://qlcx52andrdp" path="res://Assets/Cards/ATK.004.png" id="3_waopw"]
-[ext_resource type="PackedScene" uid="uid://bopwo5acoyrvp" path="res://Deck/Cards Animations/card_animation_prova.tscn" id="4_pmcc2"]
+[ext_resource type="PackedScene" uid="uid://6nqyqrmb88my" path="res://Deck/Cards Animations/Poison_Animation.tscn" id="4_r4fxw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gynl0"]
 resource_local_to_scene = true
@@ -19,7 +19,7 @@ shader_parameter/ending_colour = Vector4(1, 0.83, 0, 1)
 material = SubResource("ShaderMaterial_gynl0")
 texture = ExtResource("3_waopw")
 card_name = "Zanna_Velenosa_Card"
-cardAnimation = ExtResource("4_pmcc2")
+cardAnimation = ExtResource("4_r4fxw")
 damageValue = 6
 specValue = 3
 probValue = 100

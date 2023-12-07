@@ -24,9 +24,17 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
     private CardAnimation cardAnimation_toawait; //animazione della carta da aspettare
     #endregion
 
+    #region NODE ———————————————————————————————————————————————————————————————————————————
+    private Label manaLabel; //label del mana
+    private Timer manaLabelTimer; //timer per nascondere la label del mana
+    #endregion
+
     #region INTERFACE ———————————————————————————————————————————————————————————————————————————
     public void _on_BattleStart_Signal(){ //funzione del segnale BattleStart, emesso da BattleScene (collegato Godot)
         BattleDeck._on_BattleStart();//Prepara il battle deck
+        manaLabel = GetNode<Label>("ManaLabel"); //prendiamo la label del mana
+        manaLabelTimer = GetNode<Timer>("ManaLabelTimer"); //prendiamo il timer della label del mana
+        manaLabel.Hide(); //nascondiamo la label del mana
         //(rimosso perchè non necessario, carte aggiornante una volta che inizia il turno) //EmitSignal("CardsOnGUI", BattleDeck.HandsCard); //aggiorniamo lo stato delle carte in mano
     }
 
@@ -49,8 +57,8 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
                     UseCard();
                 }
             } else { //non c'è abbastanza mana
-                    //DA PROGRAMMARE
-                /*PER TESTING*/ GD.Print("Mana insufficiente");
+                    manaLabel.Show(); //mostraimo la label del mana
+                    manaLabelTimer.Start(); //avviamo il timer per nascondere la label del mana
             }
         }
 
@@ -171,6 +179,10 @@ public partial class Player_BattleScene : Characters_Battle, DeckUse
     public void _on_battle_scene_pass_card_animation_to_player(CardAnimation cardAnimation){ //segnale per passare l'animazione della carta al player
         //collegato con BattleScene -> Godot -> Player
         cardAnimation_toawait = cardAnimation;
+    }
+
+    public void  _on_mana_label_timer_timeout(){
+        manaLabel.Hide(); //nascondiamo la label del mana
     }
     #endregion
 }

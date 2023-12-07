@@ -12,8 +12,8 @@ public partial class Card : TextureRect
 	[Export] int cardId; //id della carta
 	[Export] private string card_name;
 
-	[Export] private int card_deck_position; //posizione della carta nel deck
-	[Export] private int card_hand_position; //posizione della carta nella mano
+	private int card_deck_position; //posizione della carta nel deck
+	private int card_hand_position; //posizione della carta nella mano
 	private Boolean is_focused; //se la carta è focussata
 	private Boolean is_input_connected; //se la carta è connessa al segnale
 	#endregion
@@ -71,6 +71,12 @@ public partial class Card : TextureRect
 	public override void _Ready(){
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		collisionShape2D = GetNode<CollisionShape2D>("Area2D/CollisionShape2D");
+
+		//HARDCODED
+		if(card_name.Equals("LOL_Card")){
+			probValue = 100;
+		}
+		//HARDCODED
 	}
 	#endregion
 
