@@ -313,7 +313,7 @@ public partial class Enemy_BattleScene : Characters_Battle, DeckUse
 		var passiveCards_queue = InsertionSortAndQueue(passiveCards); //ordiniamo le carte passive
 		//SCELTA CARTE
 		//CALCOLO SCELTA PERCENTUALE
-		var scelta_percentuale = ((reaction + 1) / (14 + 1)) *100; // la reaction va da -1 a 14, quindi + 1 per rendere tutto positivo
+		var scelta_percentuale = ((reaction + 1) / (14 + 1)) * 100; // la reaction va da -1 a 14, quindi + 1 per rendere tutto positivo
 		Queue<Card> choosenCards = new Queue<Card>(); //creiamo una coda di carte
 		Random random = new Random();
 		for(int i = 0; i < BattleDeck.HandsCard.CountCardsInHand(); i++){//scorriamo le carte

@@ -6,5 +6,6 @@
   	"4" : "res://Deck/Card/Cards-Scene/Scudo_Legno_Card.tscn",
   	"5" : "res://Deck/Card/Cards-Scene/Difensore_Inamovibile_Card.tscn",
   	"6" : "res://Deck/Card/Cards-Scene/Appropria_Anima_Card.tscn",
-	"7" : "res://Deck/Card/Cards-Scene/Zanna_Velenosa_Card.tscn"
+	"7" : "res://Deck/Card/Cards-Scene/Zanna_Velenosa_Card.tscn",
+	"8" : "res://Deck/Card/Cards-Scene/AtkSoft_Card.tscn"
 }

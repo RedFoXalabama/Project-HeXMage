@@ -83,6 +83,10 @@ public partial class Dungeon : Node
 		ChangeRoomTo(0);
 		HideStartScreen();
 	}
+	public void _on_exit_button_pressed(){
+		PlaySound("select");
+		GetTree().Quit();
+	}
 	#endregion
 
 	#region FUNCTIONALITY ————————————————————————————————————————————————————————————————————

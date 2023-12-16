@@ -30,4 +30,4 @@ theme_override_colors/font_shadow_color = Color(0.431373, 0.286275, 0.803922, 1)
 theme_override_colors/font_outline_color = Color(0.431373, 0.286275, 0.803922, 1)
 theme_override_fonts/font = ExtResource("1_me0l5")
 theme_override_font_sizes/font_size = 100
-text = "YOU WIN THE BATTLE"
+text = "YOU WON THE BATTLE"

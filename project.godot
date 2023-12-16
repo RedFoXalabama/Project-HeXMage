@@ -14,6 +14,8 @@ config/name="Project-IdS"
 config/tags=PackedStringArray("university")
 run/main_scene="res://BattleScene/Dungeon.tscn"
 config/features=PackedStringArray("4.1", "C#", "GL Compatibility")
+boot_splash/image="res://pink-dark.png"
+config/icon="res://icon.svg"
 
 [autoload]
 
@@ -21,7 +23,9 @@ GlobalDeck="*res://Deck/Global_Deck.cs"
 
 [display]
 
-window/stretch/mode="viewport"
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
 
 [dotnet]
 

@@ -29,7 +29,7 @@ script = ExtResource("1_0a7w1")
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 offset_right = 164.0
-offset_bottom = 87.0
+offset_bottom = 95.0
 
 [node name="CharIcon" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2
@@ -72,5 +72,6 @@ layout_mode = 2
 texture = ExtResource("10_y5kir")
 
 [node name="Earth" type="TextureRect" parent="HBoxContainer/BarContainer/StatusContainer"]
+visible = false
 layout_mode = 2
 texture = ExtResource("11_wmvsw")

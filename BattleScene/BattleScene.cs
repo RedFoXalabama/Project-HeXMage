@@ -241,7 +241,9 @@ public partial class BattleScene : Node2D
 		//serve per passare la carta e il nemico selezionato, dalla carta si prende il packedscene dell'animazione e lo istanzia sul nemico
 		enemy_BattleScene.GetParent<Marker2D>().AddChild(card.CardAnimation.Instantiate());
 		//connetto il segnale per abilitare le collisioni delle carte così che possa inviarlo l'animazione una volta finita
-		enemy_BattleScene.GetParent<Marker2D>().GetChild<CardAnimation>(1).Connect("AbleCardsCollision", new Callable(handCards_GUI, "_on_Able_Cards_Collision"));
+		if (enemy_BattleScene.GetParent<Marker2D>().GetChild<CardAnimation>(1).IsConnected("AbleCardsCollision", new Callable(handCards_GUI, "_on_Able_Cards_Collision")) == false){
+			enemy_BattleScene.GetParent<Marker2D>().GetChild<CardAnimation>(1).Connect("AbleCardsCollision", new Callable(handCards_GUI, "_on_Able_Cards_Collision"));
+		}
 		//passo al nemico la card animation per gli await dei segnali
 		EmitSignal("PassCardAnimationToPlayer", enemy_BattleScene.GetParent<Marker2D>().GetChild<CardAnimation>(1));
 		//avvio l'animazione
@@ -251,7 +253,9 @@ public partial class BattleScene : Node2D
 		//serve per passare la carta, dalla carta si prende il packedscene dell'animazione e lo istanzia sul player
 		playerPosition.AddChild(card.CardAnimation.Instantiate());
 		//connetto il segnale per abilitare le collisioni delle carte così che possa inviarlo l'animazione una volta finita
-		playerPosition.GetChild<CardAnimation>(1).Connect("AbleCardsCollision", new Callable(handCards_GUI, "_on_Able_Cards_Collision"));
+		if (playerPosition.GetChild<CardAnimation>(1).IsConnected("AbleCardsCollision", new Callable(handCards_GUI, "_on_Able_Cards_Collision")) == false){
+			playerPosition.GetChild<CardAnimation>(1).Connect("AbleCardsCollision", new Callable(handCards_GUI, "_on_Able_Cards_Collision"));
+		}
 		//passo al nemico la card animation per gli await dei segnali
 		EmitSignal("PassCardAnimationToPlayer", playerPosition.GetChild<CardAnimation>(1));
 		//avvio l'animazione
@@ -276,7 +280,7 @@ public partial class BattleScene : Node2D
 
 	public void _on_battle_music_finished(){
 		music_counter++;
-		if (music_counter == 3){
+		if (music_counter == 2){
 			battleMusic_riff.Play();
 		} else {
 			battleMusic.Play();

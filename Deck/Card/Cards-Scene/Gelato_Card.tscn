@@ -23,6 +23,7 @@ cardAnimation = ExtResource("4_ncvwh")
 damageValue = 10
 specValue = 2
 probValue = 25
+mana_value = 3
 CardTarget = 2
 AttackType = 1
 ElementType = 2

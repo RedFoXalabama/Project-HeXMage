@@ -19,6 +19,6 @@ material = SubResource("ShaderMaterial_cndnw")
 card_name = "Attacco Base_Card"
 cardAnimation = ExtResource("3_y67in")
 damageValue = 3
-mana_value = 3
+mana_value = 1
 CardTarget = 2
 AttackType = 1
