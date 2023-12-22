@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://dl3kroow2wmhd"]
+[gd_scene load_steps=43 format=3 uid="uid://dl3kroow2wmhd"]
 
 [ext_resource type="Texture2D" uid="uid://r46b478gqfhg" path="res://Assets/3D Model/Texture/floor/color_map.jpg" id="1_vpcv7"]
 [ext_resource type="Texture2D" uid="uid://wixtvechfiwf" path="res://Assets/3D Model/Texture/floor/normal_map_opengl.jpg" id="2_sejt8"]
@@ -10,6 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://xmbrphjv6tc3" path="res://Assets/3D Model/Texture/Character.png" id="9_dfmui"]
 [ext_resource type="PackedScene" uid="uid://cwqc0fww61jus" path="res://Assets/3D Model/Texture/Sgabello/sgabello.tscn" id="10_3h1i0"]
 [ext_resource type="PackedScene" uid="uid://bns5ts7ys4slv" path="res://Assets/3D Model/Texture/Bancone/bancone.tscn" id="10_5b82m"]
+[ext_resource type="Texture2D" uid="uid://biymqkvdc5prx" path="res://Assets/GUI/TurnButton/IslandButton_Normal.png" id="11_yyybh"]
+[ext_resource type="Texture2D" uid="uid://bly2b6u58dbgo" path="res://Assets/GUI/TurnButton/IslandButton_Pressed.png" id="12_dka8u"]
+[ext_resource type="Script" path="res://Level/IslandButton.cs" id="13_23dx6"]
 
 [sub_resource type="Environment" id="Environment_35six"]
 background_mode = 1
@@ -418,3 +421,21 @@ parameters/Walk/blend_position = Vector2(0, 0)
 
 [node name="bancone" parent="." instance=ExtResource("10_5b82m")]
 transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0, 0, -3)
+
+[node name="IslandButton" type="TextureButton" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -230.0
+offset_top = -80.0
+offset_right = -40.0
+offset_bottom = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("11_yyybh")
+texture_pressed = ExtResource("12_dka8u")
+script = ExtResource("13_23dx6")
+
+[connection signal="pressed" from="IslandButton" to="IslandButton" method="_on_pressed"]

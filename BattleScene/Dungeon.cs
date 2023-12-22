@@ -87,6 +87,10 @@ public partial class Dungeon : Node
 		PlaySound("select");
 		GetTree().Quit();
 	}
+	public void _on_tavern_button_pressed(){
+		PlaySound("select");
+		GetTree().ChangeSceneToFile("res://Level/level0.tscn");
+	}
 	#endregion
 
 	#region FUNCTIONALITY ————————————————————————————————————————————————————————————————————

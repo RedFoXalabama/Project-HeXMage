@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b0y2j5lel440p"]
+[gd_scene load_steps=22 format=3 uid="uid://b0y2j5lel440p"]
 
 [ext_resource type="Script" path="res://BattleScene/Dungeon.cs" id="1_1w63x"]
 [ext_resource type="PackedScene" uid="uid://clcvdw6jbnm8g" path="res://BattleScene/BattleScene.tscn" id="2_tn04t"]
@@ -12,6 +12,8 @@
 [ext_resource type="AudioStream" uid="uid://b6mqshbw717bk" path="res://Assets/Audio/Water&Bird.wav" id="7_srli7"]
 [ext_resource type="Texture2D" uid="uid://fvwnrhep0wvi" path="res://Assets/GUI/TurnButton/ExitButton_Normal.png" id="8_ivq0j"]
 [ext_resource type="Texture2D" uid="uid://bug1nnjpen7oj" path="res://Assets/GUI/TurnButton/ExitButton_Pressed.png" id="9_01vyg"]
+[ext_resource type="Texture2D" uid="uid://by6urr57jtb7r" path="res://Assets/GUI/TurnButton/TavernButton_Normal.png" id="10_odij0"]
+[ext_resource type="Texture2D" uid="uid://o57vh6fx13ji" path="res://Assets/GUI/TurnButton/TavernButton_Pressed.png" id="11_harms"]
 [ext_resource type="AudioStream" uid="uid://cgw1ptfbsluo" path="res://Assets/Audio/SFX/Blip_Select.wav" id="16_o33t3"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_hwtvk"]
@@ -119,6 +121,21 @@ grow_vertical = 2
 texture_normal = ExtResource("8_ivq0j")
 texture_pressed = ExtResource("9_01vyg")
 
+[node name="TavernButton" type="TextureButton" parent="StartView/StartButtonLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -230.0
+offset_top = -80.0
+offset_right = -40.0
+offset_bottom = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("10_odij0")
+texture_pressed = ExtResource("11_harms")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="StartView"]
 
 [node name="RoomContainer" type="Node" parent="."]
@@ -143,3 +160,4 @@ stream = ExtResource("16_o33t3")
 
 [connection signal="pressed" from="StartView/StartButtonLayer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="StartView/StartButtonLayer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="StartView/StartButtonLayer/TavernButton" to="." method="_on_tavern_button_pressed"]
