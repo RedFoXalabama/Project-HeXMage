@@ -101,6 +101,9 @@ public partial class HandCards_GUI : CanvasLayer
 			}
 		}
 	}
+	public void _on_restart_button_pressed(){ //segnale per il bottone restart
+		GetTree().ReloadCurrentScene();
+	}
 	#endregion
 
 	#region GETTER/SETTER ———————————————————————————————————————————————————————————————————————————

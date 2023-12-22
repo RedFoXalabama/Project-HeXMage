@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://db87r6f4sp7hw"]
+[gd_scene load_steps=8 format=3 uid="uid://db87r6f4sp7hw"]
 
 [ext_resource type="Script" path="res://BattleScene/GUI/HandCards_GUI.cs" id="1_r8m6g"]
 [ext_resource type="Texture2D" uid="uid://buci04lp67u2h" path="res://Assets/GUI/TurnButton/TurnButton_Normal.png" id="2_ff8fw"]
 [ext_resource type="PackedScene" uid="uid://dn8fn2pjqrrja" path="res://BattleScene/GUI/Stats_GUI.tscn" id="2_qmu6o"]
 [ext_resource type="Texture2D" uid="uid://d3wcsvtafdh8n" path="res://Assets/GUI/TurnButton/TurnButton_Disabled.png" id="3_g38ya"]
 [ext_resource type="Texture2D" uid="uid://c41lmxk7m541w" path="res://Assets/GUI/TurnButton/TurnButton_Pressed.png" id="4_vcl1y"]
+[ext_resource type="Texture2D" uid="uid://bj5oslw2mc4xu" path="res://Assets/GUI/TurnButton/RestartButton_Normal.png" id="6_w0vtq"]
+[ext_resource type="Texture2D" uid="uid://gv4rjkcr1f1k" path="res://Assets/GUI/TurnButton/RestartButton_Pressed.png" id="7_no433"]
 
 [node name="HandCards_GUI" type="CanvasLayer"]
 script = ExtResource("1_r8m6g")
@@ -44,3 +46,18 @@ offset_top = -300.0
 offset_right = 399.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[node name="RestartButton" type="TextureButton" parent="."]
+process_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = -70.0
+offset_right = 215.0
+offset_bottom = -21.0
+grow_vertical = 0
+texture_normal = ExtResource("6_w0vtq")
+texture_pressed = ExtResource("7_no433")
+
+[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]

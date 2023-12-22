@@ -15,6 +15,8 @@ using System.Text.Json;
 
 	//FUNZIONI
 	public void InitForPlayer(string deckCardFile){ //inizializza il dizionario di carte per il player
+		//prima ci assiucriamo che non ci siano residui
+		cards.Clear(); //pulisce il dizionario
 		//Riempiamo il packedscene di carte tramite il json in cui sono salvate le carte del player
 		var file = FileAccess.Open(deckCardFile, FileAccess.ModeFlags.Read);
 		var json = file.GetAsText();
