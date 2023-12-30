@@ -55,9 +55,7 @@ using System.Text.Json;
 	public void RemoveCard(Card card){ //rimuove una carta
 		cards.Remove(card.CardDeckPosition);
 
-		//IMPORTANTE CAZZO
 		//aggiungere funzione per rimuovere la carta dal packedscene e dal json
-		//GUARDA QUI CRETINO
 	}
 
 	//Getter-Setter
